@@ -63,7 +63,12 @@ class LoginPageContainer extends React.Component {
 					ToastAndroid.SHORT,
 					ToastAndroid.CENTER
 				)
-
+				
+				const { waitingAction, params } = this.props.waitingAction
+				
+				if(waitingAction !== "")
+					this.props.navigation.navigate(waitingAction, params)
+				
 				this.props.navigation.navigate('Home')
 			})
 			.catch(err => {
@@ -73,8 +78,7 @@ class LoginPageContainer extends React.Component {
 			})
 	}
 
-  render() {
-		console.log(this.props.auth, "auth")
+  render() { console.log(this.props.waitingAction, "dsd")
 		const { userName,  password, validEmail, validPass, formError} = this.state
 		return <LoginPageView 
 							onChangeEmail={this.onChangeEmail} 
@@ -86,8 +90,9 @@ class LoginPageContainer extends React.Component {
 	}
 }
 
-const mapStateToProps = ({auth}) => ({
-	auth
+const mapStateToProps = ({auth, waitingAction}) => ({
+	auth,
+	waitingAction
 })
 
 const mapDispatchToProps = (dispatch) => ({

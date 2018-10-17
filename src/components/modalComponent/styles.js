@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native'
 
-import { primaryColor, secondaryColor } from '../sharedStyles'
+import { primaryColor, secondaryColor, floatingBtnColor } from '../sharedStyles'
 
 export const styles = StyleSheet.create({
     container: {
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-start',
         width: '100%',
         height:55,
-        backgroundColor:primaryColor,
+        backgroundColor:floatingBtnColor,
         padding: 5
     },
     goback: {

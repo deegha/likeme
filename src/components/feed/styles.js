@@ -3,22 +3,55 @@ import * as shared from '../sharedStyles'
 
 export const styles = StyleSheet.create({
   container: {
-    marginTop: 22,
-    borderRadius: 10 
+    width: '100%',
+    backgroundColor: shared.secondaryColor,
+    padding: 20,
+    marginBottom:5
   },
   imageArea: {
     display:'flex',
-    flex:3
+    borderRadius: 20,
+    overflow: 'hidden',
+    marginBottom: 25,
+    marginTop: 15,  
   },
   contentArea: {
     display:'flex',
-    justifyContent:'center',
-    alignItems: 'center',
-
+    flexDirection: 'row',
+    justifyContent:'flex-start',
+    alignItems: 'flex-start',
+    
+    padding:20
   },
-  image: {
-    flex:1,
-    height: undefined, 
-    width: undefined
-   }
+  userImageContainer: {
+    flex: 1
+  },
+  userImage: {
+    width: 40,
+    height: 40,
+    borderRadius:20,
+  },
+  postContent: {
+    flex: 5,
+    alignItems: 'flex-start',
+    paddingRight: 20
+  },
+  userName: {
+    marginBottom: 5,
+    fontWeight: 'bold',
+    color: shared.primary_text
+  },
+  postText: {
+    fontWeight: '100',
+    color: shared.secondary_text,
+  },
+  actionArea: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
+  statText: {
+    fontSize: 11,
+    textAlign: 'center',
+    color: shared.secondary_text
+  }
 })

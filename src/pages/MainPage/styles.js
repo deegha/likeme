@@ -3,6 +3,7 @@ import * as shared from '../../components/sharedStyles'
 
 export const styles = StyleSheet.create({
   container: {
-    marginTop: 22
+    backgroundColor: shared.backGround,
+    height: '100%'
   }
 })

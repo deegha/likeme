@@ -11,7 +11,7 @@ const initialState = {
       postText: "",
       postMedia: {
         type: null,
-        url: null
+        url: ""
       }
     }
   ],
@@ -35,7 +35,6 @@ export const feedsReducer = (state=initialState, action) => {
         ...state,
         loading: false,
         feeds: [
-          ...state.feeds,
           ...Object.keys(action.feeds).map(feed => ({
             id: feed,
             postText: action.feeds[feed].postText,

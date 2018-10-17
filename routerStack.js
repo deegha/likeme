@@ -3,14 +3,16 @@ import { createStackNavigator } from 'react-navigation'
 import MainContainer from "./src/pages/MainPage/MainContainer"
 import LoginPageContainer from './src/pages/loginPage/LoginPageContainer'
 
+import  * as shared from './src/components/sharedStyles'
+
 export const RootStack = createStackNavigator(
 	{
 		Home: {
 			screen: MainContainer,
 			title: 'Home',
-			navigationOptions:{
-				header: null 
-			  }
+			// navigationOptions:{
+			// 	header: null 
+			// }
 		},
 		login: {
 			screen: LoginPageContainer,
@@ -22,9 +24,11 @@ export const RootStack = createStackNavigator(
 		initialRouteName: 'Home',
 		navigationOptions: {
 		headerStyle: {
-			backgroundColor: '#00bcd4',
+			backgroundColor: shared.backGround,
+			borderColor: shared.backGround,
+			elevation: 0,
 		},
-		headerTintColor: '#fff',
+		headerTintColor: '#000',
 		headerTitleStyle: {
 			fontWeight: '100',
 		},

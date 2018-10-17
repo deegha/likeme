@@ -3,9 +3,9 @@ import * as shared from '../sharedStyles'
 
 export const styles = StyleSheet.create({
 	btnContainer: {
-		backgroundColor: shared.primaryColor,
-		height: 70,
-		width: 70,
+		backgroundColor: '#ecf0f1',
+		height: 40,
+		width: 40,
 		display:'flex',
 		justifyContent:'center',
 		alignItems: 'center',

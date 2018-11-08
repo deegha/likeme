@@ -13,8 +13,7 @@ export const styles = StyleSheet.create({
     innerContainer: {
         display: 'flex',
         width: '80%',
-        justifyContent: 'center',
-        height:60,
+
     },
     loginTitile: {
         color: shared.secondary_text,

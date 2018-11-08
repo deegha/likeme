@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { ImagePicker, Permissions } from 'expo'
+import { ImagePicker, Permissions, Location } from 'expo'
 
 import { CreatePost } from './CreatePost'
 // import { createFeed } from '../../../../services/backendClient'
@@ -15,10 +15,11 @@ class CreatepostContainer extends React.Component {
 		super(props)
 
 		this.state = {
-
+			location: null,
+			errorMessage: null,
 			postText: "",
 			postType: null,
-			userID: "iaIpVuopiZdrzcgXSuKpT8W22eU2",
+			userID: "",
 			postMedia: {
 				url:"",
 				type:""
@@ -27,11 +28,12 @@ class CreatepostContainer extends React.Component {
 	}
 
 	async componentDidMount() {
-		if(!this.prop.authenticated) {
-			this.props.navigation.navigate('login')
-		}
-    await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    await Permissions.askAsync(Permissions.CAMERA);
+		// if(!this.prop.authenticated) {
+		// 	this.props.navigation.navigate('login')
+		// }
+    await Permissions.askAsync(Permissions.CAMERA_ROLL)
+		await Permissions.askAsync(Permissions.CAMERA)
+		this.getLocationAsync()
   }
 
 	componentDidUpdate() {
@@ -48,7 +50,7 @@ class CreatepostContainer extends React.Component {
 			feed.createdAt = Date.now()
 			feed.postText  = this.state.postText
 			feed.postMedia.type = 'text'
-			feed.userID	= this.state.userID
+			feed.userID	= this.props.currentUser.id
 
 			this.props.createFeed(feed)
 		}
@@ -57,14 +59,13 @@ class CreatepostContainer extends React.Component {
 			.then(medaUrl => {
 
 				const feed = FeedModel
-
+				feed.location	= this.state.location
 				feed.createdAt = Date.now()
 				feed.postText  = this.state.postText
 				feed.postMedia.type = this.state.postMedia.type
 				feed.postMedia.url	= medaUrl
 				feed.userObj.userID	= this.props.currentUser.id
-				feed.userObj.image	= this.props.currentUser.profileImage
-				feed.userObj.displayName = this.props.currentUser.name
+				feed.userObj.displayName = this.props.currentUser.displayName
 
 				this.props.createFeed(feed)
 					
@@ -74,10 +75,22 @@ class CreatepostContainer extends React.Component {
 
 	onTextChange = (text) => this.setState({postText:text})
 
+	getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied',
+      })
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    this.setState({ location });
+  }
+
 	pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
 			allowsEditing: true,
-			aspect: [4, 3]
+			// aspect: [4, 3]
     })
 
     if (!result.cancelled) {
@@ -98,7 +111,7 @@ class CreatepostContainer extends React.Component {
 
 	render() {
 		const { postText, postMedia } = this.state
-
+		console.log(this.state)
 		return <CreatePost
 							postMedia={postMedia}
 							disabled={postText !== '' || postMedia.url !== ''?false:true}

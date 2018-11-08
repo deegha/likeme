@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
     },
     postData: {
         display: 'flex',
-        flex: 2,
         margin:0,
         padding:0,
         width: '100%',
@@ -18,7 +17,6 @@ export const styles = StyleSheet.create({
     },
     postOptions: {
         display: 'flex',
-        flex: 1,
     },
     inputFeild: {
         fontSize: 50
@@ -30,5 +28,12 @@ export const styles = StyleSheet.create({
     },
     postImage: {
         width: '100%'
+    },
+    option: {
+        margin: 10
+    },
+    optionText: {
+        fontSize: 15,
+        fontWeight: '600'
     }
 })

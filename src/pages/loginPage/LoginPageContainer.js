@@ -20,23 +20,24 @@ class LoginPageContainer extends React.Component {
 			password: "",
 			validEmail: "",
 			validPass:"",
-			formError: ""
+			formError: "",
+			loading: false
 		}
 	} 
-
 	static navigationOptions = {
-		header: null 
-	}
+    headerStyle: {
+      backgroundColor: '#000000',
+    },
+    headerTintColor: '#fff'
+  }
 
-	onChangeEmail = (text) =>  { 
-		text === "" ? this.setFormError(EMAIL_NOT_EMPTY): this.setFormError("")
-		this.setState({email: text})
-	}
+	navigateRegister = ()  => {
+		this.props.navigation.navigate('register')
+	}			
 
-	onChangePassword = (text) =>  { 
-		text === "" ? this.setFormError(PASS_NOT_EMPTY): this.setFormError("")
-		this.setState({password: text})
-	}
+	onChange = (feild, value) => this.setState(
+    {[feild]: value, setFormError: ""}
+  )
 
 	setFormError = (message) => this.setState({formError : message})
 
@@ -62,7 +63,6 @@ class LoginPageContainer extends React.Component {
 							user
 						)
 					}
-
 					this.redirect()
 				})
 				.catch(err => console.log(err))
@@ -80,7 +80,9 @@ class LoginPageContainer extends React.Component {
 	}
 
 	onSubmit = ()  => {
+		this.setState({loading: true})
 		const { email, password} = this.state
+
 		if(email === '' || password === '') {
 			this.setFormError(EMAIL_PASS_EMPTY)
 			return
@@ -95,9 +97,14 @@ class LoginPageContainer extends React.Component {
 				}
 			})
 			.then(user => {
-				user !== undefined && this.setFormError("")
+				console.log(user)
+				if(user !== undefined) {
+					this.setFormError("")
+					this.redirect()
+				} 
+
+				this.setState({loading: false})
 				
-				this.redirect()
 			})
 			.catch(err => {
 
@@ -107,15 +114,14 @@ class LoginPageContainer extends React.Component {
 	}
 
   render() { 
-		const { userName,  password, validEmail, validPass, formError} = this.state
+		const { formError } = this.state
 		return <LoginPageView 
+							loading={this.state.loading}
+							navigateRegister={this.navigateRegister}
 							contiueWithFacebook={this.contiueWithFacebook}
-							onChangeEmail={this.onChangeEmail} 
-							onChangePassword={this.onChangePassword}
+							onChange={this.onChange}
 							onSubmit={this.onSubmit}
-							userName={userName} 
-							formError={formError}
-							password={password}/>
+							formError={formError}/>
 	}
 }
 

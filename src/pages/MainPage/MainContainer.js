@@ -16,17 +16,8 @@ import { MainView } from './MainView'
 
 class MainContainer extends React.Component {
 
-	static navigationOptions = ({navigation}) => {
-		const params = navigation.state.params || {}
-
-		return ({
-			title: 'Like me',
-			headerRight: (
-				<TouchableOpacity onPress={params.logOut}>
-					<Text style={{marginRight:20}} >logout</Text>
-				</TouchableOpacity>
-			)
-		})
+	static navigationOptions = {
+		header: null 
 	}
 
 	constructor(props) {
@@ -37,14 +28,23 @@ class MainContainer extends React.Component {
 	}
 
 	componentWillMount() {
-    this.props.navigation.setParams({ logOut: this.logOut });
-  }
+    this.props.navigation.setParams({ logOut: this.logOut,auth: this.props.auth.authenticated })
+	}
+	
+	componentWillUpdate(preProps) {
+		if(this.props.auth.authenticated !== preProps.auth.authenticated) {
+			console.log(preProps.auth, this.props.auth, "dsfds")
+			this.props.navigation.setParams({auth: this.props.auth.authenticated })
+		}
+	}
 
 	componentDidMount() {
 		this.props.getFeeds()
 	}
 
-
+	leftBtn = () => {
+		
+	}
 
 	logOut = () => Fire.auth().signOut()
 
@@ -66,9 +66,9 @@ class MainContainer extends React.Component {
 	
 	setModalVisibleAfterPost = () => this.setState({showModal: false})
 
-	makeAction = (action, postId) => () => {
+	navigateLogin = () => this.props.navigation.navigate('login')
 
-	}
+	makeAction = () => {}
 	
 	render() {
 			const {feeds, loading, auth} = this.props
@@ -76,6 +76,9 @@ class MainContainer extends React.Component {
 			<View style={styles.container}>
 				{feeds[0].id === null ? <View><Text>loading</Text></View>:
 				<MainView 
+					auth={auth}
+					navigateLogin={this.navigateLogin}
+					logOut={this.logOut}
 					creating={this.props.creating}
 					createPost={this.createPost}
 					makeAction={this.makeAction}

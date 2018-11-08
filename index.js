@@ -4,28 +4,27 @@ import  { connect } from 'react-redux'
 import Fire from './src/services/firebase'
 import { authenticate, logout } from './src/actions/authActions'
 import { ToastAndroid } from 'react-native'
+import { getUserById } from './src/services/backendClient'
 
 class Index extends React.Component {
 
   componentDidMount() {
 		Fire.auth().onAuthStateChanged(userData => {
 			if(userData !== null) { 
-        
-        const authUser = {
-					id: userData.uid,
-					name : userData.displayName,
-          email: userData.email, 
-          profileImage: userData.photoURL
-        }
-        
-				this.props.authenticate(authUser)
-			
-				ToastAndroid.showWithGravity(
-					'login succes',
-					ToastAndroid.SHORT,
-					ToastAndroid.CENTER
-				)
-				
+				getUserById(userData.uid)
+					.then(data => {
+
+						
+						console.log(data.val()[userData.uid], "data")
+						
+						this.props.authenticate(data.val()[userData.uid])
+					
+						ToastAndroid.showWithGravity(
+							'login succes',
+							ToastAndroid.SHORT,
+							ToastAndroid.CENTER
+						)
+					})
       }else {
 				this.props.logoutUser()
 				ToastAndroid.showWithGravity(

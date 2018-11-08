@@ -5,7 +5,7 @@ import { TextFeild, RoundBtn } from '../../components'
 import { styles } from './styles' 
 import {primaryColor, thirdColor} from '../../components/sharedStyles'
 
-export const LoginPageView = ({onChangeEmail, userName, password, onChangePassword, onSubmit, formError, contiueWithFacebook}) => (
+export const LoginPageView = ({loading , onSubmit, formError, contiueWithFacebook, navigateRegister, onChange}) => (
 	<View style={styles.container}>
 	
 		<View style={styles.loginTitileContainer}>
@@ -21,24 +21,20 @@ export const LoginPageView = ({onChangeEmail, userName, password, onChangePasswo
 		</View>
 		<View style={styles.innerContainer}>
 			<TextFeild 
-				autoCapitalize="none"
-				keyboardType='email-address' 
-				returnKeyType="next"
-				autoCorrect={false}
-				onChange={onChangeEmail} 
+				onChange={onChange} 
 				feild="email"  
+				type="email"
 				placeholder="Email" />
 		</View>
 		<View style={styles.innerContainer}>
 			<TextFeild 
-				returnKeyType="go" 
-				onChange={onChangePassword}
+				type="password"
+				onChange={onChange}
 				feild="password" 
-				placeholder="Password" 
-				secureTextEntry/>
+				placeholder="Password"/>
 		</View>
 		<View style={styles.btnContainer}>
-			<RoundBtn onPress={ onSubmit} color={'#00bcd4'}>
+			<RoundBtn onPress={ onSubmit} color={'#000000'}>
 				Login
 			</RoundBtn>
 		</View>
@@ -52,12 +48,12 @@ export const LoginPageView = ({onChangeEmail, userName, password, onChangePasswo
 		
 		</View>
 		<View style={styles.btnContainer}>
-			<RoundBtn onPress={() => console.log("Register new account")} color={'#e74c3c'}>
+			<RoundBtn onPress={navigateRegister} color={'#00bcd4'}>
 				Register new account
 			</RoundBtn>
 		</View>
 		<View style={styles.btnContainer} >
-			<RoundBtn color={'#3B5998'} onPress={contiueWithFacebook}>
+			<RoundBtn loading={loading} color={'#3B5998'} onPress={contiueWithFacebook}>
 			Continue with facebook
 			</RoundBtn>
 		</View>

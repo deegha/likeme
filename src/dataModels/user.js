@@ -2,6 +2,7 @@
     id: "",
     displayName : "",
     email: "",
+    type: "consumer",
     image: "", 
     friends: false, //user ids of the friends
     numPosts: 0, // number of posts the user has posted

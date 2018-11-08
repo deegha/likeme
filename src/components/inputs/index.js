@@ -1,5 +1,6 @@
-import { TextFeild } from './TextInput'
+import { TextFeild, RoundBtn } from './TextInput'
 
 export {
-    TextFeild
+    TextFeild,
+    RoundBtn
 }

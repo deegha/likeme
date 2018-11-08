@@ -20,6 +20,6 @@ export const TextFeild = ({
 						multiline={multiline}
 						placeholder={placeholder}
 						onChangeText={onChange}
-						underlineColorAndroid= {underlineColorAndroid?underlineColorAndroid:"#00bcd4"}
+						underlineColorAndroid= {underlineColorAndroid?underlineColorAndroid:"#969FAA"}
 						value={value} />
 					}

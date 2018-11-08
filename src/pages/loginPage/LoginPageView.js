@@ -1,16 +1,16 @@
 import React from "react"
 import { View, Button, ActivityIndicator, Text } from 'react-native'
 
-import { TextFeild } from '../../components/inputs'
+import { TextFeild, RoundBtn } from '../../components'
 import { styles } from './styles' 
 import {primaryColor, thirdColor} from '../../components/sharedStyles'
 
-export const LoginPageView = ({onChangeEmail, userName, password, onChangePassword, onSubmit, formError}) => (
+export const LoginPageView = ({onChangeEmail, userName, password, onChangePassword, onSubmit, formError, contiueWithFacebook}) => (
 	<View style={styles.container}>
 	
 		<View style={styles.loginTitileContainer}>
 			<Text style={styles.loginTitile}>
-				Login to continue 
+				Like  me
 			</Text>
 		</View>
 		<View style={styles.loginTitileContainer}>
@@ -38,11 +38,9 @@ export const LoginPageView = ({onChangeEmail, userName, password, onChangePasswo
 				secureTextEntry/>
 		</View>
 		<View style={styles.btnContainer}>
-			<Button
-					color={primaryColor}
-          title="Login"
-          onPress={onSubmit}
-        />
+			<RoundBtn onPress={ onSubmit} color={'#00bcd4'}>
+				Login
+			</RoundBtn>
 		</View>
 		<View style={styles.deviderContainer}>
 			
@@ -54,17 +52,14 @@ export const LoginPageView = ({onChangeEmail, userName, password, onChangePasswo
 		
 		</View>
 		<View style={styles.btnContainer}>
-			<Button
-					color={thirdColor}
-          title="Register new account"
-          onPress={() => console.log("login with fb")}
-        />
+			<RoundBtn onPress={() => console.log("Register new account")} color={'#e74c3c'}>
+				Register new account
+			</RoundBtn>
 		</View>
-		<View style={styles.btnContainer}>
-			<Button
-          title="Continue with facebook"
-          onPress={() => console.log("login with fb")}
-        />
+		<View style={styles.btnContainer} >
+			<RoundBtn color={'#3B5998'} onPress={contiueWithFacebook}>
+			Continue with facebook
+			</RoundBtn>
 		</View>
 		
 	</View>

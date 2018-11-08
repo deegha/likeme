@@ -9,10 +9,10 @@ export const RootStack = createStackNavigator(
 	{
 		Home: {
 			screen: MainContainer,
-			title: 'Home',
-			// navigationOptions:{
-			// 	header: null 
-			// }
+			title: 'Like me',
+			navigationOptions:{
+				header: null 
+			}
 		},
 		login: {
 			screen: LoginPageContainer,

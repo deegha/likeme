@@ -1,12 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { ToastAndroid } from 'react-native'
+import Expo from 'expo'
+import * as firebase from 'firebase'
 
 import { LoginPageView } from './LoginPageView'
 import Fire from '../../services/firebase'
 import { USER_NOT_FOUND, PASS_NOT_EMPTY, EMAIL_NOT_EMPTY, EMAIL_PASS_EMPTY } from '../../services/errorConstants'
 import { authenticate } from '../../actions/authActions'
-
+import { getUserById, createUser } from '../../services/backendClient'
+import { UserModel } from '../../dataModels/user'
 class LoginPageContainer extends React.Component {
 
 	constructor(props) {
@@ -21,6 +24,10 @@ class LoginPageContainer extends React.Component {
 		}
 	} 
 
+	static navigationOptions = {
+		header: null 
+	}
+
 	onChangeEmail = (text) =>  { 
 		text === "" ? this.setFormError(EMAIL_NOT_EMPTY): this.setFormError("")
 		this.setState({email: text})
@@ -32,6 +39,45 @@ class LoginPageContainer extends React.Component {
 	}
 
 	setFormError = (message) => this.setState({formError : message})
+
+	contiueWithFacebook = async event => {
+		const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('282141632273767', 
+		{permissions : ['public_profile']})
+
+		if(type == 'success') {
+			const credential =  firebase.auth.FacebookAuthProvider.credential(token)
+
+			Fire.auth().signInAndRetrieveDataWithCredential(credential)
+				.then(res => {
+					if(res.additionalUserInfo.isNewUser) {
+						const user = UserModel
+
+						user.id = res.user.uid
+						user.displayName = res.user.displayName
+						user.email = res.user.email
+						user.image = res.user.photoURL
+
+						createUser(
+							res.user.uid,
+							user
+						)
+					}
+
+					this.redirect()
+				})
+				.catch(err => console.log(err))
+		}
+	}
+
+
+	redirect = () => {
+		const { waitingAction, params } = this.props.waitingAction
+				
+		if(waitingAction !== "")
+			this.props.navigation.navigate(waitingAction, params)
+		
+		this.props.navigation.navigate('Home')
+	}
 
 	onSubmit = ()  => {
 		const { email, password} = this.state
@@ -50,26 +96,8 @@ class LoginPageContainer extends React.Component {
 			})
 			.then(user => {
 				user !== undefined && this.setFormError("")
-
-				const authUser = {
-					id: user.user.uid,
-					name : user.user.providerData[0].displayName,
-					email: user.user.providerData[0].email, 
-				}
-				this.props.authenticate(authUser)
-			
-				ToastAndroid.showWithGravity(
-					'login succes',
-					ToastAndroid.SHORT,
-					ToastAndroid.CENTER
-				)
 				
-				const { waitingAction, params } = this.props.waitingAction
-				
-				if(waitingAction !== "")
-					this.props.navigation.navigate(waitingAction, params)
-				
-				this.props.navigation.navigate('Home')
+				this.redirect()
 			})
 			.catch(err => {
 
@@ -78,9 +106,10 @@ class LoginPageContainer extends React.Component {
 			})
 	}
 
-  render() { console.log(this.props.waitingAction, "dsd")
+  render() { 
 		const { userName,  password, validEmail, validPass, formError} = this.state
 		return <LoginPageView 
+							contiueWithFacebook={this.contiueWithFacebook}
 							onChangeEmail={this.onChangeEmail} 
 							onChangePassword={this.onChangePassword}
 							onSubmit={this.onSubmit}

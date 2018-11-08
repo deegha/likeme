@@ -6,14 +6,13 @@ export const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: shared.secondaryColor,
     padding: 20,
-    marginBottom:5
+    marginBottom:3
   },
   imageArea: {
     display:'flex',
     borderRadius: 20,
     overflow: 'hidden',
     marginBottom: 25,
-    marginTop: 15,  
   },
   contentArea: {
     display:'flex',
@@ -21,18 +20,20 @@ export const styles = StyleSheet.create({
     justifyContent:'flex-start',
     alignItems: 'flex-start',
     
-    padding:20
+    padding:10
   },
   userImageContainer: {
-    flex: 1
+    flex: 1,
+    justifyContent:'flex-start'
   },
   userImage: {
     width: 40,
     height: 40,
     borderRadius:20,
+    marginTop:4
   },
   postContent: {
-    flex: 5,
+    flex: 6,
     alignItems: 'flex-start',
     paddingRight: 20
   },

@@ -15,7 +15,8 @@ const initialState = {
       }
     }
   ],
-  loading: false
+  loading: false,
+  creating: false
 }
 
 export const feedsReducer = (state=initialState, action) => {
@@ -31,20 +32,63 @@ export const feedsReducer = (state=initialState, action) => {
         loading: true
       } 
     case Actions.FETCH_FEEDS_REQUEST_SUCCESS:
+      const unOrderdFeeds = [
+        ...Object.keys(action.feeds).map(feed => ({
+          id: feed,
+          createdAt: action.feeds[feed].createdAt,
+          postText: action.feeds[feed].postText,
+          postMedia: {
+            type: action.feeds[feed].postMedia.type,
+            url: action.feeds[feed].postMedia.url
+          },
+          userObj: {
+            id: action.feeds[feed].userObj.userID,
+            name: action.feeds[feed].userObj.displayName,
+            image: action.feeds[feed].userObj.image
+          },
+          voteUp: action.feeds[feed].voteup
+        }))
+      ]
+
+      const sortedIndex = [
+        ...Object.keys(unOrderdFeeds).sort((a, b) => {
+          return  unOrderdFeeds[b].createdAt - unOrderdFeeds[a].createdAt 
+        } )
+      ]
+
       return {
         ...state,
         loading: false,
-        feeds: [
-          ...Object.keys(action.feeds).map(feed => ({
-            id: feed,
-            postText: action.feeds[feed].postText,
-            postMedia: {
-              type: action.feeds[feed].postMedia.type,
-              url: action.feeds[feed].postMedia.url
-            }
-          }))
-        ]
+        feeds: [...sortedIndex.map(index => unOrderdFeeds[index])]
       }
+    case Actions.CREATE_FEED_REQUEST: {
+      return {
+        ...state,
+        creating: true
+      }
+    }
+    case Actions.CREATE_FEED_SUCESS: {
+      return {
+        ...state,
+        creating: false
+      }
+    }
+    case Actions.CREATE_FEDD_FAIL: {
+      return {
+        ...state,
+        creating: false
+      }
+    }
+    case Actions.VOTE_UP: {
+
+      const feed = state.feeds.filter( feed => feed.id === action.feedId )
+      
+      feed.voteUp = feed.voteUp === 0 ? {0:actio.userid}: { ...feed.voteUp, ...action.userid }
+      console.log(feed, "vote")
+      return {
+        ...state
+      }
+    }
     default : 
       return state
   }

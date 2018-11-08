@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { View, Text, TouchableHighlight, Button } from 'react-native'
+import { View, Text, TouchableOpacity, Button } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 
 import { ModalComponent } from '../../components'
-import { fetchFeeds } from '../../actions/feedsActions'
+import { fetchFeeds, voteUpAction } from '../../actions/feedsActions'
 import { setWatingAction } from '../../actions/waitingActions'
 import CreatepostContainer from './components/createPost/CreatepostContainer'
+import Fire from '../../services/firebase'
 
 import * as BTN_ACTIONS from '../../components/feed/actionsConstants'
 
@@ -15,10 +16,18 @@ import { MainView } from './MainView'
 
 class MainContainer extends React.Component {
 
-	static navigationOptions = {
-    title: 'Home',
-	}
+	static navigationOptions = ({navigation}) => {
+		const params = navigation.state.params || {}
 
+		return ({
+			title: 'Like me',
+			headerRight: (
+				<TouchableOpacity onPress={params.logOut}>
+					<Text style={{marginRight:20}} >logout</Text>
+				</TouchableOpacity>
+			)
+		})
+	}
 
 	constructor(props) {
 		super(props)
@@ -27,11 +36,29 @@ class MainContainer extends React.Component {
 		}
 	}
 
+	componentWillMount() {
+    this.props.navigation.setParams({ logOut: this.logOut });
+  }
+
 	componentDidMount() {
 		this.props.getFeeds()
 	}
 
-	createPost = () => this.setState({showModal: true})
+
+
+	logOut = () => Fire.auth().signOut()
+
+	createPost = () => {
+		if(!this.props.auth.authenticated) {
+			this.props.setWatingAction('Home', {
+				id: null,
+				action: BTN_ACTIONS.CREATE_POST
+			})
+			this.props.navigation.navigate('login')
+		}else {
+			this.setState({showModal: true})
+		}
+	} 
 
 	setModalVisible = (visible) => () => { 
     this.setState({showModal: visible})
@@ -40,40 +67,16 @@ class MainContainer extends React.Component {
 	setModalVisibleAfterPost = () => this.setState({showModal: false})
 
 	makeAction = (action, postId) => () => {
-		
-		if(!this.props.auth.authenticated) {
-
-			switch(action) {
-				case BTN_ACTIONS.VOTE_UP : 
-					this.props.setWatingAction('Post', {
-						id: postId,
-						action: BTN_ACTIONS.VOTE_UP
-					})
-				case BTN_ACTIONS.VOTE_DOWN : 
-					this.props.setWatingAction('Post', {
-						id: postId,
-						action: BTN_ACTIONS.VOTE_DOWN
-					})
-				case BTN_ACTIONS.CLICK_ACTION : 
-					this.props.setWatingAction('Post', {
-						id: postId,
-						action: BTN_ACTIONS.CLICK_ACTION
-					})
-			}
-
-			this.props.setWatingAction(action)
-			this.props.navigation.navigate('login')
-		}
 
 	}
 	
 	render() {
 			const {feeds, loading, auth} = this.props
-
 			return (
 			<View style={styles.container}>
 				{feeds[0].id === null ? <View><Text>loading</Text></View>:
 				<MainView 
+					creating={this.props.creating}
 					createPost={this.createPost}
 					makeAction={this.makeAction}
 					feedsItem={feeds} 
@@ -90,15 +93,18 @@ class MainContainer extends React.Component {
 	}
 }
 
-const mapStateToProps = ({feeds, auth}) => ({
+const mapStateToProps = ({feeds, auth, waitingAction}) => ({
 	feeds: feeds.feeds,
 	loading: feeds.loading,
-	auth
+	creating: feeds.creating,
+	auth,
+	waitingAction: waitingAction.waitingAction
 })
 
 const mapDispatchToProps = (dispatch) => ({
 	getFeeds : () => dispatch(fetchFeeds()),
-	setWatingAction: (action, params) => dispatch(setWatingAction(action, params))
+	setWatingAction: (action, params) => dispatch(setWatingAction(action, params)),
+	voteUp: (feedId) => dispatch(voteUpAction(feedId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps) (MainContainer)

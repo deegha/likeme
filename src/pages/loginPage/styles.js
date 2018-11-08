@@ -4,7 +4,7 @@ import * as shared from '../../components/sharedStyles'
 export const styles = StyleSheet.create({
     container: {
         display: 'flex',
-
+        backgroundColor: shared.secondaryColor,
         alignItems: 'center',
         height:'100%',
         width: '100%',
@@ -14,13 +14,14 @@ export const styles = StyleSheet.create({
         display: 'flex',
         width: '80%',
         justifyContent: 'center',
-        height:90,
+        height:60,
     },
     loginTitile: {
-        color: shared.primaryColor,
-        marginBottom:20,
+        color: shared.secondary_text,
+        marginBottom:50,
         marginTop: 50,
-        fontSize: 20
+        fontSize: 34,
+        fontWeight: '100'
     },
     devider: {
         borderTopWidth: 1,
@@ -45,7 +46,7 @@ export const styles = StyleSheet.create({
         display: 'flex',
         width: '80%',
         justifyContent: 'center',
-        height:50,
+        height:60,
     },
     formError: {
         color: shared.thirdColor

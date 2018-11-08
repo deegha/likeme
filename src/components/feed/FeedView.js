@@ -16,10 +16,10 @@ export const FeedView = ({feed, makeAction}) => {
 
       <View style={styles.contentArea}>
         <View style={styles.userImageContainer}>
-          <Image style={styles.userImage} source={propic} />
+          <Image style={styles.userImage} source={{uri: feed.userObj.image}} />
         </View>
         <View style={styles.postContent}>
-          <Text style={styles.userName}>Deegha Galkissa</Text>
+          <Text style={styles.userName}>{feed.userObj.name}</Text>
           <Text style={styles.postText}>
             {feed.postText}
           </Text>
@@ -56,9 +56,7 @@ export const FeedView = ({feed, makeAction}) => {
             <Ionicons name="md-share" size={20} color="black" />
           </RoundButton>
         </View>
-        
       </View>
-
     </View>
   )
 }

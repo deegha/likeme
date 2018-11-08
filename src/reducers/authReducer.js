@@ -6,9 +6,7 @@
 import * as Actions from "../actions/authActions"
 
 const initial_state = {
-		userId: null,
-		userName : null,
-		email: null, 
+		user: {},
 		authenticated : false,
 		loading: false
 }
@@ -20,11 +18,9 @@ export const authenticationReducer = (state = initial_state, action) => {
 				...state,
 				loading:true
 			}
-		case Actions.AUTHENTICATE :  console.log(action, "action")
+		case Actions.AUTHENTICATE : 
 			return {
-				userId: action.user.id,
-				userName: action.user.name,
-				email: action.user.email,
+				user: action.user,
 				authenticated : true,
 				loading: false
 			}

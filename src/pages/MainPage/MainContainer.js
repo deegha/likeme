@@ -14,11 +14,9 @@ import * as BTN_ACTIONS from '../../components/feed/actionsConstants'
 import { styles } from './styles'
 import { MainView } from './MainView'
 
-
 const HEADER_MAX_HEIGHT = 100
 const HEADER_MIN_HEIGHT = 40
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT
-
 
 class MainContainer extends React.Component {
 
@@ -40,7 +38,6 @@ class MainContainer extends React.Component {
 	
 	componentWillUpdate(preProps) {
 		if(this.props.auth.authenticated !== preProps.auth.authenticated) {
-			console.log(preProps.auth, this.props.auth, "dsfds")
 			this.props.navigation.setParams({auth: this.props.auth.authenticated })
 		}
 	}
@@ -110,10 +107,17 @@ class MainContainer extends React.Component {
 				extrapolate: 'clamp',
 			})
 
+			const actionFontWeight =  scrollY.interpolate({
+				inputRange: [0,HEADER_SCROLL_DISTANCE],
+				outputRange: [800, 100],
+				extrapolate: 'clamp',
+			})
+
 			return (
 			<View style={styles.container}>
 				{feeds[0].id === null ? <View><Text>loading</Text></View>:
 				<MainView 
+					actionFontWeight={actionFontWeight}
 					titleSize={titleSize}
 					zIndex={zIndex}
 					headerTranslate={headerTranslate}

@@ -11,7 +11,7 @@ import { FloatingBtn } from '../../components/'
 import { Ionicons } from '@expo/vector-icons'
 import { CREATE_POST } from '../../components/feed/actionsConstants'
 
-export const MainView = ({auth, feedsItem, loading, fetchFeeds,makeAction, createPost, creating, logOut, navigateLogin, scrollY, headerTranslate, titleTranslate ,zIndex,titleSize}) => {
+export const MainView = ({auth, feedsItem, loading, fetchFeeds,makeAction, createPost, creating, logOut, navigateLogin, scrollY, headerTranslate, titleTranslate ,zIndex,titleSize, actionFontWeight}) => {
 
   return (
     <View style={{flex:1}}>
@@ -39,7 +39,7 @@ export const MainView = ({auth, feedsItem, loading, fetchFeeds,makeAction, creat
           <TouchableOpacity 
             style={{transform: [{ translateY: titleTranslate }]}}
             onPress={auth.authenticated?logOut:navigateLogin}>
-            <Text style={styles.rightBtn}>{auth.authenticated?"Logout":"Login"}</Text>
+            <Text style={[styles.rightBtn]}>{auth.authenticated?"Logout":"Login"}</Text>
           </TouchableOpacity>
       </Animated.View >
 

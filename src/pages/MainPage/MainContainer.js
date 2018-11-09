@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { View, Text, TouchableOpacity, Button } from 'react-native'
+import { View, Text, TouchableOpacity, Button, Animated, Platform } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 
 import { ModalComponent } from '../../components'
@@ -14,6 +14,12 @@ import * as BTN_ACTIONS from '../../components/feed/actionsConstants'
 import { styles } from './styles'
 import { MainView } from './MainView'
 
+
+const HEADER_MAX_HEIGHT = 100
+const HEADER_MIN_HEIGHT = 40
+const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT
+
+
 class MainContainer extends React.Component {
 
 	static navigationOptions = {
@@ -23,7 +29,8 @@ class MainContainer extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			showModal: false
+			showModal: false,
+			scrollY: new Animated.Value(0)
 		}
 	}
 
@@ -72,10 +79,46 @@ class MainContainer extends React.Component {
 	
 	render() {
 			const {feeds, loading, auth} = this.props
+
+			const scrollY = Animated.add(
+				this.state.scrollY,
+				Platform.OS === 'ios' ? HEADER_MAX_HEIGHT : 0,
+			)
+	
+			const headerTranslate = scrollY.interpolate({
+				inputRange: [0, HEADER_SCROLL_DISTANCE],
+				outputRange: [0, -60],
+				extrapolate: 'clamp',
+			})
+	
+			const titleTranslate = scrollY.interpolate({
+				inputRange: [0, HEADER_SCROLL_DISTANCE],
+				outputRange: [0, 40],
+				extrapolate: 'clamp',
+			})
+
+			const titleSize =  scrollY.interpolate({
+				inputRange: [0, HEADER_SCROLL_DISTANCE/2 , HEADER_SCROLL_DISTANCE/1.2,HEADER_SCROLL_DISTANCE],
+				outputRange: [40, 38, 35 ,18],
+				extrapolate: 'clamp',
+			})
+
+
+			const zIndex =  scrollY.interpolate({
+				inputRange: [0, HEADER_SCROLL_DISTANCE/2, HEADER_SCROLL_DISTANCE],
+				outputRange: [0, 0, 1],
+				extrapolate: 'clamp',
+			})
+
 			return (
 			<View style={styles.container}>
 				{feeds[0].id === null ? <View><Text>loading</Text></View>:
 				<MainView 
+					titleSize={titleSize}
+					zIndex={zIndex}
+					headerTranslate={headerTranslate}
+					titleTranslate={titleTranslate}
+					scrollY={this.state.scrollY}
 					auth={auth}
 					navigateLogin={this.navigateLogin}
 					logOut={this.logOut}

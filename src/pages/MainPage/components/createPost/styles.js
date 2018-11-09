@@ -15,16 +15,20 @@ export const styles = StyleSheet.create({
         width: '100%',
         alignItems:'center'
     },
-    postOptions: {
-        display: 'flex',
-    },
+ 
     inputFeild: {
-        fontSize: 50
+        fontSize: 20,
+        padding: 5,
+        marginBottom: 10
     },
-    postOptionBtn:{
+    postOptions:{
         display:'flex',
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottomWidth:0.5,
+        borderBottomColor: '#d6d7da',    
+        marginBottom: 30
     },
     postImage: {
         width: '100%'
@@ -35,5 +39,12 @@ export const styles = StyleSheet.create({
     optionText: {
         fontSize: 15,
         fontWeight: '600'
+    },
+    form: {
+        padding: 5
+    },
+    postOptionsSection: {
+        flexDirection: 'row',
+        justifyContent: 'center'
     }
 })

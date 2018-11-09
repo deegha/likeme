@@ -17,7 +17,8 @@ class CreatepostContainer extends React.Component {
 		this.state = {
 			location: null,
 			errorMessage: null,
-			postText: "",
+			title: "",
+			info: "",
 			postType: null,
 			userID: "",
 			postMedia: {
@@ -47,8 +48,10 @@ class CreatepostContainer extends React.Component {
 		this.props.createFeedRequest()
 		if(this.state.postMedia.url === "") {
 			const feed = FeedModel
+			feed.location	= this.state.location
 			feed.createdAt = Date.now()
-			feed.postText  = this.state.postText
+			feed.title = this.state.title
+			feed.postText  = this.state.info
 			feed.postMedia.type = 'text'
 			feed.userID	= this.props.currentUser.id
 
@@ -61,7 +64,8 @@ class CreatepostContainer extends React.Component {
 				const feed = FeedModel
 				feed.location	= this.state.location
 				feed.createdAt = Date.now()
-				feed.postText  = this.state.postText
+				feed.title = this.state.title
+				feed.postText  = this.state.info
 				feed.postMedia.type = this.state.postMedia.type
 				feed.postMedia.url	= medaUrl
 				feed.userObj.userID	= this.props.currentUser.id
@@ -73,8 +77,10 @@ class CreatepostContainer extends React.Component {
 			.catch(err => console.log(err))
 	}
 
-	onTextChange = (text) => this.setState({postText:text})
-
+	onTextChange = (value) => this.setState(
+    {info : value}
+	)
+	
 	getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
@@ -110,11 +116,10 @@ class CreatepostContainer extends React.Component {
   }
 
 	render() {
-		const { postText, postMedia } = this.state
-		console.log(this.state)
+		const { postText, postMedia, title } = this.state
 		return <CreatePost
 							postMedia={postMedia}
-							disabled={postText !== '' || postMedia.url !== ''?false:true}
+							disabled={false}
 							postText={postText} 
 							pickImage={this.pickImage}
 							takePhoto={this.takePhoto}

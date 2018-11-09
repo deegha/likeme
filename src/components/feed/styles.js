@@ -48,11 +48,15 @@ export const styles = StyleSheet.create({
   },
   actionArea: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    justifyContent: 'flex-start'
   },
   statText: {
     fontSize: 11,
     textAlign: 'center',
     color: shared.secondary_text
+  },
+  action: {
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 })

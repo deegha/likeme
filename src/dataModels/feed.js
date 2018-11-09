@@ -1,5 +1,6 @@
 export const FeedModel = {
   createdAt : 0,
+  title: '',
   postText: '',
   postMedia: {
     type: "",
@@ -17,5 +18,5 @@ export const FeedModel = {
     userID: 0,
     image: '',
     displayName: ''
-  }
+  },
 }

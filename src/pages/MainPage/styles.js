@@ -7,12 +7,17 @@ export const styles = StyleSheet.create({
     height: '100%'
   },
   header: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
     width: '100%',
     padding: 20,
-    marginTop: 50,
+    height: 150,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: shared.backGround,
   },
   title: {
     fontWeight: 'bold',
@@ -20,7 +25,8 @@ export const styles = StyleSheet.create({
   },
   creatingContainer: {
     marginTop: 22,
-    width: '100%'
+    width: '100%',
+    zIndex:4
   },
   creating: {
     width: '96%',
@@ -33,5 +39,8 @@ export const styles = StyleSheet.create({
   creatingText: {
     fontSize: 18,
     fontWeight: '100'
+  },
+  rightBtn: {
+    fontWeight: '600'
   }
 })

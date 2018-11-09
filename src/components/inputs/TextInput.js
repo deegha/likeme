@@ -29,7 +29,9 @@ export class TextFeild extends React.Component {
 
 
   validate = (text) => {
-    text === ""? this.setError(this.props.feild+' feild is required'): this.setError('')
+    const emessage = this.props.name !==undefined ?this.props.name:this.props.feild
+
+    text === ""? this.setError(emessage+' feild is required'): this.setError('')
     this.setState({value: text})
 
     if(this.props.type === 'email') {

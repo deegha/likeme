@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import { View, Text, Button, ScrollView, RefreshControl, TouchableOpacity  } from 'react-native'
+import { View, Text, Button, ScrollView, RefreshControl, TouchableOpacity, Animated  } from 'react-native'
 
 import { FeedView } from '../../components'
 import { styles } from './styles'
@@ -11,7 +11,7 @@ import { FloatingBtn } from '../../components/'
 import { Ionicons } from '@expo/vector-icons'
 import { CREATE_POST } from '../../components/feed/actionsConstants'
 
-export const MainView = ({auth, feedsItem, loading, fetchFeeds,makeAction, createPost, creating, logOut, navigateLogin}) => {
+export const MainView = ({auth, feedsItem, loading, fetchFeeds,makeAction, createPost, creating, logOut, navigateLogin, scrollY, headerTranslate, titleTranslate ,zIndex,titleSize}) => {
 
   return (
     <View style={{flex:1}}>
@@ -25,8 +25,32 @@ export const MainView = ({auth, feedsItem, loading, fetchFeeds,makeAction, creat
           <Text style={styles.creatingText}>Creating post...</Text>
         </View>
       </View>}
-      <ScrollView 
-        
+
+
+      <Animated.View  style={[styles.header,{
+                      zIndex: zIndex,
+                      backgoundColor: 'red',
+                      transform: [{ translateY: headerTranslate }],
+                    }]}>
+          <Animated.Text style={[styles.title,{
+            fontSize: titleSize,
+            transform: [{ translateY: titleTranslate }]
+          }]}>Black App</Animated.Text>
+          <TouchableOpacity 
+            style={{transform: [{ translateY: titleTranslate }]}}
+            onPress={auth.authenticated?logOut:navigateLogin}>
+            <Text style={styles.rightBtn}>{auth.authenticated?"Logout":"Login"}</Text>
+          </TouchableOpacity>
+      </Animated.View >
+
+
+
+      <Animated.ScrollView  
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false },
+        )}
         refreshControl={
           <RefreshControl
             refreshing={loading}
@@ -34,18 +58,13 @@ export const MainView = ({auth, feedsItem, loading, fetchFeeds,makeAction, creat
           />
         }
         contentContainerStyle={{flexGrow : 1, alignItems : 'center'}}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Black App</Text>
-          <TouchableOpacity onPress={auth.authenticated?logOut:navigateLogin}>
-            <Text>{auth.authenticated?"Logout":"Login"}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{height:60}} ></View>
+       
+        <View style={{height:150}} ></View>
      
         {feedsItem && Object.keys(feedsItem).map( 
           feed => feedsItem[feed].id && <FeedView makeAction={makeAction} key={feedsItem[feed].id} feed={feedsItem[feed]} /> )}
         
-      </ScrollView>
+      </Animated.ScrollView >
       
     </View>
   )

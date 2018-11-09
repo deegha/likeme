@@ -32,13 +32,14 @@ export const FeedView = ({feed, makeAction}) => {
       </View>
 
       <View style={styles.actionArea}>
-        <View>
-          <Text style={styles.statText}>120 up</Text>
+        <View style={styles.action}>
+          
           <RoundButton callBack={makeAction(VOTE_UP, feed.id)}>
             <Ionicons name="ios-thumbs-up" size={20} color="black" />
           </RoundButton>
+          <Text style={styles.statText}>120 up</Text>
         </View>
-        <View>
+        {/* <View>
         <Text style={styles.statText}>14 down</Text>
           <RoundButton callBack={makeAction(VOTE_DOWN, feed.id)}>
             <Ionicons name="ios-thumbs-down" size={20} color="black" />
@@ -49,12 +50,13 @@ export const FeedView = ({feed, makeAction}) => {
           <RoundButton callBack={makeAction(CLICK_ACTION, feed.id)}>
             <Ionicons name="md-chatboxes" size={20} color="black" />
           </RoundButton>
-        </View>
-        <View>
-          <Text style={styles.statText}>120 shares</Text>
+        </View> */}
+        <View style={styles.action}>
+          
           <RoundButton callBack={makeAction(SHARE, feed.id)}>
             <Ionicons name="md-share" size={20} color="black" />
           </RoundButton>
+          <Text style={styles.statText}>120 shares</Text>
         </View>
       </View>
     </View>

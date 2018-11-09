@@ -6,6 +6,7 @@ import { authenticate, logout } from './src/actions/authActions'
 import { ToastAndroid } from 'react-native'
 import { getUserById } from './src/services/backendClient'
 
+console.disableYellowBox = true
 class Index extends React.Component {
 
   componentDidMount() {

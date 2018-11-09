@@ -1,43 +1,41 @@
 import React from 'react'
-import { View, Text , Dimensions, TouchableOpacity } from 'react-native'
+import { View, Text , Dimensions, TouchableOpacity, TextInput } from 'react-native'
 import Image from 'react-native-scalable-image'
 
 import { TextFeild, RoundButton } from '../../../../components/'
 import { styles } from './styles'
 
 export const CreatePost = ({ onTextChange, submitPost, postText, disabled, postMedia, pickImage, takePhoto }) => {
-
+	
 	return (
 		<View style={styles.container}>
 			<View style={styles.postOptions}>
-				<View style={styles.postOptionBtn}>
-					<TouchableOpacity style={styles.option} onPress={takePhoto}>
-						<Text  style={styles.optionText}>camera</Text>
-					</TouchableOpacity>
-					<TouchableOpacity  style={styles.option} disabled={disabled}>
-						<Text style={styles.optionText} onPress={pickImage}>library</Text>
-					</TouchableOpacity>
-					<TouchableOpacity  style={styles.option}>
-						<Text style={styles.optionText} onPress={submitPost}>Share</Text>
-					</TouchableOpacity>
-					{/* <RoundButton callBack={takePhoto}>
-						Camera
-					</RoundButton>
-					<RoundButton callBack={pickImage}>
-						Media
-					</RoundButton>
-					<RoundButton callBack={submitPost} disabled={disabled}>
-						Share
-					</RoundButton> */}
-				</View>
+					<View style={styles.postOptionsSection}>
+						<TouchableOpacity style={styles.option} onPress={takePhoto}>
+							<Text  style={styles.optionText}>camera</Text>
+						</TouchableOpacity>
+						<TouchableOpacity  style={styles.option} >
+							<Text style={styles.optionText} onPress={pickImage}>library</Text>
+						</TouchableOpacity>
+					</View>
+					<View style={styles.postOptionsSection}>
+						<TouchableOpacity  style={styles.option}>
+							<Text style={styles.optionText} onPress={submitPost}>Share</Text>
+						</TouchableOpacity>
+					</View>
+				
 			</View>
-			<View>
-				<TextFeild 
-					placeholder="Title"
+			<View style={styles.form}>
+				<TextInput 
+					autoFocus
+					selectionColor={"#000000"}
+				  onChangeText={onTextChange}
+					style={styles.inputFeild}
+					underlineColorAndroid="#ffffff"
+					multiline={true}
+					placeholder="Tell them about your deal"
 					/>
-				<TextFeild 
-					placeholder="Tell somthing about it..."
-					/>
+	
 			</View>
 			<View style={styles.postData}>
 				

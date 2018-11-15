@@ -9,6 +9,12 @@ import { createFeedAction, createFeedRequest } from '../../../../actions/feedsAc
 
 import { FeedModel } from '../../../../dataModels/feed'
 
+
+
+import * as firebase from 'firebase/app'
+import Fire  from '../../../../services/firebase'
+import * as geofirex from 'geofirex'
+
 class CreatepostContainer extends React.Component {
 
 	constructor(props) {
@@ -44,6 +50,9 @@ class CreatepostContainer extends React.Component {
 	}
 
 	submitPost = () => {
+
+
+
 		this.props.setModalVisible()
 		this.props.createFeedRequest()
 		if(this.state.postMedia.url === "") {
@@ -53,7 +62,9 @@ class CreatepostContainer extends React.Component {
 			feed.title = this.state.title
 			feed.postText  = this.state.info
 			feed.postMedia.type = 'text'
-			feed.userID	= this.props.currentUser.id
+			feed.userObj.image = this.props.currentUser.image
+			feed.userObj	= this.props.currentUser.id
+			feed.userObj.displayName = this.props.currentUser.displayName
 
 			this.props.createFeed(feed)
 		}
@@ -69,6 +80,7 @@ class CreatepostContainer extends React.Component {
 				feed.postMedia.type = this.state.postMedia.type
 				feed.postMedia.url	= medaUrl
 				feed.userObj.userID	= this.props.currentUser.id
+				feed.userObj.image = this.props.currentUser.image
 				feed.userObj.displayName = this.props.currentUser.displayName
 
 				this.props.createFeed(feed)
@@ -134,7 +146,7 @@ const mapStateToProps = ({auth}) => ({
 })
 
 const mapdispatchToProps = (dispatch) => ({
-	createFeed : (data) => dispatch(createFeedAction(data)),
+	createFeed : (data, id) => dispatch(createFeedAction(data, id)),
 	createFeedRequest: () => dispatch(createFeedRequest())
 })
 

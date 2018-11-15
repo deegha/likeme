@@ -60,9 +60,9 @@ export const createFeedFail = () => ({
 	type: CREATE_FEDD_FAIL
 })
 
-export const createFeedAction = (feed) => dispatch => {
+export const createFeedAction = (feed, id) => dispatch => {
 	// dispatch(createFeedReques())
-	createFeed(feed)
+	createFeed(feed, id)
 		.then(res => {
 			getFeeds()
 				.then(feeds => {
@@ -82,5 +82,7 @@ const voteUpState = (feedId, userid) => ({
 
 export const voteUpAction = (feedId) => (dispatch, getState) => {
 	dispatch(voteUpState(feedId, getState().auth.user.id))
+
+	
 }
 

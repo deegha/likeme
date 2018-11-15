@@ -28,12 +28,9 @@ export const MainView = ({auth, feedsItem, loading, fetchFeeds,makeAction, creat
 
 
       <Animated.View  style={[styles.header,{
-                      zIndex: zIndex,
-                      backgoundColor: 'red',
                       transform: [{ translateY: headerTranslate }],
                     }]}>
           <Animated.Text style={[styles.title,{
-            fontSize: titleSize,
             transform: [{ translateY: titleTranslate }]
           }]}>Black App</Animated.Text>
           <TouchableOpacity 
@@ -57,7 +54,7 @@ export const MainView = ({auth, feedsItem, loading, fetchFeeds,makeAction, creat
             onRefresh={fetchFeeds}
           />
         }
-        contentContainerStyle={{flexGrow : 1, alignItems : 'center'}}>
+        contentContainerStyle={{flexGrow : 3, alignItems : 'center'}}>
        
         <View style={{height:150}} ></View>
      

@@ -12,7 +12,14 @@ const initialState = {
       postMedia: {
         type: null,
         url: ""
-      }
+      },
+      createdAt: '',
+      userObj: {
+        id: '',
+        name: '',
+        image: ''
+      },
+      voteUp:{}
     }
   ],
   loading: false,
@@ -46,7 +53,7 @@ export const feedsReducer = (state=initialState, action) => {
             name: action.feeds[feed].userObj.displayName,
             image: action.feeds[feed].userObj.image
           },
-          voteUp: action.feeds[feed].voteup
+          voteUp: action.feeds[feed].voteup !== false ? action.feeds[feed].voteup: {} 
         }))
       ]
 
@@ -82,11 +89,28 @@ export const feedsReducer = (state=initialState, action) => {
     case Actions.VOTE_UP: {
 
       const feed = state.feeds.filter( feed => feed.id === action.feedId )
-      
-      feed.voteUp = feed.voteUp === 0 ? {0:actio.userid}: { ...feed.voteUp, ...action.userid }
-      console.log(feed, "vote")
+      const newVote = {}
+      console.log(feed.voteUp)
+      if(feed.voteUp === false) {
+        newVote = { 0 : action.userid}
+      } else {
+        const key = Object.keys(feed.voteUp).length
+        newVote = { key : action.userid}
+      }
       return {
-        ...state
+        ...state,
+        feeds: [
+          ...state.feeds.map(feed => {
+            if(feed.id === action.feedId) {
+              return {
+                ...feed,
+                voteUp: newVote
+              }
+            }
+
+            return feed
+          })
+        ]
       }
     }
     default : 

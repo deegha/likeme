@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text , Dimensions, TouchableOpacity, TextInput } from 'react-native'
 import Image from 'react-native-scalable-image'
 
-import { TextFeild, RoundButton } from '../../../../components/'
+import { TextFeild, RoundButton, GooglePlacesInput } from '../../../../components/'
 import { styles } from './styles'
 
 export const CreatePost = ({ onTextChange, submitPost, postText, disabled, postMedia, pickImage, takePhoto }) => {
@@ -37,6 +37,7 @@ export const CreatePost = ({ onTextChange, submitPost, postText, disabled, postM
 					/>
 	
 			</View>
+			<GooglePlacesInput />
 			<View style={styles.postData}>
 				
 				{postMedia.url !== "" && <Image source={{ uri: postMedia.url }} width={Dimensions.get('window').width} /> }

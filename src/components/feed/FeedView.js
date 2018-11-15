@@ -37,7 +37,7 @@ export const FeedView = ({feed, makeAction}) => {
           <RoundButton callBack={makeAction(VOTE_UP, feed.id)}>
             <Ionicons name="ios-thumbs-up" size={20} color="black" />
           </RoundButton>
-          <Text style={styles.statText}>120 up</Text>
+          <Text style={styles.statText}>{ feed.voteUp.length } up</Text>
         </View>
         {/* <View>
         <Text style={styles.statText}>14 down</Text>

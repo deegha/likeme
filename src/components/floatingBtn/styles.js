@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    zIndex:2,
+    zIndex:10,
     justifyContent: 'center',
     alignItems: 'center'
   }

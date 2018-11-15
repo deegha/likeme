@@ -72,11 +72,19 @@ class MainContainer extends React.Component {
 
 	navigateLogin = () => this.props.navigation.navigate('login')
 
-	makeAction = () => {}
+	makeAction = (action, feedId) => () => {
+
+		if(!this.props.auth.authenticated) {
+			this.props.navigation.navigate('login')
+		}
+
+		this.props.voteUp(feedId)
+
+	}
 	
 	render() {
 			const {feeds, loading, auth} = this.props
-
+		console.log(feeds)
 			const scrollY = Animated.add(
 				this.state.scrollY,
 				Platform.OS === 'ios' ? HEADER_MAX_HEIGHT : 0,

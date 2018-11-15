@@ -14,7 +14,7 @@ class Index extends React.Component {
 			if(userData !== null) { 
 				getUserById(userData.uid)
 					.then(data => {
-
+						console.log(data, "data")
 						
 						console.log(data.val()[userData.uid], "data")
 						

@@ -40,7 +40,6 @@ class RegisterContainer extends React.Component {
   pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
 			allowsEditing: true,
-			aspect: [4, 3]
     })
 
     if (!result.cancelled) {

@@ -18,6 +18,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: shared.backGround,
+    zIndex: 3,
+    flex: 1
   },
   title: {
     fontWeight: 'bold',

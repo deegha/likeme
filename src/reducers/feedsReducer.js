@@ -62,7 +62,7 @@ export const feedsReducer = (state=initialState, action) => {
           return  unOrderdFeeds[b].createdAt - unOrderdFeeds[a].createdAt 
         } )
       ]
-
+console.log("on reducer feed")
       return {
         ...state,
         loading: false,

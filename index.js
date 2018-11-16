@@ -14,9 +14,6 @@ class Index extends React.Component {
 			if(userData !== null) { 
 				getUserById(userData.uid)
 					.then(data => {
-						console.log(data, "data")
-						
-						console.log(data.val()[userData.uid], "data")
 						
 						this.props.authenticate(data.val()[userData.uid])
 					
@@ -38,7 +35,6 @@ class Index extends React.Component {
   }
 
   render() {
-		console.log(this.props.auth)
     return <RootStack />
   }
 }

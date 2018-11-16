@@ -18,7 +18,6 @@ export const MainView = ({auth, feedsItem, loading, fetchFeeds,makeAction, creat
       {auth.authenticated && auth.user.type === "store" && <FloatingBtn action={createPost} >
         <Ionicons name="md-add" size={40} color="#fff" />
       </FloatingBtn>}
-     
       {creating && 
       <View style={styles.creatingContainer}>
         <View style={styles.creating}>

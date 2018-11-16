@@ -2,12 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { View, Text, TouchableOpacity, Button, Animated, Platform } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
+import { Permissions, Location } from 'expo'
 
 import { ModalComponent } from '../../components'
 import { fetchFeeds, voteUpAction } from '../../actions/feedsActions'
 import { setWatingAction } from '../../actions/waitingActions'
 import CreatepostContainer from './components/createPost/CreatepostContainer'
 import Fire from '../../services/firebase'
+import Geohash from 'latlon-geohash'
 
 import * as BTN_ACTIONS from '../../components/feed/actionsConstants'
 
@@ -28,26 +30,19 @@ class MainContainer extends React.Component {
 		super(props)
 		this.state = {
 			showModal: false,
-			scrollY: new Animated.Value(0)
+			scrollY: new Animated.Value(0),
+			userGeo: '',
+			neighboursArr: []
 		}
 	}
 
-	componentWillMount() {
-    this.props.navigation.setParams({ logOut: this.logOut,auth: this.props.auth.authenticated })
-	}
-	
-	componentWillUpdate(preProps) {
-		if(this.props.auth.authenticated !== preProps.auth.authenticated) {
-			this.props.navigation.setParams({auth: this.props.auth.authenticated })
-		}
-	}
+	async componentDidMount() {
 
-	componentDidMount() {
-		this.props.getFeeds()
-	}
-
-	leftBtn = () => {
-		
+		const { neighboursArr, userGeo } = this.state
+		this.getLocationAsync().then(res => {
+			this.props.getFeeds(res.userGeo, neighboursArr)
+		})
+	  
 	}
 
 	logOut = () => Fire.auth().signOut()
@@ -82,9 +77,34 @@ class MainContainer extends React.Component {
 
 	}
 	
+	getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied',
+      })
+    }
+
+		let location = await Location.getCurrentPositionAsync({})
+
+		const userGeo = Geohash.encode(location.coords.latitude, location.coords.longitude, 6)
+		
+		const neighboursObj = Geohash.neighbours(userGeo)
+		const neighboursArr = Object.keys(neighboursObj).map(n =>  neighboursObj[n]) 
+
+		this.setState({ userGeo, neighboursArr })
+		// this.setState({userGeo: 'w2833r', neighboursArr})
+
+		return Promise.resolve({userGeo: userGeo})
+  }
+
+	fetchFeeds = () => { console.log("refreshed")
+		this.props.getFeeds(this.state.userGeo)
+	}
+
 	render() {
 			const {feeds, loading, auth} = this.props
-		console.log(feeds)
+
 			const scrollY = Animated.add(
 				this.state.scrollY,
 				Platform.OS === 'ios' ? HEADER_MAX_HEIGHT : 0,
@@ -123,7 +143,7 @@ class MainContainer extends React.Component {
 
 			return (
 			<View style={styles.container}>
-				{feeds[0].id === null ? <View><Text>loading</Text></View>:
+			
 				<MainView 
 					actionFontWeight={actionFontWeight}
 					titleSize={titleSize}
@@ -138,10 +158,10 @@ class MainContainer extends React.Component {
 					createPost={this.createPost}
 					makeAction={this.makeAction}
 					feedsItem={feeds} 
-					fetchFeeds={this.props.getFeeds}
+					fetchFeeds={this.fetchFeeds}
 					loading={loading}
 					navigation={this.props.navigation} 
-					setModalVisible={this.setModalVisible} />}
+					setModalVisible={this.setModalVisible} />
 
 				<ModalComponent visible={this.state.showModal} setModalVisible={this.setModalVisible} >
 					<CreatepostContainer setModalVisible={this.setModalVisibleAfterPost}  />
@@ -160,7 +180,7 @@ const mapStateToProps = ({feeds, auth, waitingAction}) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	getFeeds : () => dispatch(fetchFeeds()),
+	getFeeds : (userGeo, neighboursArr) => dispatch(fetchFeeds(userGeo, neighboursArr)),
 	setWatingAction: (action, params) => dispatch(setWatingAction(action, params)),
 	voteUp: (feedId) => dispatch(voteUpAction(feedId))
 })

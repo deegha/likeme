@@ -9,11 +9,7 @@ import { createFeedAction, createFeedRequest } from '../../../../actions/feedsAc
 
 import { FeedModel } from '../../../../dataModels/feed'
 
-
-
-import * as firebase from 'firebase/app'
-import Fire  from '../../../../services/firebase'
-import * as geofirex from 'geofirex'
+import Geohash from 'latlon-geohash'
 
 class CreatepostContainer extends React.Component {
 
@@ -21,7 +17,14 @@ class CreatepostContainer extends React.Component {
 		super(props)
 
 		this.state = {
-			location: null,
+			location: {
+				latitude: "",
+				longitude: ""
+			},
+			currentUserLocation: {
+				latitude: "",
+				longitude: ""
+			},
 			errorMessage: null,
 			title: "",
 			info: "",
@@ -49,9 +52,18 @@ class CreatepostContainer extends React.Component {
 		}
 	}
 
+	setLocationPostLocation = (location) => {
+		this.setState({location:{
+			latitude: location.lat,
+			longitude: location.lng
+		}})
+		console.log(location, "location")
+	}
+
 	submitPost = () => {
-
-
+		const { latitude, longitude } = this.state.location
+		const postGeo = Geohash.encode(latitude, longitude, 6)
+		const curGeoHash = Geohash.encode(this.state.currentUserLocation.latitude, this.state.currentUserLocation.longitude, 6)
 
 		this.props.setModalVisible()
 		this.props.createFeedRequest()
@@ -63,10 +75,10 @@ class CreatepostContainer extends React.Component {
 			feed.postText  = this.state.info
 			feed.postMedia.type = 'text'
 			feed.userObj.image = this.props.currentUser.image
-			feed.userObj	= this.props.currentUser.id
+			feed.userObj.userID	= this.props.currentUser.id
 			feed.userObj.displayName = this.props.currentUser.displayName
 
-			this.props.createFeed(feed)
+			this.props.createFeed(feed, postGeo, curGeoHash)
 		}
 
 		uploadImageAsync(this.state.postMedia.url, 'postImages')
@@ -83,7 +95,7 @@ class CreatepostContainer extends React.Component {
 				feed.userObj.image = this.props.currentUser.image
 				feed.userObj.displayName = this.props.currentUser.displayName
 
-				this.props.createFeed(feed)
+				this.props.createFeed(feed, postGeo, curGeoHash)
 					
 			})
 			.catch(err => console.log(err))
@@ -101,8 +113,12 @@ class CreatepostContainer extends React.Component {
       })
     }
 
-    let location = await Location.getCurrentPositionAsync({});
-    this.setState({ location });
+    let location = await Location.getCurrentPositionAsync({})
+		this.setState({ location, currentUserLocation:  {
+			latitude:location.coords.latitude,
+			longitude:location.coords.longitude
+		}  })
+		
   }
 
 	pickImage = async () => {
@@ -128,8 +144,10 @@ class CreatepostContainer extends React.Component {
   }
 
 	render() {
-		const { postText, postMedia, title } = this.state
+		const { postText, postMedia, currentUserLocation } = this.state
+		console.log(currentUserLocation, "currentUserLocation")
 		return <CreatePost
+							setLocationPostLocation={this.setLocationPostLocation}
 							postMedia={postMedia}
 							disabled={false}
 							postText={postText} 
@@ -146,7 +164,7 @@ const mapStateToProps = ({auth}) => ({
 })
 
 const mapdispatchToProps = (dispatch) => ({
-	createFeed : (data, id) => dispatch(createFeedAction(data, id)),
+	createFeed : (data, postGeo, curLocation) => dispatch(createFeedAction(data, postGeo, curLocation)),
 	createFeedRequest: () => dispatch(createFeedRequest())
 })
 

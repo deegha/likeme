@@ -1,13 +1,14 @@
 import React from 'react'
-import { View, Text , Dimensions, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text , Dimensions, TouchableOpacity, TextInput, ScrollView } from 'react-native'
 import Image from 'react-native-scalable-image'
 
 import { TextFeild, RoundButton, GooglePlacesInput } from '../../../../components/'
 import { styles } from './styles'
 
-export const CreatePost = ({ onTextChange, submitPost, postText, disabled, postMedia, pickImage, takePhoto }) => {
+export const CreatePost = ({ onTextChange, submitPost, postText, disabled, postMedia, pickImage, takePhoto, setLocationPostLocation }) => {
 	
 	return (
+		<ScrollView style={styles.container} >
 		<View style={styles.container}>
 			<View style={styles.postOptions}>
 					<View style={styles.postOptionsSection}>
@@ -26,6 +27,8 @@ export const CreatePost = ({ onTextChange, submitPost, postText, disabled, postM
 				
 			</View>
 			<View style={styles.form}>
+				
+				
 				<TextInput 
 					autoFocus
 					selectionColor={"#000000"}
@@ -35,14 +38,15 @@ export const CreatePost = ({ onTextChange, submitPost, postText, disabled, postM
 					multiline={true}
 					placeholder="Tell them about your deal"
 					/>
-	
+				<GooglePlacesInput callback={setLocationPostLocation} />
 			</View>
-			<GooglePlacesInput />
+			
 			<View style={styles.postData}>
 				
 				{postMedia.url !== "" && <Image source={{ uri: postMedia.url }} width={Dimensions.get('window').width} /> }
 			</View>
 		
 		</View>
+		</ScrollView>
 	)
 }

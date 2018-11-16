@@ -4,7 +4,8 @@ import * as shared from '../../components/sharedStyles'
 export const styles = StyleSheet.create({
   container: {
     backgroundColor: shared.backGround,
-    height: '100%'
+    height: '100%',
+    flex: 1
   },
   header: {
     position: 'absolute',

@@ -5,9 +5,25 @@
 
 import Fire  from "./firebase"
 
-export const getFeeds = () => Fire.database().ref("feeds").once("value")   
+export const getFeeds = (userGeo) =>  Fire.database().ref("feeds").child(userGeo).once("value")
 
-export const createFeed = (feed, id) => Fire.database().ref(`feeds/${id}`).set(feed)
+export const getSecondaryFeeds = (keys) => {
+
+  // return keys.map(key => Fire.database().ref("feeds").child(key).once("value"))
+  let promises =  keys.map(key => Fire.database().ref("feeds").child(key).once("value"))
+
+
+  return Promise.resolve(promises) 
+  // return Promise.all(promises).then(snapshots => {
+  //   snapshots.forEach(snapshot => {
+  //     if(snapshot.val() !== null){
+  //       return snapshot.val()
+  //     }
+  //   })
+  // })
+} 
+
+export const createFeed = (feed, postGeo) => Fire.database().ref(`feeds/${postGeo}`).push(feed)
 
 export const getUserById = (id) => Fire.database().ref("users").orderByChild('id').equalTo(id).once("value") 
 

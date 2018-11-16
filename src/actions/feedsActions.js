@@ -2,7 +2,7 @@
  * Created by deegha
  */
 
-import { getFeeds, createFeed, voteUp } from '../services/backendClient'
+import { getFeeds, createFeed, voteUp, getSecondaryFeeds } from '../services/backendClient'
 
 /**
  * 
@@ -27,10 +27,10 @@ export const fetchFeedsRequestSuccess = (feeds) => ({
 	feeds
 })
 
-export const fetchFeeds = () => dispatch => {
+export const fetchFeeds = (userGeo, neighboursArr) => dispatch => {
 	dispatch(fetchFeedsRequest())   
-	getFeeds()
-		.then(feeds => {
+	getFeeds(userGeo)
+		.then(feeds => { 
 			dispatch(fetchFeedsRequestSuccess(feeds.val()))
 		})
 		.catch(err => console.log(err))
@@ -60,11 +60,10 @@ export const createFeedFail = () => ({
 	type: CREATE_FEDD_FAIL
 })
 
-export const createFeedAction = (feed, id) => dispatch => {
-	// dispatch(createFeedReques())
-	createFeed(feed, id)
+export const createFeedAction = (feed, postGeo, curLocation) => dispatch => {
+	createFeed(feed, postGeo)
 		.then(res => {
-			getFeeds()
+			getFeeds(curLocation)
 				.then(feeds => {
 					dispatch(fetchFeedsRequestSuccess(feeds.val()))
 					dispatch(createFeedSucess())

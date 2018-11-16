@@ -13,7 +13,8 @@ export const styles = StyleSheet.create({
         margin:0,
         padding:0,
         width: '100%',
-        alignItems:'center'
+        alignItems:'center',
+        flex: 1
     },
  
     inputFeild: {
@@ -41,7 +42,8 @@ export const styles = StyleSheet.create({
         fontWeight: '600'
     },
     form: {
-        padding: 5
+        padding: 5,
+        flex:2
     },
     postOptionsSection: {
         flexDirection: 'row',

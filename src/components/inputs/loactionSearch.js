@@ -1,11 +1,7 @@
-import React from 'react';
-import { View, Image, Text } from 'react-native';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import React from 'react'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
  
-const homePlace = { description: 'Home', geometry: { location: { lat: 48.8152937, lng: 2.4597668 } }};
-const workPlace = { description: 'Work', geometry: { location: { lat: 48.8496818, lng: 2.2940881 } }};
- 
-export const GooglePlacesInput = () => {
+export const GooglePlacesInput = ({callback}) => {
   return (
     <GooglePlacesAutocomplete
       placeholder='Promotion Location'
@@ -16,7 +12,10 @@ export const GooglePlacesInput = () => {
       fetchDetails={true}
       renderDescription={row => row.description} 
       onPress={(data, details = null) => { 
-        console.log(data, details);
+        // console.log(data, 'data')
+
+        // console.log(details.geometry.location, 'details')
+        callback(details.geometry.location)
       }}
       
       getDefaultValue={() => ''}
@@ -30,7 +29,8 @@ export const GooglePlacesInput = () => {
       styles={{
         textInputContainer: {
           width: '100%',
-          backgroundColor: '#ffffff'
+          backgroundColor: '#ffffff',
+          borderBottomColor: '#ffffff'
         },
         description: {
           fontWeight: 'bold'
@@ -41,7 +41,12 @@ export const GooglePlacesInput = () => {
         textInput: {
           fontSize: 20,
           padding: 5,
-          marginBottom: 10
+          marginBottom: 10,
+          marginLeft: -4,
+      marginRight: 0,
+        },
+        container: {
+          flex:1
         }
       }}
       

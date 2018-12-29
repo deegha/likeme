@@ -36,7 +36,7 @@ export const feedsReducer = (state=initialState, action) => {
     case Actions.FETCH_FEEDS_REQUEST_FAIL: 
       return {
         ...state,
-        loading: true
+        loading: false
       } 
     case Actions.FETCH_FEEDS_REQUEST_SUCCESS:
       const unOrderdFeeds = [
@@ -62,7 +62,6 @@ export const feedsReducer = (state=initialState, action) => {
           return  unOrderdFeeds[b].createdAt - unOrderdFeeds[a].createdAt 
         } )
       ]
-console.log("on reducer feed")
       return {
         ...state,
         loading: false,
@@ -90,7 +89,7 @@ console.log("on reducer feed")
 
       const feed = state.feeds.filter( feed => feed.id === action.feedId )
       const newVote = {}
-      console.log(feed.voteUp)
+
       if(feed.voteUp === false) {
         newVote = { 0 : action.userid}
       } else {
@@ -107,7 +106,6 @@ console.log("on reducer feed")
                 voteUp: newVote
               }
             }
-
             return feed
           })
         ]

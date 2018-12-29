@@ -13,13 +13,19 @@ export class ModalComponent extends React.Component {
 		}
 	}
 
+	setVisibility = (visible) => () => this.setState({visible})
+
 	render() {
 		return (
 			<View style={{padding:0}}>
 				 <Modal 
-				 	 style={{padding:0, margin:0}}
-					 swipeDirection={"down"} 
-					 isVisible={this.props.visible}>
+						style={{padding:0, margin:0}}
+						isVisible={this.props.visible}
+						swipeDirection={"down"} 
+						onSwipeThreshold={0}
+						hideModalContentWhileAnimating={true}
+						onSwipe={() => this.setState({ visible: false })}
+						>
 						<View style={styles.container}>
 							<View style={styles.modalHeader}>
 								<TouchableHighlight

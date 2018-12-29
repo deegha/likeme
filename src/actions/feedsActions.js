@@ -2,7 +2,7 @@
  * Created by deegha
  */
 
-import { getFeeds, createFeed, voteUp, getSecondaryFeeds } from '../services/backendClient'
+import { getFeeds, createFeed, voteUp, getSecondaryFeeds, getAllFeeds } from '../services/backendClient'
 
 /**
  * 
@@ -27,14 +27,39 @@ export const fetchFeedsRequestSuccess = (feeds) => ({
 	feeds
 })
 
-export const fetchFeeds = (userGeo, neighboursArr) => dispatch => {
+export const fetchFeeds = (userGeo, neighboursArr) => async (dispatch) => {
 	dispatch(fetchFeedsRequest())   
-	getFeeds(userGeo)
-		.then(feeds => { 
-			dispatch(fetchFeedsRequestSuccess(feeds.val()))
-		})
-		.catch(err => console.log(err))
+
+	try {
+		const res = await getFeeds(userGeo)
+		const feeds = res.val()
+		if(feeds) {
+			dispatch(fetchFeedsRequestSuccess(feeds))
+		}else {
+			dispatch(fetchFeedsRequestFail())
+		}
+	}catch(err) {
+		dispatch(fetchFeedsRequestFail())
+		console.log(err, "fetch feeds")
+	}
 }
+
+export const fetchAllFeeds = () => async (dispatch) => {
+	dispatch(fetchFeedsRequest())   
+	
+	try {
+		const res = await getAllFeeds()	
+		const feeds = res.val()
+		let collection = {}
+		Object.keys(feeds).map( feedIndex => {
+			collection = {...collection,...feeds[feedIndex]}
+		})
+
+		dispatch(fetchFeedsRequestSuccess(collection))
+	}catch(err) {
+		console.log(err)
+	}
+} 
 
 /**
  * 

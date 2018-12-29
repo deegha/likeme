@@ -2,13 +2,13 @@
  * Created by deegha on 23/10/2018
  */
 
-
 import React from 'react'
 import { TextInput, View, Text } from 'react-native'
 import { styles } from './styles'
 
 import * as shared from '../sharedStyles'
 import { validateEmail } from '../../services/helpers'
+import { FadeInView } from '../'
 
 export class TextFeild extends React.Component {
 
@@ -20,6 +20,13 @@ export class TextFeild extends React.Component {
     }
   }
 
+  // static getDerivedStateFromProps(props, state) {
+  //   if(props.error !== '') {
+  //     return {error: props.error}
+  //   }
+  //   return {error: ""}
+  // }
+
   onChange = (text) => {
     this.validate(text)
     this.props.onChange(this.props.feild.toLowerCase(), text)
@@ -27,11 +34,15 @@ export class TextFeild extends React.Component {
 
   setError = (erroText) => this.setState({error: erroText})
 
+  onFocus = () => () => {
+    this.props.onFocus && this.props.onFocus()
+    this.setError("")
+  }
 
   validate = (text) => {
     const emessage = this.props.name !==undefined ?this.props.name:this.props.feild
 
-    text === ""? this.setError(emessage+' feild is required'): this.setError('')
+    text === ""? this.setError(emessage+' field is required'): this.setError('')
     this.setState({value: text})
 
     if(this.props.type === 'email') {
@@ -52,17 +63,17 @@ export class TextFeild extends React.Component {
     
     switch(color) {
       case 'secondary':
-        selectionColor = shared.PRIMERY_COLOR
+        selectionColor = shared.floatingBtnColor
         placeholderTextColor = '#737373'
-        underlineColor =   shared.PRIMERY_COLOR
+        underlineColor =   shared.floatingBtnColor
         extraStyles = {
           color: '#000000'
         }
   
       default:
-        selectionColor = shared.PRIMERY_COLOR
+        selectionColor = shared.floatingBtnColor
         placeholderTextColor = '#737373'
-        underlineColor =   shared.PRIMERY_COLOR
+        underlineColor =   shared.floatingBtnColor
         extraStyles = {
           color: '#000000'
         }
@@ -87,7 +98,7 @@ export class TextFeild extends React.Component {
         <View style={styles.textInputContainer}>
           <TextInput
             onBlur={()=>this.validate(this.state.value)}
-            onFocus={()=>this.setError("")}
+            onFocus={this.onFocus()}
             selectionColor={selectionColor}
             placeholderTextColor={placeholderTextColor}
             placeholder={placeholder}
@@ -98,7 +109,15 @@ export class TextFeild extends React.Component {
             {...extraProps}
             />
         </View>    
-        {this.state.error ?<View ><Text style={styles.textInputError}>{this.state.error}</Text></View>:<View style={[ {height: 17}]} ></View>}
+        <View style={{height: 20 }}>
+          {this.state.error ? (
+            <FadeInView>
+              <Text style={styles.textInputError}>{this.state.error}</Text>
+            </FadeInView>
+          ): (
+            <View/>
+          )}
+        </View> 
       </View>
     )
   }

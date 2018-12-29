@@ -8,19 +8,14 @@ export const styles = StyleSheet.create({
     flex: 1
   },
   header: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
     width: '100%',
-    padding: 20,
-    height: 150,
+    padding: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: shared.backGround,
+    // backgroundColor: 'red',
     zIndex: 1,
-    flex: 5
   },
   title: {
     fontWeight: 'bold',
@@ -46,18 +41,8 @@ export const styles = StyleSheet.create({
   rightBtn: {
     fontWeight: '600'
   },
-  bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    padding: 10,
-    backgroundColor: shared.floatingBtnColor,
-  },
-  bottomNavIcon: {
-    padding: 5,
-    alignItems: 'center',
-  },
-  bottomNavIconText: {
-    color: shared.secondaryColor,
-
+  scrollView: {
+    backgroundColor: '#000',
+    flex:1,
   }
 })

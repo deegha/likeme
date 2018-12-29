@@ -5,6 +5,7 @@ import { FeedView } from './feed/FeedView'
 import { FloatingBtn } from './floatingBtn/FloatingBtn'
 import { RoundBtn } from './inputs/roundBtn'
 import { GooglePlacesInput } from './inputs/loactionSearch'
+import { FadeInView } from './fadeInView/FadeInView'
 
 export {
     ModalComponent,
@@ -13,5 +14,6 @@ export {
     FeedView,
     FloatingBtn,
     RoundBtn,
-    GooglePlacesInput
+    GooglePlacesInput,
+    FadeInView
 }

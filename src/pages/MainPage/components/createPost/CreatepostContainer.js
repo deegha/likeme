@@ -65,6 +65,8 @@ class CreatepostContainer extends React.Component {
 		const postGeo = Geohash.encode(latitude, longitude, 6)
 		const curGeoHash = Geohash.encode(this.state.currentUserLocation.latitude, this.state.currentUserLocation.longitude, 6)
 
+		console.log(postGeo, "postGeo")
+
 		this.props.setModalVisible()
 		this.props.createFeedRequest()
 		if(this.state.postMedia.url === "") {
@@ -145,8 +147,8 @@ class CreatepostContainer extends React.Component {
 
 	render() {
 		const { postText, postMedia, currentUserLocation } = this.state
-		console.log(currentUserLocation, "currentUserLocation")
 		return <CreatePost
+							location={this.state.location}
 							setLocationPostLocation={this.setLocationPostLocation}
 							postMedia={postMedia}
 							disabled={false}

@@ -11,6 +11,7 @@ import { WithImage } from './withImage'
 import { styles } from './styles'
 
 export const FeedView = ({feed, makeAction}) => {
+  
   return (
     <View style={styles.container}>
 

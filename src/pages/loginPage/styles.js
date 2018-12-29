@@ -13,13 +13,9 @@ export const styles = StyleSheet.create({
     innerContainer: {
         display: 'flex',
         width: '80%',
-
     },
     loginTitile: {
         color: shared.secondary_text,
-        marginBottom:50,
-        marginTop: 50,
-        fontSize: 34,
         fontWeight: '100'
     },
     devider: {
@@ -33,7 +29,6 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '50%',
         justifyContent: 'center',
-        height:90,
         alignItems: 'center',
     },
     text : {
@@ -48,12 +43,13 @@ export const styles = StyleSheet.create({
         height:60,
     },
     formError: {
-        color: shared.thirdColor
+        color: "#e74c3c",
+        textAlign: 'center'
     },
     loginTitileContainer: {
         display:'flex',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems:'center'
-    }
+    }    
   })

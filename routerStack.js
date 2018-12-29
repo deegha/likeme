@@ -1,20 +1,31 @@
 import { createStackNavigator } from 'react-navigation'
 
-import MainContainer from "./src/pages/MainPage/MainContainer"
+import Tabs from "./src/pages/MainPage/MainView"
 import LoginPageContainer from './src/pages/loginPage/LoginPageContainer'
 import RegisterContainer from './src/pages/registerPage/RegisterContainer'
+
+import LocationFeeds from './src/pages/locationFeeds/LocationFeeds'
 
 import  * as shared from './src/components/sharedStyles'
 
 export const RootStack = createStackNavigator(
 	{
-		Home: {
-			screen: MainContainer,
-			title: 'Like me',
-		},
+		tabs: {
+			screen: Tabs,
+			navigationOptions:{
+				header: null 
+			}
+		},	
 		login: {
 			screen: LoginPageContainer,
 			title: 'Login',
+		},
+		Home: {
+			screen: LocationFeeds,
+			title: 'Like me',
+			navigationOptions:{
+				header: null 
+			}
 		},
 		register: {
 			screen: RegisterContainer,
@@ -23,7 +34,7 @@ export const RootStack = createStackNavigator(
 	},
 	{
 		header: null,
-		initialRouteName: 'Home',
+		initialRouteName: 'tabs',
 		navigationOptions: {
 		headerStyle: {
 			backgroundColor: shared.backGround,

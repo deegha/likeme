@@ -1,50 +1,32 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { View, Text, TouchableOpacity, Button, Animated, Platform } from 'react-native'
-import { createStackNavigator } from 'react-navigation'
-import { Permissions, Location } from 'expo'
+import { View,  Animated} from 'react-native'
+
 
 import { ModalComponent } from '../../components'
-import { fetchFeeds, voteUpAction } from '../../actions/feedsActions'
+import { fetchFeeds, voteUpAction, fetchAllFeeds } from '../../actions/feedsActions'
 import { setWatingAction } from '../../actions/waitingActions'
 import CreatepostContainer from './components/createPost/CreatepostContainer'
 import Fire from '../../services/firebase'
-import Geohash from 'latlon-geohash'
+
 
 import * as BTN_ACTIONS from '../../components/feed/actionsConstants'
 
 import { styles } from './styles'
-import { MainView } from './MainView'
-
-const HEADER_MAX_HEIGHT = 100
-const HEADER_MIN_HEIGHT = 40
-const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT
+import  MainView  from './MainView'
 
 class MainContainer extends React.Component {
-
-	static navigationOptions = {
-		header: null 
-	}
-
 	constructor(props) {
 		super(props)
 		this.state = {
 			showModal: false,
 			scrollY: new Animated.Value(0),
 			userGeo: '',
-			neighboursArr: []
+			neighboursArr: [],
+			selected:'home'
 		}
 	}
-
-	async componentDidMount() {
-
-		const { neighboursArr, userGeo } = this.state
-		this.getLocationAsync().then(res => {
-			this.props.getFeeds(res.userGeo, neighboursArr)
-		})
-	  
-	}
-
+	
 	logOut = () => Fire.auth().signOut()
 
 	createPost = () => {
@@ -65,105 +47,15 @@ class MainContainer extends React.Component {
 	
 	setModalVisibleAfterPost = () => this.setState({showModal: false})
 
-	navigateLogin = () => this.props.navigation.navigate('login')
-
-	makeAction = (action, feedId) => () => {
-
-		if(!this.props.auth.authenticated) {
-			this.props.navigation.navigate('login')
-		}
-
-		this.props.voteUp(feedId)
-
-	}
-	
-	getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
-      this.setState({
-        errorMessage: 'Permission to access location was denied',
-      })
-    }
-
-		let location = await Location.getCurrentPositionAsync({})
-
-		const userGeo = Geohash.encode(location.coords.latitude, location.coords.longitude, 6)
-		
-		const neighboursObj = Geohash.neighbours(userGeo)
-		const neighboursArr = Object.keys(neighboursObj).map(n =>  neighboursObj[n]) 
-
-		this.setState({ userGeo, neighboursArr })
-		// this.setState({userGeo: 'w2833r', neighboursArr})
-
-		return Promise.resolve({userGeo: userGeo})
-  }
-
-	fetchFeeds = () => { console.log("refreshed")
-		this.props.getFeeds(this.state.userGeo)
-	}
-
 	render() {
-			const {feeds, loading, auth} = this.props
+		const { auth, navigation, creating  } = this.props
 
-			const scrollY = Animated.add(
-				this.state.scrollY,
-				Platform.OS === 'ios' ? HEADER_MAX_HEIGHT : 0,
-			)
-	
-			const headerTranslate = scrollY.interpolate({
-				inputRange: [0, HEADER_SCROLL_DISTANCE],
-				outputRange: [0, -60],
-				extrapolate: 'clamp',
-			})
-	
-			const titleTranslate = scrollY.interpolate({
-				inputRange: [0, HEADER_SCROLL_DISTANCE],
-				outputRange: [0, 40],
-				extrapolate: 'clamp',
-			})
-
-			const titleSize =  scrollY.interpolate({
-				inputRange: [0, HEADER_SCROLL_DISTANCE/2 , HEADER_SCROLL_DISTANCE/1.2,HEADER_SCROLL_DISTANCE],
-				outputRange: [40, 38, 35 ,18],
-				extrapolate: 'clamp',
-			})
-
-
-			const zIndex =  scrollY.interpolate({
-				inputRange: [0, HEADER_SCROLL_DISTANCE/2, HEADER_SCROLL_DISTANCE],
-				outputRange: [0, 0, 1],
-				extrapolate: 'clamp',
-			})
-
-			const actionFontWeight =  scrollY.interpolate({
-				inputRange: [0,HEADER_SCROLL_DISTANCE],
-				outputRange: [800, 100],
-				extrapolate: 'clamp',
-			})
-
-			return (
+		return (
 			<View style={styles.container}>
-			
-				<MainView 
-					actionFontWeight={actionFontWeight}
-					titleSize={titleSize}
-					zIndex={zIndex}
-					headerTranslate={headerTranslate}
-					titleTranslate={titleTranslate}
-					scrollY={this.state.scrollY}
-					auth={auth}
-					navigateLogin={this.navigateLogin}
-					logOut={this.logOut}
-					creating={this.props.creating}
-					createPost={this.createPost}
-					makeAction={this.makeAction}
-					feedsItem={feeds} 
-					fetchFeeds={this.fetchFeeds}
-					loading={loading}
-					navigation={this.props.navigation} 
-					setModalVisible={this.setModalVisible} />
-
-				<ModalComponent visible={this.state.showModal} setModalVisible={this.setModalVisible} >
+				<MainView setModalVisible={this.setModalVisible} />
+				<ModalComponent 
+					visible={this.state.showModal} 
+					setModalVisible={this.setModalVisible} >
 					<CreatepostContainer setModalVisible={this.setModalVisibleAfterPost}  />
 				</ModalComponent>
 			</View>
@@ -181,6 +73,7 @@ const mapStateToProps = ({feeds, auth, waitingAction}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	getFeeds : (userGeo, neighboursArr) => dispatch(fetchFeeds(userGeo, neighboursArr)),
+	getAllFeeds: () => dispatch(fetchAllFeeds()),
 	setWatingAction: (action, params) => dispatch(setWatingAction(action, params)),
 	voteUp: (feedId) => dispatch(voteUpAction(feedId))
 })

@@ -5,7 +5,12 @@
 
 import Fire  from "./firebase"
 
-export const getFeeds = (userGeo) =>  Fire.database().ref("feeds").child(userGeo).once("value")
+export const getFeeds = (userGeo) =>  {
+  console.log(userGeo, "userGeo")
+  return Fire.database().ref("feeds").child(userGeo).once("value")
+}
+
+export const getAllFeeds = () => Fire.database().ref("feeds").once("value")
 
 export const getSecondaryFeeds = (keys) => {
 

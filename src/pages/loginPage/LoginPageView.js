@@ -1,19 +1,35 @@
 import React from "react"
-import { View, Button, ActivityIndicator, Text } from 'react-native'
+import { View, Button, ActivityIndicator,Animated, Text } from 'react-native'
 
 import { TextFeild, RoundBtn } from '../../components'
 import { styles } from './styles' 
 import {primaryColor, thirdColor} from '../../components/sharedStyles'
 
-export const LoginPageView = ({loading , onSubmit, formError, contiueWithFacebook, navigateRegister, onChange}) => (
+export const LoginPageView = ({
+	loading, 
+	onSubmit, 
+	formError, 
+	contiueWithFacebook, 
+	navigateRegister,
+	onChange,
+	titleMargin,
+	titleSize,
+	deviderHeight,
+	validForm
+}) => (
 	<View style={styles.container}>
-	
-		<View style={styles.loginTitileContainer}>
-			<Text style={styles.loginTitile}>
-				Like  me
-			</Text>
-		</View>
-		<View style={styles.loginTitileContainer}>
+
+		<Animated.View style={[styles.loginTitileContainer, {
+			 marginBottom:titleMargin,
+			 marginTop: titleMargin,
+		}]}>
+			<Animated.Text style={[styles.loginTitile, {
+				fontSize: titleSize,
+			}]}>
+				Black App
+			</Animated.Text>
+		</Animated.View>
+		<View style={[styles.innerContainer]}>
 			{formError !== "" && 	
 			<Text style={styles.formError}>
 					{formError}
@@ -34,11 +50,11 @@ export const LoginPageView = ({loading , onSubmit, formError, contiueWithFaceboo
 				placeholder="Password"/>
 		</View>
 		<View style={styles.btnContainer}>
-			<RoundBtn onPress={ onSubmit} color={'#000000'}>
+			<RoundBtn loading={loading} onPress={ onSubmit} disabled={!validForm} fontColor={"#ffffff"} color={'#34495e'}>
 				Login
 			</RoundBtn>
 		</View>
-		<View style={styles.deviderContainer}>
+		<Animated.View style={[styles.deviderContainer, {height: deviderHeight}]}>
 			
 			<View style={styles.devider}></View>
 				<Text  style={styles.text}>
@@ -46,14 +62,14 @@ export const LoginPageView = ({loading , onSubmit, formError, contiueWithFaceboo
 				</Text>
 			<View style={styles.devider}></View>
 		
-		</View>
+		</Animated.View>
 		<View style={styles.btnContainer}>
 			<RoundBtn onPress={navigateRegister} color={'#00bcd4'}>
-				Register new account
+				Sign up
 			</RoundBtn>
 		</View>
 		<View style={styles.btnContainer} >
-			<RoundBtn loading={loading} color={'#3B5998'} onPress={contiueWithFacebook}>
+			<RoundBtn  color={'#3B5998'} onPress={contiueWithFacebook}>
 			Continue with facebook
 			</RoundBtn>
 		</View>

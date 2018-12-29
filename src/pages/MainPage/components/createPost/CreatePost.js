@@ -5,7 +5,7 @@ import Image from 'react-native-scalable-image'
 import { TextFeild, RoundButton, GooglePlacesInput } from '../../../../components/'
 import { styles } from './styles'
 
-export const CreatePost = ({ onTextChange, submitPost, postText, disabled, postMedia, pickImage, takePhoto, setLocationPostLocation }) => {
+export const CreatePost = ({ onTextChange, location,  submitPost, postText, disabled, postMedia, pickImage, takePhoto, setLocationPostLocation }) => {
 	
 	return (
 		<ScrollView style={styles.container} >
@@ -28,7 +28,6 @@ export const CreatePost = ({ onTextChange, submitPost, postText, disabled, postM
 			</View>
 			<View style={styles.form}>
 				
-				
 				<TextInput 
 					autoFocus
 					selectionColor={"#000000"}
@@ -38,7 +37,7 @@ export const CreatePost = ({ onTextChange, submitPost, postText, disabled, postM
 					multiline={true}
 					placeholder="Tell them about your deal"
 					/>
-				<GooglePlacesInput callback={setLocationPostLocation} />
+				<GooglePlacesInput location={location} callback={setLocationPostLocation} />
 			</View>
 			
 			<View style={styles.postData}>

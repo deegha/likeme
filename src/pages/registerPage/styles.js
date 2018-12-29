@@ -3,12 +3,12 @@ import * as shared from '../../components/sharedStyles'
 
 export const regStyles = StyleSheet.create({
   addImageContainer: {
-    width: 90,
-    height: 90,
+    // width: 90,
+    // height: 90,
     backgroundColor: shared.silver,
     borderRadius: 20,
-    marginTop: 30,
-    marginBottom: 20,
+    // marginTop: 30,
+    // marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center'
   },

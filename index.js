@@ -18,17 +18,17 @@ class Index extends React.Component {
 						this.props.authenticate(data.val()[userData.uid])
 					
 						ToastAndroid.showWithGravity(
-							'login succes',
+							'logged in succes',
 							ToastAndroid.SHORT,
-							ToastAndroid.CENTER
+							ToastAndroid.BOTTOM
 						)
 					})
       }else {
 				this.props.logoutUser()
 				ToastAndroid.showWithGravity(
-					'logout succes',
+					'not logged in',
 					ToastAndroid.SHORT,
-					ToastAndroid.CENTER
+					ToastAndroid.BOTTOM
 				)
 			}
 		})

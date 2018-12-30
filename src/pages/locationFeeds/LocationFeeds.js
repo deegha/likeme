@@ -4,10 +4,11 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { Animated } from 'react-native'
+import { Animated,View } from 'react-native'
 import { Permissions, Location } from 'expo'
 import { fetchFeeds } from '../../actions/feedsActions'
-import { LocationFeedsView } from './LocationFeedsView'
+import { setWatingAction } from '../../actions/waitingActions'
+import { FeedsView } from '../../components'
 import Fire from '../../services/firebase'
 import Geohash from 'latlon-geohash'
 
@@ -22,20 +23,29 @@ class LocationFeeds extends React.Component {
 		this.state = {
 			scrollOffset: new Animated.Value(0),
 			userGeo: '',
-			neighboursArr: [],
+      neighboursArr: [],
+      showModal:false
 		}
 	}
 
   logout = () => Fire.auth().signOut()
 
   async componentDidMount() {
-    console.log( this.props.navigation.getParam('data') )
-
     try{
       const userGeo = await this.getLocationAsync()
-      this.props.getFeeds('w2833r')
+      // this.props.getFeeds('w2833r')
+      this.props.getFeeds(userGeo.userGeo, userGeo.neighboursArr)
     }catch(err){
       console.log(err)
+    }
+  }
+
+  componentDidUpdate(preProps) {
+    
+    const action = this.props.navigation.getParam('action')
+    console.log('updated', action)
+    if(action === 'create_post') {
+      this.createPost()
     }
   }
 
@@ -47,13 +57,16 @@ class LocationFeeds extends React.Component {
       })
     }
 
-		let location = await Location.getCurrentPositionAsync({})
+    let location = await Location.getCurrentPositionAsync({})
+    console.log(location)
 		const userGeo = Geohash.encode(location.coords.latitude, location.coords.longitude, 6)
-		const neighboursObj = Geohash.neighbours(userGeo)
+    const neighboursObj = Geohash.neighbours(userGeo)
+    
+    
 		const neighboursArr = Object.keys(neighboursObj).map(n =>  neighboursObj[n]) 
-
+ 
 		this.setState({ userGeo, neighboursArr })
-		return Promise.resolve({userGeo: userGeo})
+		return Promise.resolve({userGeo: userGeo, neighboursArr})
   }
 
   handleScroll = (e) =>  {
@@ -67,9 +80,24 @@ class LocationFeeds extends React.Component {
     this.props.navigation.navigate("login")
   }
 
+  setModalVisible = (visible) => () => { 
+    this.setState({showModal: visible})
+  }
+
+  createPost = () => {
+    if(!this.props.auth.authenticated) {
+			this.props.navigation.navigate('login', {page: 'tabs',action: 'create_post'})
+    }else {
+      this.setState({showModal: true})
+    }
+    
+  }
+  
+  setModalVisibleAfterPost = () => this.setState({showModal: false})
+
   render() {
-    const { scrollOffset } = this.state
-    const { feeds, tournaments, auth} = this.props
+    const { scrollOffset, showModal } = this.state
+    const { feeds , auth} = this.props
 
     const titleMarginTop = scrollOffset.interpolate({
       inputRange: [0, 200],
@@ -88,25 +116,30 @@ class LocationFeeds extends React.Component {
     })
 
     return (
-      <LocationFeedsView 
-        titleMarginTop={titleMarginTop}
-        subTitleMarginTop={subTitleMarginTop}
-        titleFontSize={titleFontSize}
-        feedsItem={feeds} 
-        auth={auth}
-        
-        logout={this.logout}
-        navigateTol={this.navigateTol}
-        handleScroll={this.handleScroll}
-      />
+        <FeedsView 
+          titleMarginTop={titleMarginTop}
+          subTitleMarginTop={subTitleMarginTop}
+          titleFontSize={titleFontSize}
+          feedsItem={feeds} 
+          auth={auth}
+          
+          createPost={this.createPost}
+          navigation={this.props.navigation}
+          showModal={showModal}
+          setModalVisibleAfterPost={this.setModalVisibleAfterPost}
+          setModalVisible={this.setModalVisible}
+          logout={this.logout}
+          navigateTol={this.navigateTol}
+          handleScroll={this.handleScroll}
+        />
     ) 
   }
 }
 
-const mapStateToProps = ({feeds, auth, waitingAction}) => ({
+const mapStateToProps = ({feeds, auth, waitingAction, allFeeds:{creating}}) => ({
 	feeds: feeds.feeds,
 	loading: feeds.loading,
-	creating: feeds.creating,
+	creating,
 	auth,
 	waitingAction: waitingAction.waitingAction
 })

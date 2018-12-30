@@ -58,5 +58,13 @@ export const styles = StyleSheet.create({
   action: {
     flexDirection: 'row',
     alignItems: 'center'
+  },
+  postLocation: {
+    paddingHorizontal: 10,
+  },
+  postLocationText: {
+    fontWeight: '100',
+    color: shared.secondary_text,
+    fontSize: 11
   }
 })

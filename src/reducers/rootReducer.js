@@ -7,9 +7,11 @@ import { combineReducers } from "redux"
 import { authenticationReducer as auth } from './authReducer' 
 import { feedsReducer as feeds } from './feedsReducer'
 import { waitingActionReducer as waitingAction } from './watingActionReducer'
+import { allFeedsReducer as  allFeeds } from './allFeedsReducer' 
 
 export const rootReducer = combineReducers({
     auth,
     feeds,
-    waitingAction
+    waitingAction,
+    allFeeds
 })

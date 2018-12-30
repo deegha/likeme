@@ -4,25 +4,26 @@
 
 import React from 'react'
 import LocationFeeds from '../locationFeeds/LocationFeeds'
-import { AllFeeds } from '../allFeeds/AllFeeds'
+import AllFeeds  from '../allFeeds/AllFeeds'
 import {  Entypo, Ionicons } from '@expo/vector-icons'
 
 import { createBottomTabNavigator } from 'react-navigation'
 
 export default createBottomTabNavigator({
-  LocationFeeds: {
-    screen: LocationFeeds,
-    navigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ tintColor }) => {
-        return <Entypo name={'location'} size={25} color={tintColor} />
-      },
-    })
-  },
-  Feeds: {
+ 
+  'All promotions': {
     screen: AllFeeds,
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ tintColor }) => {
         return <Entypo name={'home'} size={25} color={tintColor} />
+      },
+    })
+  },
+  'Near you': {
+    screen: LocationFeeds,
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ tintColor }) => {
+        return <Entypo name={'location'} size={25} color={tintColor} />
       },
     })
   },

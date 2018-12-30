@@ -14,6 +14,11 @@ export const FETCH_FEEDS_REQUEST = 'FETCH_FEEDS_REQUEST'
 export const FETCH_FEEDS_REQUEST_FAIL = 'FETCH_FEEDS_REQUEST_FAIL'
 export const FETCH_FEEDS_REQUEST_SUCCESS = 'FETCH_FEEDS_REQUEST_SUCCESS'
 
+export const FETCH_ALL_FEEDS_REQUEST = 'FETCH_ALL_FEEDS_REQUEST'
+export const FETCH_ALLFEEDS_REQUEST_FAIL = 'FETCH_ALLFEEDS_REQUEST_FAIL'
+export const FETCH_ALLFEEDS_REQUEST_SUCCESS = 'FETCH_ALLFEEDS_REQUEST_SUCCESS'
+
+
 export const fetchFeedsRequest = () => ({
 	type: FETCH_FEEDS_REQUEST
 })
@@ -29,7 +34,7 @@ export const fetchFeedsRequestSuccess = (feeds) => ({
 
 export const fetchFeeds = (userGeo, neighboursArr) => async (dispatch) => {
 	dispatch(fetchFeedsRequest())   
-
+	console.log(neighboursArr)
 	try {
 		const res = await getFeeds(userGeo)
 		const feeds = res.val()
@@ -38,11 +43,38 @@ export const fetchFeeds = (userGeo, neighboursArr) => async (dispatch) => {
 		}else {
 			dispatch(fetchFeedsRequestFail())
 		}
+
+		neighboursArr.map( geo => {
+			getFeeds(geo)
+			.then( res => {
+				if(res.val() !== null) {
+					dispatch(fetchFeedsRequestSuccess(res.val()))
+				}
+			})
+		})
+
+		Promise.all(newList)
+		.then(res => console.log(res))
+		
+		
 	}catch(err) {
 		dispatch(fetchFeedsRequestFail())
 		console.log(err, "fetch feeds")
 	}
 }
+
+export const fetchAllFeedsRequest = () => ({
+	type: FETCH_ALL_FEEDS_REQUEST
+})
+
+export const fetchAllFeedsRequestFail = () => ({
+	type: FETCH_ALLFEEDS_REQUEST_FAIL
+})
+
+export const fetchAllFeedsRequestSuccess = (feeds) => ({
+	type: FETCH_ALLFEEDS_REQUEST_SUCCESS,
+	feeds
+})
 
 export const fetchAllFeeds = () => async (dispatch) => {
 	dispatch(fetchFeedsRequest())   
@@ -55,7 +87,7 @@ export const fetchAllFeeds = () => async (dispatch) => {
 			collection = {...collection,...feeds[feedIndex]}
 		})
 
-		dispatch(fetchFeedsRequestSuccess(collection))
+		dispatch(fetchAllFeedsRequestSuccess(collection))
 	}catch(err) {
 		console.log(err)
 	}
@@ -86,16 +118,32 @@ export const createFeedFail = () => ({
 })
 
 export const createFeedAction = (feed, postGeo, curLocation) => dispatch => {
+	dispatch(createFeedRequest())
+
 	createFeed(feed, postGeo)
 		.then(res => {
-			getFeeds(curLocation)
-				.then(feeds => {
-					dispatch(fetchFeedsRequestSuccess(feeds.val()))
-					dispatch(createFeedSucess())
+
+			getAllFeeds()
+			.then(res => {
+				const feeds = res.val()
+				let collection = {}
+				Object.keys(feeds).map( feedIndex => {
+					collection = {...collection,...feeds[feedIndex]}
 				})
-				.catch(err => console.log(err))
+				dispatch(fetchAllFeedsRequestSuccess(collection))
+			})
+
+			getFeeds(curLocation)
+			.then(feeds => {
+				dispatch(fetchFeedsRequestSuccess(feeds.val()))
+				dispatch(createFeedSucess())
+			})
+			
 		})
-		.catch(err => dispatch(createFeedFail()))
+		.catch(err => {
+			console.log(err, "error in creating post")
+			dispatch(createFeedFail())
+		})
 }
 
 const voteUpState = (feedId, userid) => ({

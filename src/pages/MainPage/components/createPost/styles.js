@@ -41,6 +41,11 @@ export const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '600'
     },
+    optionTextDisabled: {
+        fontSize: 15,
+        fontWeight: '600',
+        color: shared.disabledText
+    },
     form: {
         padding: 5,
         flex:2

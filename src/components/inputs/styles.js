@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
       borderRadius: 30,
       padding: 10,
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
     SeachIconContainer: {
       width: '100%',

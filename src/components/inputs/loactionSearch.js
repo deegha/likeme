@@ -47,7 +47,7 @@ export class GooglePlacesInput extends React.Component {
                   locationDescription:data.description,
                   visible: false
                 })
-                callback(details.geometry.location)
+                callback(details.geometry.location, data.description)
               }}
               
               getDefaultValue={() => ''}

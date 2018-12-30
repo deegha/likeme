@@ -20,9 +20,15 @@ export const CreatePost = ({ onTextChange, location,  submitPost, postText, disa
 						</TouchableOpacity>
 					</View>
 					<View style={styles.postOptionsSection}>
-						<TouchableOpacity  style={styles.option}>
-							<Text style={styles.optionText} onPress={submitPost}>Share</Text>
-						</TouchableOpacity>
+						{disabled? (
+							<View  style={styles.option}>
+								<Text style={styles.optionTextDisabled} >Share</Text>
+							</View>
+						): (
+							<TouchableOpacity  style={styles.option} onPress={submitPost}>
+								<Text style={styles.optionText} >Share</Text>
+							</TouchableOpacity>
+						)}
 					</View>
 				
 			</View>

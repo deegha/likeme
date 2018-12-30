@@ -25,12 +25,21 @@ class LoginPageContainer extends React.Component {
 			password: "",
 			formError: "",
 			loading: false,
-			validForm: false
+			validForm: false,
+
+			redirectAction: '',
+			redirectPage: ''
 		}
 	} 
 	static navigationOptions = {
 		title: 'Login'
-  }
+	}
+	
+	componentDidMount() {
+		const redirectPage = this.props.navigation.getParam('page')
+		const redirectAction = this.props.navigation.getParam('action')
+		redirectAction && this.setState({redirectAction, redirectPage})
+	}
 
 	componentWillMount () {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
@@ -95,12 +104,15 @@ class LoginPageContainer extends React.Component {
 
 
 	redirect = () => {
-		const { waitingAction, params } = this.props.waitingAction
+
+		const { redirectAction, redirectPage } = this.state
 				
-		if(waitingAction !== "")
-			this.props.navigation.navigate(waitingAction, params)
-		
-		this.props.navigation.navigate('tabs')
+		if(redirectAction !== '') {
+			console.log(redirectAction, "redirect	")
+			this.props.navigation.navigate(redirectPage, {action:redirectAction})
+		}else {
+			this.props.navigation.navigate('tabs')
+		}
 	}
 
 	onSubmit = ()  => {
@@ -200,7 +212,6 @@ class LoginPageContainer extends React.Component {
 		const { formError, titleMargin,titleFont, deviderHeight,validForm } = this.state
 
 		const titleSize = titleFont
-
 		return <LoginPageView 
 							titleMargin={titleMargin}
 							titleSize= {titleSize}

@@ -26,19 +26,19 @@ const initialState = {
   creating: false
 }
 
-export const feedsReducer = (state=initialState, action) => {
+export const allFeedsReducer = (state=initialState, action) => {
   switch(action.type) {
-    case Actions.FETCH_FEEDS_REQUEST : 
+    case Actions.FETCH_ALL_FEEDS_REQUEST : 
       return {
         ...state,
         loading: true
       }
-    case Actions.FETCH_FEEDS_REQUEST_FAIL: 
+    case Actions.FETCH_ALLFEEDS_REQUEST_FAIL: 
       return {
         ...state,
         loading: false
       } 
-    case Actions.FETCH_FEEDS_REQUEST_SUCCESS:
+    case Actions.FETCH_ALLFEEDS_REQUEST_SUCCESS:
       const unOrderdFeeds = [
         ...Object.keys(action.feeds).map(feed => ({
           id: feed,
@@ -66,9 +66,52 @@ export const feedsReducer = (state=initialState, action) => {
       return {
         ...state,
         loading: false,
-        feeds: [ ...state.feeds ,...sortedIndex.map(index => unOrderdFeeds[index])]
+        feeds: [...sortedIndex.map(index => unOrderdFeeds[index])]
       }
-    
+    case Actions.CREATE_FEED_REQUEST: {
+      return {
+        ...state,
+        creating: true
+      }
+    }
+    case Actions.CREATE_FEED_SUCESS: {
+      return {
+        ...state,
+        creating: false
+      }
+    }
+    case Actions.CREATE_FEDD_FAIL: {
+      return {
+        ...state,
+        creating: false
+      }
+    }
+    case Actions.VOTE_UP: {
+
+      const feed = state.feeds.filter( feed => feed.id === action.feedId )
+      const newVote = {}
+
+      if(feed.voteUp === false) {
+        newVote = { 0 : action.userid}
+      } else {
+        const key = Object.keys(feed.voteUp).length
+        newVote = { key : action.userid}
+      }
+      return {
+        ...state,
+        feeds: [
+          ...state.feeds.map(feed => {
+            if(feed.id === action.feedId) {
+              return {
+                ...feed,
+                voteUp: newVote
+              }
+            }
+            return feed
+          })
+        ]
+      }
+    }
     default : 
       return state
   }

@@ -31,7 +31,13 @@ export const FeedView = ({feed, makeAction}) => {
         {feed.postMedia.url !== "" &&
           <WithImage url={feed.postMedia.url} />} 
       </View>
-
+      {feed.location.description !== undefined && feed.location.description !== '' && (
+        <View style={styles.postLocation} >
+          <Text style={styles.postLocationText}>
+              {feed.location.description}
+          </Text>
+        </View>
+      )}
       <View style={styles.actionArea}>
         <View style={styles.action}>
           

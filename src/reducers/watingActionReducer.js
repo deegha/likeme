@@ -6,7 +6,7 @@ import * as Actions from '../actions/waitingActions'
 
 const initialState = {
   waitingAction: '',
-  params : {}
+  waitingParams : {}
 }
 
 export const waitingActionReducer = (state=initialState, action) => {

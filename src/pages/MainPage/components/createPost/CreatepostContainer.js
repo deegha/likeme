@@ -23,9 +23,11 @@ class CreatepostContainer extends React.Component {
 			},
 			currentUserLocation: {
 				latitude: "",
-				longitude: ""
+				longitude: "",
+				description: ""
 			},
 			errorMessage: null,
+			falidForm: false,
 			title: "",
 			info: "",
 			postType: null,
@@ -38,9 +40,9 @@ class CreatepostContainer extends React.Component {
 	}
 
 	async componentDidMount() {
-		// if(!this.prop.authenticated) {
-		// 	this.props.navigation.navigate('login')
-		// }
+		if(!this.prop.authenticated) {
+			this.props.navigation.navigate('login')
+		}
     await Permissions.askAsync(Permissions.CAMERA_ROLL)
 		await Permissions.askAsync(Permissions.CAMERA)
 		this.getLocationAsync()
@@ -52,16 +54,17 @@ class CreatepostContainer extends React.Component {
 		}
 	}
 
-	setLocationPostLocation = (location) => {
+	setLocationPostLocation = (location, description) => {
 		this.setState({location:{
 			latitude: location.lat,
-			longitude: location.lng
+			longitude: location.lng,
+			description
 		}})
 		console.log(location, "location")
 	}
 
 	submitPost = () => {
-		const { latitude, longitude } = this.state.location
+		const { latitude, longitude, description } = this.state.location
 		const postGeo = Geohash.encode(latitude, longitude, 6)
 		const curGeoHash = Geohash.encode(this.state.currentUserLocation.latitude, this.state.currentUserLocation.longitude, 6)
 
@@ -104,9 +107,13 @@ class CreatepostContainer extends React.Component {
 	}
 
 	onTextChange = (value) => this.setState(
-    {info : value}
+    {info : value}, ()=> this.validateForm()
 	)
 	
+	validateForm = () => {
+		(this.state.info !=='' || this.state.postMedia !=='' )? this.setState({falidForm: true}): this.setState({falidForm: false}) 
+	}
+
 	getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
@@ -130,7 +137,7 @@ class CreatepostContainer extends React.Component {
     })
 
     if (!result.cancelled) {
-      this.setState({ postMedia: { url: result.uri, type: result.type } });
+      this.setState({ falidForm: true, postMedia: { url: result.uri, type: result.type } })
     }
 	}
 	
@@ -141,17 +148,17 @@ class CreatepostContainer extends React.Component {
 	
 
 		if (!result.cancelled) {
-      this.setState({ postMedia: { url: result.uri, type: result.type } });
+      this.setState({ falidForm: true, postMedia: { url: result.uri, type: result.type } })
     }
   }
 
 	render() {
-		const { postText, postMedia, currentUserLocation } = this.state
+		const { postText, postMedia, currentUserLocation, falidForm } = this.state
 		return <CreatePost
 							location={this.state.location}
 							setLocationPostLocation={this.setLocationPostLocation}
 							postMedia={postMedia}
-							disabled={false}
+							disabled={!falidForm}
 							postText={postText} 
 							pickImage={this.pickImage}
 							takePhoto={this.takePhoto}
@@ -165,9 +172,9 @@ const mapStateToProps = ({auth}) => ({
 	authenticated: auth.authenticated
 })
 
-const mapdispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch) => ({
 	createFeed : (data, postGeo, curLocation) => dispatch(createFeedAction(data, postGeo, curLocation)),
 	createFeedRequest: () => dispatch(createFeedRequest())
 })
 
-export default connect(mapStateToProps, mapdispatchToProps)(CreatepostContainer) 
+export default connect(mapStateToProps, mapDispatchToProps)(CreatepostContainer) 

@@ -24,7 +24,7 @@ class RegisterContainer extends React.Component {
       name: '',
       email:'',
       password: '',
-      confirmPassword: '',
+      confirmpassword: '',
       formError: '',
       validForm: false,
       creating: false
@@ -162,17 +162,15 @@ class RegisterContainer extends React.Component {
   }
 
   onChange = (feild, value) => this.setState(
-    {[feild]: value, setFormError: ""}, ()=> this.validateForm()
+    {[feild]: value, setFormError: ""}, () => this.validateForm()
   )
 
   validateForm = () => {
    
-    (validateEmail(this.state.email)  
+    ( validateEmail(this.state.email) 
       && this.state.password !== ''
-      // && this.state.password === this.state.confirmPassword
-      && this.state.confirmPassword !== '')? this.setState({validForm: true}): this.setState({validForm: false})
-
-      console.log( this.state.confirmPassword)
+      && this.state.password === this.state.confirmpassword
+      && this.state.confirmpassword !== '')? this.setState({validForm: true}): this.setState({validForm: false})
 	}
 
 

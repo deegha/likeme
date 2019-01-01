@@ -40,11 +40,13 @@ export const styles = StyleSheet.create({
         display: 'flex',
         width: '80%',
         justifyContent: 'center',
-        height:60,
+        height:50,
     },
     formError: {
         color: "#e74c3c",
-        textAlign: 'center'
+        textAlign: 'center',
+        fontWeight: '600',
+        fontSize: 10
     },
     loginTitileContainer: {
         display:'flex',

@@ -25,13 +25,7 @@ export const authenticationReducer = (state = initial_state, action) => {
 				loading: false
 			}
 		case Actions.LOG_OUT : 
-			return {
-				userId: null,
-				userName: null,
-				email: null,
-				authenticated : false,
-				loading: false
-			}
+			return initial_state
 		default :
 			return state 
 	}

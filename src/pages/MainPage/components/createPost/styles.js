@@ -53,5 +53,6 @@ export const styles = StyleSheet.create({
     postOptionsSection: {
         flexDirection: 'row',
         justifyContent: 'center'
-    }
+    },
+  
 })

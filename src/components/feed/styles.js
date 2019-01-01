@@ -53,18 +53,24 @@ export const styles = StyleSheet.create({
   statText: {
     fontSize: 11,
     textAlign: 'center',
-    color: shared.secondary_text
+    color: "#95a5a6"
   },
   action: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    margin: 5,
   },
   postLocation: {
     paddingHorizontal: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10
   },
   postLocationText: {
     fontWeight: '100',
     color: shared.secondary_text,
-    fontSize: 11
+    fontSize: 11,
+    marginLeft: 5,
+    
   }
 })

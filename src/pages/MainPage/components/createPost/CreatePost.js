@@ -5,6 +5,7 @@ import Image from 'react-native-scalable-image'
 import { TextFeild, RoundButton, GooglePlacesInput } from '../../../../components/'
 import { styles } from './styles'
 
+
 export const CreatePost = ({ onTextChange, location,  submitPost, postText, disabled, postMedia, pickImage, takePhoto, setLocationPostLocation }) => {
 	
 	return (
@@ -43,7 +44,9 @@ export const CreatePost = ({ onTextChange, location,  submitPost, postText, disa
 					multiline={true}
 					placeholder="Tell them about your deal"
 					/>
-				<GooglePlacesInput location={location} callback={setLocationPostLocation} />
+					<GooglePlacesInput location={location} callback={setLocationPostLocation} />
+
+			
 			</View>
 			
 			<View style={styles.postData}>

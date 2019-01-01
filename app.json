@@ -1,18 +1,21 @@
 {
   "expo": {
-    "name": "Black App",
-    "description": "Share somthing cool",
-    "slug": "likeme",
+    "name": "Promo App",
+    "description": "Share your promotions, Promo app is a centralize promotions hub for all kind of businesses. This app will show all the promotions near you",
+    "slug": "promoapp",
     "privacy": "unlisted",
     "sdkVersion": "30.0.0",
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "notification": {
+      "icon": "./assets/icon.png"
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#00bcd4"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,6 +25,9 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.deegha.promoapp"
     }
   }
 }

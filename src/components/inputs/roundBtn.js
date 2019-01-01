@@ -16,7 +16,7 @@ export class RoundBtn extends React.Component {
 
     if(disabled)
       return (
-        <View style={[styles.roundBtn,{backgroundColor: "#bdc3c7"}]}>
+        <View style={[styles.roundBtn,{backgroundColor: "#ecf0f1"}]}>
           <Text style={{fontWeight:'bold'}}>{loading?"Loading":children}</Text>
         </View>
       )

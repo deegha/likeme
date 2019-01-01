@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {View, Text, TouchableOpacity, Image, Animated } from 'react-native'
-import { TextFeild, RoundBtn } from '../../components'
+import { TextFeild, RoundBtn, FadeInView } from '../../components'
 
 import { styles } from '../loginPage/styles'
 import { regStyles } from './styles'
@@ -9,7 +9,6 @@ import { regStyles } from './styles'
 export const RegisterView = ({
 	pickImage, formError, onChange, onSubmit, data, imageMargin, imageWidth,imageText,validForm
 }) => {
-	console.log(validForm, 'validForm')
   return (
     <View style={styles.container}>
 	
@@ -28,9 +27,12 @@ export const RegisterView = ({
 		</View>
 		<View style={styles.loginTitileContainer}>
 			{formError !== "" && 	
-			<Text style={styles.formError}>
-					{formError}
-			</Text>}
+			<FadeInView>	
+				<Text style={styles.formError}>
+						{formError}
+				</Text>
+			</FadeInView>
+			}
 		</View>
     <View style={styles.innerContainer}>
 			<TextFeild 
@@ -60,7 +62,7 @@ export const RegisterView = ({
 				name="Confirm Password"
 				onChange={onChange}
 				type="password"
-				feild="confirmPassword"  
+				feild="confirmpassword"  
 				placeholder="Confirm Password"/>
 		</View>
 		<View style={styles.btnContainer}>

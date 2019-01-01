@@ -3,30 +3,39 @@
  * Created by Deegha on 26/09/2018
  */
 
+const baseUrl = "http://localhost:5000/like-me-65680/us-central1/"
+
+const headers = {
+  "Content-Type": "application/json",
+  "Accept" : "application/json"
+}
+
+const GET = async(path) => {
+  
+  console.log('get', baseUrl+path )
+  return fetch(baseUrl+path, {
+    headers: headers
+  }).then(checkStatusAndGetJSON)
+}
+
+const POST = async (path, data) => {
+
+  console.log('post', baseUrl+path)
+  return fetch(baseUrl+path, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(data) 
+  }).then(checkStatusAndGetJSON)
+}   
+
+
 import Fire  from "./firebase"
 
 export const getFeeds = (userGeo) =>  {
-  console.log(userGeo, "userGeo")
   return Fire.database().ref("feeds").child(userGeo).once("value")
 }
 
 export const getAllFeeds = () => Fire.database().ref("feeds").once("value")
-
-export const getSecondaryFeeds = (keys) => {
-
-  // return keys.map(key => Fire.database().ref("feeds").child(key).once("value"))
-  let promises =  keys.map(key => Fire.database().ref("feeds").child(key).once("value"))
-
-
-  return Promise.resolve(promises) 
-  // return Promise.all(promises).then(snapshots => {
-  //   snapshots.forEach(snapshot => {
-  //     if(snapshot.val() !== null){
-  //       return snapshot.val()
-  //     }
-  //   })
-  // })
-} 
 
 export const createFeed = (feed, postGeo) => Fire.database().ref(`feeds/${postGeo}`).push(feed)
 
@@ -35,6 +44,10 @@ export const getUserById = (id) => Fire.database().ref("users").orderByChild('id
 export const createUser = (id, userObj) => Fire.database().ref(`users/${id}`).set(userObj)
 
 export const voteUp = (id) =>  Fire.database().ref(`feeds/${id}/vote`).push(id)
+
+export const setPushToken = (token, userID) => Fire.database().ref(`users/${userID}/notificationToken`).update(token)
+
+export const getFeedsByUser = (userID) => POST('getFeedsByuser')
 
 
 

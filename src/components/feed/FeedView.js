@@ -2,10 +2,11 @@ import React from 'react'
 import { View, Text, Dimensions, Image } from 'react-native'
 
 import { RoundButton } from '../'
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, Foundation, FontAwesome, Entypo } from '@expo/vector-icons'
 
 import propic from '../../../assets/propic.jpg'
 import { VOTE_UP, VOTE_DOWN, CLICK_ACTION, SHARE } from './actionsConstants' 
+import { FadeInView } from '../'
 
 import { WithImage } from './withImage'
 import { styles } from './styles'
@@ -13,6 +14,7 @@ import { styles } from './styles'
 export const FeedView = ({feed, makeAction}) => {
   
   return (
+    <FadeInView>
     <View style={styles.container}>
 
       <View style={styles.contentArea}>
@@ -33,6 +35,7 @@ export const FeedView = ({feed, makeAction}) => {
       </View>
       {feed.location.description !== undefined && feed.location.description !== '' && (
         <View style={styles.postLocation} >
+          <Entypo name="location-pin" size={11} color="black" />
           <Text style={styles.postLocationText}>
               {feed.location.description}
           </Text>
@@ -42,9 +45,10 @@ export const FeedView = ({feed, makeAction}) => {
         <View style={styles.action}>
           
           <RoundButton callBack={makeAction(VOTE_UP, feed.id)}>
-            <Ionicons name="ios-thumbs-up" size={20} color="black" />
+            <Foundation name="heart" size={20} color="#e74c3c" />
+            <Text style={styles.statText}>{ feed.voteUp.length }220</Text>
           </RoundButton>
-          <Text style={styles.statText}>{ feed.voteUp.length } up</Text>
+          
         </View>
         {/* <View>
         <Text style={styles.statText}>14 down</Text>
@@ -62,10 +66,12 @@ export const FeedView = ({feed, makeAction}) => {
           
           <RoundButton callBack={makeAction(SHARE, feed.id)}>
             <Ionicons name="md-share" size={20} color="black" />
+            <Text style={styles.statText}>120</Text>
           </RoundButton>
-          <Text style={styles.statText}>120 shares</Text>
+          
         </View>
       </View>
     </View>
+    </FadeInView>
   )
 }

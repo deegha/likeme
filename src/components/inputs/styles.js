@@ -23,14 +23,18 @@ export const styles = StyleSheet.create({
     SeachIconContainer: {
       width: '100%',
       padding: 7,
-      paddingTop: 0
+      paddingTop: 0,
+      alignItems: 'center',
+      flexDirection: 'row'
     },
     locationPlaceholder: {
       fontWeight: '100',
-      color: '#bdc3c7'
+      color: '#bdc3c7',
+      fontSize: 12,
     },
     locatoionText: {
-      color: '#000000'
+      color: '#000000',
+      fontSize: 12
     },
     locationSeacrhContainer: {
       padding: 14,
@@ -47,5 +51,9 @@ export const styles = StyleSheet.create({
       padding: 5
     }, goback: {
       color: shared.secondaryColor,
-  },
+    },
+    // locationContainer: {
+    //   flexDirection: 'row',
+    //   alignItems: 'center'
+    // }
   })

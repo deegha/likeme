@@ -12,9 +12,9 @@ export const RoundButton = ({callBack, extrenalStyles, opacity, children, disabl
 			disabled={disabled}
 			onPress={callBack}
 			style={[styles.btnContainer, extrenalStyles]}>
-			<Text style={textStyles}>
+	
 				{children}
-			</Text>
+
 		</TouchableOpacity>
 	)
 }

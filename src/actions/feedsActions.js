@@ -2,7 +2,7 @@
  * Created by deegha
  */
 
-import { getFeeds, createFeed, voteUp, getSecondaryFeeds, getAllFeeds } from '../services/backendClient'
+import { getFeeds, createFeed, voteUp, getAllFeeds } from '../services/backendClient'
 
 /**
  * 
@@ -34,7 +34,7 @@ export const fetchFeedsRequestSuccess = (feeds) => ({
 
 export const fetchFeeds = (userGeo, neighboursArr) => async (dispatch) => {
 	dispatch(fetchFeedsRequest())   
-	console.log(neighboursArr)
+
 	try {
 		const res = await getFeeds(userGeo)
 		const feeds = res.val()
@@ -53,10 +53,6 @@ export const fetchFeeds = (userGeo, neighboursArr) => async (dispatch) => {
 			})
 		})
 
-		Promise.all(newList)
-		.then(res => console.log(res))
-		
-		
 	}catch(err) {
 		dispatch(fetchFeedsRequestFail())
 		console.log(err, "fetch feeds")
@@ -153,8 +149,8 @@ const voteUpState = (feedId, userid) => ({
 }) 
 
 export const voteUpAction = (feedId) => (dispatch, getState) => {
-	dispatch(voteUpState(feedId, getState().auth.user.id))
-
-	
+	dispatch(voteUpState(feedId, getState().auth.user.id))	
 }
+
+
 

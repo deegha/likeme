@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Modal, TouchableOpacity, Text, TouchableHighlight } from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
-
+import {  MaterialIcons } from '@expo/vector-icons'
 import { styles } from './styles'
 export class GooglePlacesInput extends React.Component {
 
@@ -19,6 +19,7 @@ export class GooglePlacesInput extends React.Component {
     return (
       <View>
         <TouchableOpacity style={[styles.SeachIconContainer]}  onPress={this.setVisibility(true)}>
+          <MaterialIcons name="add-location" size={12} color="#bdc3c7" />
           {locationDescription === "" ? 
             <Text style={styles.locationPlaceholder}>Location</Text>: 
             <Text style={styles.locatoionText}>{locationDescription}</Text> }

@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native'
 import * as shared from '../sharedStyles' 
+import { Dimensions } from 'react-native'
 
 export const styles = StyleSheet.create({
   container: {
@@ -27,10 +28,10 @@ export const styles = StyleSheet.create({
     justifyContent:'flex-start'
   },
   userImage: {
-    width: 40,
-    height: 40,
-    borderRadius:20,
-    marginTop:4
+    width: 60,
+    height: 60,
+    borderRadius:30,
+    marginRight:6
   },
   postContent: {
     flex: 6,
@@ -72,5 +73,18 @@ export const styles = StyleSheet.create({
     fontSize: 11,
     marginLeft: 5,
     
+  },
+  postBox: {
+    justifyContent: 'center',
+    alignItems:'center',
+    width: Dimensions.get('window').width-30,
+    
+    backgroundColor: '#3498db'
+  },
+  postBoxText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'center'
   }
 })

@@ -7,19 +7,24 @@ class ActiveUserFeeds extends React.Component {
 
 
   render () {
-    const { user } = this.props
+    const { user, feeds } = this.props
 
     return (
-      <ActiveUserFeedsView user={user} />
+      <ActiveUserFeedsView user={user} feeds={feeds} />
     )
   }
 
 }
 
-const mapStateToProps = ({auth: {user, loading, authenticated }}) => ({
+const mapStateToProps = ({
+  auth: {user, loading, authenticated },
+  allFeeds: { feeds }
+}) => ({
   user,
   loading,
-  authenticated
+  authenticated,
+  
+  feeds
 })
 
 export default connect(mapStateToProps)(ActiveUserFeeds)

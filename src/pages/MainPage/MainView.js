@@ -5,7 +5,7 @@
 import React from 'react'
 import LocationFeeds from '../locationFeeds/LocationFeeds'
 import AllFeeds  from '../allFeeds/AllFeeds'
-import ActiveUserFeeds from '../profle/ActivaUserFeeds'
+import ActiveUserFeeds from '../profile/ActivaUserFeeds'
 import {  Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 
 import { createBottomTabNavigator } from 'react-navigation'

@@ -5,23 +5,7 @@
 import * as Actions from '../actions/feedsActions'
 
 const initialState = {
-  feeds : [
-    {
-      id: null,
-      postText: "",
-      postMedia: {
-        type: null,
-        url: ""
-      },
-      createdAt: '',
-      userObj: {
-        id: '',
-        name: '',
-        image: ''
-      },
-      voteUp:{}
-    }
-  ],
+  feeds : [],
   loading: false,
   creating: false
 }

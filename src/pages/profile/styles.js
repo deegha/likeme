@@ -3,7 +3,6 @@ import * as shared from '../../components/sharedStyles'
 
 export const styles = StyleSheet.create({
   container: {
-    paddingTop: 22,
     backgroundColor: shared.backGround,
     height: '100%',
     flex: 1
@@ -12,7 +11,9 @@ export const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
+    padding: 25,
+    paddingTop: 82,
+    paddingBottom: 62,
     alignItems: 'center',
     backgroundColor: shared.secondaryColor,
   },
@@ -22,16 +23,19 @@ export const styles = StyleSheet.create({
   displayName: {
     fontWeight: 'bold',
     fontSize: 40,
+    color: '#353b48'
   },
   profileDetails: {
     marginTop: 5,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+   
   },
-  follow: {
+  detail: {
     fontSize: 13,
-
+    fontWeight: 'bold',
+    color: '#636e72'
   },
   displayImage: {
     height: 70,

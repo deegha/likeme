@@ -13,7 +13,6 @@ export const ActiveUserFeedsView = ({
   user,
   feeds
 }) => {
-  console.log("Dsfsdafd")
   return (
 
       <View style={styles.container}>
@@ -21,15 +20,17 @@ export const ActiveUserFeedsView = ({
           <View style={styles.informationArea}>
             <Text style={styles.displayName}>{user.displayName}</Text>
             <View  style={styles.profileDetails}>
-              <Text style={styles.follow}>10Followers</Text>
+              <Text style={styles.detail}>10 Followers</Text>
               <View style={{width: 10}} />
-              <Text style={styles.follow}>20Following</Text>
+              <Text style={styles.detail}>20 Following</Text>
+              <View style={{width: 10}} />
+              <Text style={styles.detail}>50 Promotions</Text>
             </View>
           </View>
           <Image style={styles.displayImage} source={{uri: user.image}} /> 
         </View>
         <View  style={styles.body}>
-          <Text>dsafdsa</Text>
+          <Text></Text>
         </View>
       </View>
 

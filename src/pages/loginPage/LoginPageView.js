@@ -26,7 +26,7 @@ export const LoginPageView = ({
 			<Animated.Text style={[styles.loginTitile, {
 				fontSize: titleSize,
 			}]}>
-				Black App
+				PROMO APP
 			</Animated.Text>
 		</Animated.View>
 		<View style={[styles.innerContainer]}>

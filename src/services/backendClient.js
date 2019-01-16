@@ -3,7 +3,7 @@
  * Created by Deegha on 26/09/2018
  */
 
-const baseUrl = "http://localhost:5000/like-me-65680/us-central1/"
+const baseUrl = "https://us-central1-like-me-65680.cloudfunctions.net/"
 
 const headers = {
   "Content-Type": "application/json",
@@ -15,17 +15,19 @@ const GET = async(path) => {
   console.log('get', baseUrl+path )
   return fetch(baseUrl+path, {
     headers: headers
-  }).then(checkStatusAndGetJSON)
+  })
 }
 
 const POST = async (path, data) => {
 
   console.log('post', baseUrl+path)
-  return fetch(baseUrl+path, {
+  const result = await fetch(baseUrl+path, {
     method: "POST",
     headers: headers,
     body: JSON.stringify(data) 
-  }).then(checkStatusAndGetJSON)
+  })
+
+  return await result.json()
 }   
 
 
@@ -43,11 +45,12 @@ export const getUserById = (id) => Fire.database().ref("users").orderByChild('id
 
 export const createUser = (id, userObj) => Fire.database().ref(`users/${id}`).set(userObj)
 
-export const voteUp = (id) =>  Fire.database().ref(`feeds/${id}/vote`).push(id)
+export const voteUp = (feedID, id) =>  Fire.database().ref(`feeds/${feedID}/vote`).push(id)
 
 export const setPushToken = (token, userID) => Fire.database().ref(`users/${userID}/notificationToken`).update(token)
 
-export const getFeedsByUser = (userID) => POST('getFeedsByuser')
+export const getFeedsByUser = (userId) => POST('getFeedsByuser', {userId})
+
 
 
 

@@ -8,6 +8,8 @@ import { GooglePlacesInput } from './inputs/loactionSearch'
 import { FadeInView } from './fadeInView/FadeInView'
 import CreatepostContainer from '../pages/MainPage/components/createPost/CreatepostContainer'
 import { FeedsView } from './feedsView/FeedsView'
+import { ProfileFeed } from './profileFeed/ProfileFeed'
+import LikeBtn from './likeBtn/likeBtn'
 
 export {
     ModalComponent,
@@ -19,5 +21,7 @@ export {
     GooglePlacesInput,
     FadeInView,
     CreatepostContainer,
-    FeedsView
+    FeedsView,
+    ProfileFeed,
+    LikeBtn
 }

@@ -38,7 +38,7 @@ export const feedsReducer = (state=initialState, action) => {
             name: action.feeds[feed].userObj.displayName,
             image: action.feeds[feed].userObj.image
           },
-          voteUp: action.feeds[feed].voteup !== false ? action.feeds[feed].voteup: {} 
+          voteUp: action.feeds[feed].voteup  
         }))
       ]
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image, 
         View, 
+        ScrollView,
         TouchableOpacity, 
         Animated, 
         Text, 
@@ -8,17 +9,40 @@ import { Image,
         SafeAreaView } from 'react-native'
 
 import { styles } from './styles'
+import { ProfileFeed } from '../../components'
+
+const Listheader = ({children}) => {
+  return (
+    <View style={styles.listheaderContainer}>
+      <Text style={styles.listheadertext}>{children}</Text>
+    </View>
+  )
+}
 
 export const ActiveUserFeedsView = ({
   user,
-  feeds
+  userFeeds,
+
+  handleScroll,
+  headerPaddingTop,
+  headerPaddingBottom,
+  titleFontSize,
+  imageWidth
 }) => {
+
+  console.log(userFeeds,"userFeeds")
+
   return (
 
       <View style={styles.container}>
-        <View style={styles.header}>
+        <Animated.View style={[styles.header, {
+          paddingTop: headerPaddingTop,
+          paddingBottom: headerPaddingBottom
+        }]}>
           <View style={styles.informationArea}>
-            <Text style={styles.displayName}>{user.displayName}</Text>
+            <Animated.Text style={[styles.displayName, {
+              fontSize: titleFontSize
+            }]}>{user.displayName}</Animated.Text>
             <View  style={styles.profileDetails}>
               <Text style={styles.detail}>10 Followers</Text>
               <View style={{width: 10}} />
@@ -27,10 +51,35 @@ export const ActiveUserFeedsView = ({
               <Text style={styles.detail}>50 Promotions</Text>
             </View>
           </View>
-          <Image style={styles.displayImage} source={{uri: user.image}} /> 
-        </View>
+          <Animated.Image style={[styles.displayImage,{
+              height: imageWidth,
+              width: imageWidth,
+          }]} source={{uri: user.image}} /> 
+        </Animated.View>
         <View  style={styles.body}>
-          <Text></Text>
+        <ScrollView onScroll={handleScroll}>
+          {/* <Text style={styles.listtitle}>Your feeds</Text> */}
+          { userFeeds.length > 0 &&
+          <FlatList
+            scrollEventThrottle={16}
+            data={userFeeds}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({item}) =>  <ProfileFeed feed={item} />}
+            ListHeaderComponent={() => <Listheader>Added by you  </Listheader>}
+            stickyHeaderIndices={[0]}
+            initialNumToRender={4}
+            
+            />}
+ 
+          {/* <FlatList
+            scrollEventThrottle={16}
+            data={Object.keys(feeds)}
+            keyExtractor={(item) => item.toString()}
+            renderItem={({item}) =>  <ProfileFeed feed={feeds[item]} />}
+            initialNumToRender={4}
+            ListHeaderComponent={() => <Listheader>Liked by you</Listheader>}
+            /> */}
+          </ScrollView>
         </View>
       </View>
 

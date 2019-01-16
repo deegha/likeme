@@ -6,7 +6,7 @@ import { Ionicons, Foundation, FontAwesome, Entypo } from '@expo/vector-icons'
 
 import propic from '../../../assets/propic.jpg'
 import { VOTE_UP, VOTE_DOWN, CLICK_ACTION, SHARE } from './actionsConstants' 
-import { FadeInView } from '../'
+import { FadeInView, LikeBtn } from '../'
 
 import { WithImage } from './withImage'
 import { styles } from './styles'
@@ -63,11 +63,12 @@ export class FeedView extends React.PureComponent {
         <View style={styles.actionArea}>
           <View style={styles.action}>
             
-            <RoundButton callBack={makeAction(VOTE_UP, feed.id)}>
+            {/* <RoundButton callBack={makeAction(VOTE_UP, feed.id)}>
               <Foundation name="heart" size={20} color="#e74c3c" />
               <Text style={styles.statText}>{ feed.voteUp.length }220</Text>
-            </RoundButton>
-            
+            </RoundButton> */}
+
+            <LikeBtn feedId={feed.id} likesArray={feed.voteUp} />
           </View>
           {/* <View>
           <Text style={styles.statText}>14 down</Text>

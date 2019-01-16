@@ -41,5 +41,12 @@ export const styles = StyleSheet.create({
     height: 70,
     width: 70,
     borderRadius: 35
+  },
+  listheaderContainer: {
+    padding: 25
+  },
+  listheadertext: {
+    fontWeight: 'bold',
+    color: '#353b48'
   }
 })

@@ -2,7 +2,7 @@
  * Created by deegha
  */
 
-import { getFeeds, createFeed, voteUp, getAllFeeds } from '../services/backendClient'
+import { getFeeds, createFeed, voteUp, getAllFeeds, getFeedsByUser } from '../services/backendClient'
 
 /**
  * 
@@ -17,6 +17,10 @@ export const FETCH_FEEDS_REQUEST_SUCCESS = 'FETCH_FEEDS_REQUEST_SUCCESS'
 export const FETCH_ALL_FEEDS_REQUEST = 'FETCH_ALL_FEEDS_REQUEST'
 export const FETCH_ALLFEEDS_REQUEST_FAIL = 'FETCH_ALLFEEDS_REQUEST_FAIL'
 export const FETCH_ALLFEEDS_REQUEST_SUCCESS = 'FETCH_ALLFEEDS_REQUEST_SUCCESS'
+
+export const FETCH_USER_FEEDS_REQUEST = 'FETCH_USER_FEEDS_REQUEST'
+export const FETCH_USER_FEEDS_SUCCESS = 'FETCH_USER_FEEDS_SUCCESS'
+export const FETCH_USER_FEEDS_FAIL = 'FETCH_USER_FEEDS_FAIL'
 
 
 export const fetchFeedsRequest = () => ({
@@ -149,8 +153,36 @@ const voteUpState = (feedId, userid) => ({
 }) 
 
 export const voteUpAction = (feedId) => (dispatch, getState) => {
-	dispatch(voteUpState(feedId, getState().auth.user.id))	
+
+	const userID = getState().auth.user.id
+	voteUp(feedId,userID)
+	.then( () => dispatch(voteUpState(feedId, userID)))
+	.catch(err => console.log(err))
+
 }
 
+const fetchUserFeedsRequest = () => ({
+	type: FETCH_USER_FEEDS_REQUEST	
+})
 
+const fetchUserFeedsSuccess = (feeds) => ({
+	type: FETCH_USER_FEEDS_SUCCESS,
+	feeds
+})
+
+const fetchUserFeedsFail = () => ({
+	type: FETCH_USER_FEEDS_FAIL	
+})
+
+export const fetchUserFeeds = (userId) => async (dispatch) => {
+	dispatch(fetchUserFeedsRequest())
+
+	try {
+		const feeds = await getFeedsByUser(userId)
+		dispatch(fetchUserFeedsSuccess(feeds.data))
+	}catch(err) {
+		dispatch(fetchUserFeedsFail())
+		console.log(err)
+	}
+}
 

@@ -43,9 +43,9 @@ class AllFeeds extends React.Component {
   }
 
   handleScroll = (e) =>  {
-    const scrollSensitivity = 4 / 3;
-    const offset = e.nativeEvent.contentOffset.y / scrollSensitivity;
-    this.state.scrollOffset.setValue(offset);
+    const scrollSensitivity = 4 / 3
+    const offset = e.nativeEvent.contentOffset.y / scrollSensitivity
+    this.state.scrollOffset.setValue(offset)
   }
 
   navigateTol = () => {

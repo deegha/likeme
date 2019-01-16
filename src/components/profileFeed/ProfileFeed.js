@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, TouchableOpacity, Animated, Text, Image } from 'react-native'
-
+import {  Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { styles } from './styles'
  
 export class ProfileFeed extends React.PureComponent {
@@ -11,18 +11,21 @@ export class ProfileFeed extends React.PureComponent {
 
     return (
       <View style={styles.container}>
-        {feed.postMedia.url && <Image source={feed.postMedia.url} style={styles.image} /> }
-        <View>
+        <Image source={{uri: feed.postMedia.url}} style={styles.image} />
+        <View style={styles.descriptionBox}>
+          
           <Text style={styles.description}>{feed.postText}</Text>
           {feed.location.description !== undefined && feed.location.description !== '' && (
             <View style={styles.postLocation} >
-              <Entypo name="location-pin" size={11} color="black" />
+             
               <Text style={styles.postLocationText}>
                   {feed.location.description}
               </Text>
             </View>
           )}
-          
+          <TouchableOpacity style={styles.removeBtn}>
+            <Text style={styles.removeBtnText}>Remove</Text>
+          </TouchableOpacity>
         </View>
       </View>
     )

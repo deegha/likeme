@@ -1,13 +1,38 @@
 import React from 'react'
 import { View, TouchableOpacity, Animated, Text, Image } from 'react-native'
 import {  Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { styles } from './styles'
- 
+import { styles,hStyles } from './styles'
+import { LinearGradient } from 'expo'
 export class ProfileFeed extends React.PureComponent {
 
   render () {
 
-    const { feed } = this.props
+    const { feed, horizontal } = this.props
+
+
+    if(horizontal) {
+
+      return(
+        <View style={hStyles.container}>
+          <Image source={{uri: feed.postMedia.url}} style={hStyles.image} />
+          <View style={styles.descriptionBox}>
+            
+            <Text style={styles.description}>{feed.postText.substring(0, 100)}</Text>
+            {feed.location.description !== undefined && feed.location.description !== '' && (
+              <View style={styles.postLocation} >
+              
+                <Text style={styles.postLocationText}>
+                    {feed.location.description}
+                </Text>
+              </View>
+            )}
+            <TouchableOpacity style={styles.removeBtn}>
+              <Text style={styles.removeBtnText}>Remove</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )
+    }
 
     return (
       <View style={styles.container}>
@@ -27,6 +52,7 @@ export class ProfileFeed extends React.PureComponent {
             <Text style={styles.removeBtnText}>Remove</Text>
           </TouchableOpacity>
         </View>
+
       </View>
     )
   }

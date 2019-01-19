@@ -3,9 +3,10 @@ import * as shared from '../../components/sharedStyles'
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: shared.backGround,
+    backgroundColor: '#ffffff',
     height: '100%',
-    flex: 1
+    flex: 1,
+    
   },
   header: {
     width: '100%',
@@ -43,7 +44,7 @@ export const styles = StyleSheet.create({
     borderRadius: 35
   },
   listheaderContainer: {
-    padding: 25
+    padding: 25,
   },
   listheadertext: {
     fontWeight: 'bold',

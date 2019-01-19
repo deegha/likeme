@@ -31,7 +31,6 @@ export const ActiveUserFeedsView = ({
   likedFeeds
 }) => {
 
-  console.log(likedFeeds)
   return (
 
       <View style={styles.container}>
@@ -58,27 +57,33 @@ export const ActiveUserFeedsView = ({
         </Animated.View>
         <View  style={styles.body}>
         <ScrollView style={styles.scrollView} onScroll={handleScroll}>
-          {/* <Text style={styles.listtitle}>Your feeds</Text> */}
+          {<Listheader>Liked by you  </Listheader>}
+           <FlatList
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            scrollEventThrottle={16}
+            data={likedFeeds.likedFeeds}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({item}) =>  <ProfileFeed horizontal={true} feed={item} />}
+            initialNumToRender={4}
+            // ListHeaderComponent={() => <Listheader>Liked by you</Listheader>}
+            />
+
+          
           { userFeeds.length > 0 &&
           <FlatList
+            
             scrollEventThrottle={16}
             data={userFeeds}
             keyExtractor={(item) => item.id.toString()}
-            renderItem={({item}) =>  <ProfileFeed feed={item} />}
+            renderItem={({item}) =>  <ProfileFeed  feed={item} />}
             ListHeaderComponent={() => <Listheader>Added by you  </Listheader>}
             stickyHeaderIndices={[0]}
             initialNumToRender={4}
             
             />}
  
-          <FlatList
-            scrollEventThrottle={16}
-            data={likedFeeds.likedFeeds}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({item}) =>  <ProfileFeed feed={item} />}
-            initialNumToRender={4}
-            ListHeaderComponent={() => <Listheader>Liked by you</Listheader>}
-            />
+         
           </ScrollView>
         </View>
       </View>

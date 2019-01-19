@@ -34,6 +34,14 @@ class ActiveUserFeeds extends React.Component {
     }
   }
 
+  componentDidUpdate(preProps) {
+
+    if(preProps.authenticated !== this.props.authenticated) {
+      fetchUserFeeds(this.props.user.id)
+      fetchLikedFeeds(this.props.user.id)
+    }
+  }
+
   handleScroll = (e) =>  {
     const scrollSensitivity = 4 / 3;
     const offset = e.nativeEvent.contentOffset.y / scrollSensitivity;

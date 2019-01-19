@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start' ,
     backgroundColor: '#ffff',
-    margin: 1
+    margin: 1,
   },
   image: {
     width: 100,
@@ -41,5 +41,21 @@ export const styles = StyleSheet.create({
   },
   removeBtnText: {
     color: shared.red
+  }
+})
+
+export const hStyles = StyleSheet.create({
+  container: {
+    padding: 10,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start' ,
+    backgroundColor: '#ffff',
+    margin: 1,
+  },
+  image: {
+    width: 200,
+    height: 200,
+    borderRadius: 20,
+    marginRight: 10
   }
 })

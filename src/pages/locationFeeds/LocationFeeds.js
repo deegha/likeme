@@ -95,7 +95,7 @@ class LocationFeeds extends React.Component {
 
   render() {
     const { scrollOffset, showModal, userGeo } = this.state
-    const { feeds , auth} = this.props
+    const { feeds , auth, loading } = this.props
     const titleMarginTop = scrollOffset.interpolate({
       inputRange: [0, 200],
       outputRange: [45, 20],
@@ -119,7 +119,7 @@ class LocationFeeds extends React.Component {
           titleFontSize={titleFontSize}
           feedsItem={feeds} 
           auth={auth}
-          
+          loading={loading}
           userGeo={userGeo}
           createPost={this.createPost}
           navigation={this.props.navigation}

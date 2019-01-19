@@ -60,6 +60,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     margin: 5,
+    width: 60
   },
   postLocation: {
     paddingHorizontal: 10,

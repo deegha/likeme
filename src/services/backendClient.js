@@ -20,7 +20,7 @@ const GET = async(path) => {
 
 const POST = async (path, data) => {
 
-  console.log('post', baseUrl+path)
+  console.log('post', baseUrl+path, data)
   const result = await fetch(baseUrl+path, {
     method: "POST",
     headers: headers,
@@ -30,14 +30,13 @@ const POST = async (path, data) => {
   return await result.json()
 }   
 
-
 import Fire  from "./firebase"
 
-export const getFeeds = (userGeo) =>  {
-  return Fire.database().ref("feeds").child(userGeo).once("value")
-}
+export const getFeeds = (userGeo, userId) => POST('getFeedsByGEO', {userGeo, userId})
 
-export const getAllFeeds = () => Fire.database().ref("feeds").once("value")
+export const getAllFeeds = (userId, nextRef) => POST('getAllFeeds', {userId, nextRef})
+
+export const voteUp = (feedId, user) =>  POST('likeFeed',  { user, feedId })
 
 export const createFeed = (feed, postGeo) => Fire.database().ref(`feeds/${postGeo}`).push(feed)
 
@@ -45,11 +44,11 @@ export const getUserById = (id) => Fire.database().ref("users").orderByChild('id
 
 export const createUser = (id, userObj) => Fire.database().ref(`users/${id}`).set(userObj)
 
-export const voteUp = (feedID, id) =>  Fire.database().ref(`feeds/${feedID}/vote`).push(id)
-
 export const setPushToken = (token, userID) => Fire.database().ref(`users/${userID}/notificationToken`).update(token)
 
 export const getFeedsByUser = (userId) => POST('getFeedsByuser', {userId})
+
+export const getFeedsLikedByUser = (userId) => POST('likedFeeds', {userId})
 
 
 

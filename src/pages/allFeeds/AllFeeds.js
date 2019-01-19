@@ -40,6 +40,11 @@ class AllFeeds extends React.Component {
     if(action === 'create_post') {
       this.createPost()
     }
+
+    if(preProps.auth.authenticated !== this.props.auth.authenticated) {
+      this.props.getAllFeeds()  
+    }
+
   }
 
   handleScroll = (e) =>  {

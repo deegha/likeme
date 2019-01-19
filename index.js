@@ -6,17 +6,21 @@ import { authenticate, logout } from './src/actions/authActions'
 import { ToastAndroid } from 'react-native'
 import { getUserById, setPushToken } from './src/services/backendClient'
 import { Permissions, Notifications } from 'expo'
-
+import { Loading } from './src/components'
 
 console.disableYellowBox = true
 class Index extends React.Component {
+
+	state = {
+		LoadingContent: false
+	}
 
   componentDidMount() {
 
 		Fire.database().ref("feeds").on("value", (snapshot, b) => {
 			console.log("database changed")
 		})
-
+		this.setState({LoadingContent: true})
 		Fire.auth().onAuthStateChanged(userData => {
 			if(userData !== null) { 
 				getUserById(userData.uid)
@@ -28,6 +32,8 @@ class Index extends React.Component {
 							ToastAndroid.SHORT,
 							ToastAndroid.BOTTOM
 						)
+
+						this.setState({LoadingContent: false})
 					})
       }else {
 				this.props.logoutUser()
@@ -36,6 +42,8 @@ class Index extends React.Component {
 					ToastAndroid.SHORT,
 					ToastAndroid.BOTTOM
 				)
+
+				this.setState({LoadingContent: false})
 			}
 		})
 	}
@@ -68,7 +76,14 @@ class Index extends React.Component {
 	}
 
   render() {
-    return <RootStack />
+
+		if(this.state.LoadingContent) {
+			return <Loading />
+		}else{
+			return <RootStack />
+		}
+
+    
   }
 }
 

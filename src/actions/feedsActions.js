@@ -2,7 +2,7 @@
  * Created by deegha
  */
 
-import { getFeeds, createFeed, voteUp, getAllFeeds, getFeedsByUser } from '../services/backendClient'
+import { getFeeds, createFeed, voteUp, getAllFeeds, getFeedsByUser, getFeedsLikedByUser } from '../services/backendClient'
 
 /**
  * 
@@ -22,6 +22,9 @@ export const FETCH_USER_FEEDS_REQUEST = 'FETCH_USER_FEEDS_REQUEST'
 export const FETCH_USER_FEEDS_SUCCESS = 'FETCH_USER_FEEDS_SUCCESS'
 export const FETCH_USER_FEEDS_FAIL = 'FETCH_USER_FEEDS_FAIL'
 
+export const FETCH_USER_LIKED_FEEDS_REQUEST = 'FETCH_USER_LIKED_FEEDS_REQUEST'
+export const FETCH_USER_LIKED_FEEDS_SUCCESS = 'FETCH_USER_LIKED_FEEDS_SUCCESS'
+export const FETCH_USER_LIKED_FEEDS_FAIL = 'FETCH_USER_LIKED_FEEDS_FAIL'
 
 export const fetchFeedsRequest = () => ({
 	type: FETCH_FEEDS_REQUEST
@@ -36,12 +39,14 @@ export const fetchFeedsRequestSuccess = (feeds) => ({
 	feeds
 })
 
-export const fetchFeeds = (userGeo, neighboursArr) => async (dispatch) => {
+export const fetchFeeds = (userGeo, neighboursArr) => async (dispatch, getState) => {
 	dispatch(fetchFeedsRequest())   
 
 	try {
-		const res = await getFeeds(userGeo)
-		const feeds = res.val()
+		const { auth: {user: {id}} } = getState()
+
+		const res = await getFeeds(userGeo, id)
+		const feeds = res.data
 		if(feeds) {
 			dispatch(fetchFeedsRequestSuccess(feeds))
 		}else {
@@ -49,10 +54,10 @@ export const fetchFeeds = (userGeo, neighboursArr) => async (dispatch) => {
 		}
 
 		neighboursArr.map( geo => {
-			getFeeds(geo)
+			getFeeds(geo, id)
 			.then( res => {
-				if(res.val() !== null) {
-					dispatch(fetchFeedsRequestSuccess(res.val()))
+				if(res.data) {
+					dispatch(fetchFeedsRequestSuccess(res.data))
 				}
 			})
 		})
@@ -76,18 +81,16 @@ export const fetchAllFeedsRequestSuccess = (feeds) => ({
 	feeds
 })
 
-export const fetchAllFeeds = () => async (dispatch) => {
+export const fetchAllFeeds = () => async (dispatch, getState) => {
 	dispatch(fetchFeedsRequest())   
 	
 	try {
-		const res = await getAllFeeds()	
-		const feeds = res.val()
-		let collection = {}
-		Object.keys(feeds).map( feedIndex => {
-			collection = {...collection,...feeds[feedIndex]}
-		})
 
-		dispatch(fetchAllFeedsRequestSuccess(collection))
+		const { auth: {user: {id}} } = getState()
+
+		const res = await getAllFeeds(id, null)	
+		const feeds = res.data
+		dispatch(fetchAllFeedsRequestSuccess(feeds))
 	}catch(err) {
 		console.log(err)
 	}
@@ -117,25 +120,21 @@ export const createFeedFail = () => ({
 	type: CREATE_FEDD_FAIL
 })
 
-export const createFeedAction = (feed, postGeo, curLocation) => dispatch => {
+export const createFeedAction = (feed, postGeo, curLocation) => (dispatch, getState) => {
 	dispatch(createFeedRequest())
-
+	const { auth: {user: {id}} } = getState()
 	createFeed(feed, postGeo)
 		.then(res => {
-
+			
 			getAllFeeds()
 			.then(res => {
-				const feeds = res.val()
-				let collection = {}
-				Object.keys(feeds).map( feedIndex => {
-					collection = {...collection,...feeds[feedIndex]}
-				})
-				dispatch(fetchAllFeedsRequestSuccess(collection))
+				const feeds = res.data
+				dispatch(fetchAllFeedsRequestSuccess(feeds))
 			})
 
-			getFeeds(curLocation)
+			getFeeds(curLocation, id)
 			.then(feeds => {
-				dispatch(fetchFeedsRequestSuccess(feeds.val()))
+				dispatch(fetchFeedsRequestSuccess(feeds.data))
 				dispatch(createFeedSucess())
 			})
 			
@@ -146,19 +145,33 @@ export const createFeedAction = (feed, postGeo, curLocation) => dispatch => {
 		})
 }
 
-const voteUpState = (feedId, userid) => ({
+const voteUpState = (feedId) => ({
 	type: VOTE_UP,
-	feedId,
-	userid
+	feedId
 }) 
 
-export const voteUpAction = (feedId) => (dispatch, getState) => {
+export const voteUpAction = (feedId, userGeo) => (dispatch, getState) => {
 
-	const userID = getState().auth.user.id
-	voteUp(feedId,userID)
-	.then( () => dispatch(voteUpState(feedId, userID)))
+	const { auth: {user: {id, displayName}} } = getState()
+	voteUp(feedId,{id, displayName})
+	.then( () => {
+
+		dispatch(voteUpState(feedId))
+
+		getAllFeeds(id)
+			.then(res => {
+				const feeds = res.data
+				dispatch(fetchAllFeedsRequestSuccess(feeds))
+			})
+
+		if(userGeo) {
+			getFeeds(userGeo, id)
+			.then(feeds => {
+				dispatch(fetchFeedsRequestSuccess(feeds.data))
+			})
+		}
+	})
 	.catch(err => console.log(err))
-
 }
 
 const fetchUserFeedsRequest = () => ({
@@ -186,3 +199,26 @@ export const fetchUserFeeds = (userId) => async (dispatch) => {
 	}
 }
 
+const fetchUserLikedFeedsRequest = () => ({
+	type: FETCH_USER_LIKED_FEEDS_REQUEST
+})
+
+const fetchUserLikedFeedsFail = () => ({
+	type: FETCH_USER_LIKED_FEEDS_FAIL
+})
+
+const fetchUserLikedFeedsSuccess = (feeds) => ({
+	type: FETCH_USER_LIKED_FEEDS_SUCCESS,
+	feeds
+})
+
+export const fetchUserLikedFeeds = (userId) => async (dispatch) => {
+	dispatch(fetchUserLikedFeedsRequest())
+
+	try {
+		const likedFeedSnap = await getFeedsLikedByUser(userId)
+		dispatch(fetchUserLikedFeedsSuccess(likedFeedSnap.data))
+	}catch(err) {
+		console.log(err)
+	}
+}

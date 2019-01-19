@@ -40,12 +40,11 @@ class LocationFeeds extends React.Component {
     }
   }
 
-  componentDidUpdate(preProps) {
+  async componentDidUpdate(preProps) {
     
-    const action = this.props.navigation.getParam('action')
-    console.log('updated', action)
-    if(action === 'create_post') {
-      this.createPost()
+    if(preProps.auth.authenticated !== this.props.auth.authenticated) {
+      const userGeo = await this.getLocationAsync()
+      this.props.getFeeds(userGeo.userGeo, userGeo.neighboursArr)
     }
   }
 
@@ -76,7 +75,6 @@ class LocationFeeds extends React.Component {
   }
 
   navigateTol = () => {
-    console.log('cliked')
     this.props.navigation.navigate("login")
   }
 
@@ -96,9 +94,8 @@ class LocationFeeds extends React.Component {
   setModalVisibleAfterPost = () => this.setState({showModal: false})
 
   render() {
-    const { scrollOffset, showModal } = this.state
+    const { scrollOffset, showModal, userGeo } = this.state
     const { feeds , auth} = this.props
-
     const titleMarginTop = scrollOffset.interpolate({
       inputRange: [0, 200],
       outputRange: [45, 20],
@@ -123,6 +120,7 @@ class LocationFeeds extends React.Component {
           feedsItem={feeds} 
           auth={auth}
           
+          userGeo={userGeo}
           createPost={this.createPost}
           navigation={this.props.navigation}
           showModal={showModal}

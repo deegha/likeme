@@ -12,10 +12,11 @@ import { WithImage } from './withImage'
 import { styles } from './styles'
 
 export class FeedView extends React.PureComponent {
-
+  
   render() {
-    const { feed, makeAction } = this.props
+    const { feed, makeAction, userGeo } = this.props
 
+    // console.log(feed)
     return (
       <FadeInView>
       <View style={styles.container}>
@@ -62,33 +63,13 @@ export class FeedView extends React.PureComponent {
         )}
         <View style={styles.actionArea}>
           <View style={styles.action}>
-            
-            {/* <RoundButton callBack={makeAction(VOTE_UP, feed.id)}>
-              <Foundation name="heart" size={20} color="#e74c3c" />
-              <Text style={styles.statText}>{ feed.voteUp.length }220</Text>
-            </RoundButton> */}
-
-            <LikeBtn feedId={feed.id} likesArray={feed.voteUp} />
+            <LikeBtn userGeo={userGeo} feedId={feed.id} likeCount={feed.voteUp} liked={feed.currentUserLiked} />
           </View>
-          {/* <View>
-          <Text style={styles.statText}>14 down</Text>
-            <RoundButton callBack={makeAction(VOTE_DOWN, feed.id)}>
-              <Ionicons name="ios-thumbs-down" size={20} color="black" />
-            </RoundButton>
-          </View>
-          <View>
-            <Text style={styles.statText}>120 actions</Text>
-            <RoundButton callBack={makeAction(CLICK_ACTION, feed.id)}>
-              <Ionicons name="md-chatboxes" size={20} color="black" />
-            </RoundButton>
-          </View> */}
           <View style={styles.action}>
-            
             <RoundButton callBack={makeAction(SHARE, feed.id)}>
               <Ionicons name="md-share" size={20} color="black" />
               <Text style={styles.statText}>120</Text>
             </RoundButton>
-            
           </View>
         </View>
       </View>

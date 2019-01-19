@@ -21,7 +21,8 @@ export class FeedsView extends React.PureComponent {
       auth,
       navigateTol,
       logout,
-    
+      
+      userGeo,
       navigation,
       showModal,
       setModalVisibleAfterPost,
@@ -43,13 +44,14 @@ export class FeedsView extends React.PureComponent {
   
          <FlatList
             scrollEventThrottle={16}
-            
+            initialNumToRender={5}
             data={Object.keys(feedsItem)}
             keyExtractor={(item) => item.toString()}
             renderItem={({item}) => {
               //feedsItem[item].postMedia.url !=="" &&
               return  (
                 <FeedView 
+                  userGeo={userGeo}
                   makeAction={()=>()=>console.log("dsfsd")} 
                   key={feedsItem[item].id} 
                   feed={feedsItem[item]} />

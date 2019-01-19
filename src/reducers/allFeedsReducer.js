@@ -23,34 +23,10 @@ export const allFeedsReducer = (state=initialState, action) => {
         loading: false
       } 
     case Actions.FETCH_ALLFEEDS_REQUEST_SUCCESS:
-      const unOrderdFeeds = [
-        ...Object.keys(action.feeds).map(feed => ({
-          id: feed,
-          location: action.feeds[feed].location,
-          createdAt: action.feeds[feed].createdAt,
-          postText: action.feeds[feed].postText,
-          postMedia: {
-            type: action.feeds[feed].postMedia.type,
-            url: action.feeds[feed].postMedia.url
-          },
-          userObj: {
-            id: action.feeds[feed].userObj.userID,
-            name: action.feeds[feed].userObj.displayName,
-            image: action.feeds[feed].userObj.image
-          },
-          voteUp: action.feeds[feed].voteup !== false ? action.feeds[feed].voteup: {} 
-        }))
-      ]
-
-      const sortedIndex = [
-        ...Object.keys(unOrderdFeeds).sort((a, b) => {
-          return  unOrderdFeeds[b].createdAt - unOrderdFeeds[a].createdAt 
-        } )
-      ]
       return {
         ...state,
         loading: false,
-        feeds: [...sortedIndex.map(index => unOrderdFeeds[index])]
+        feeds: action.feeds
       }
     case Actions.CREATE_FEED_REQUEST: {
       return {
@@ -72,29 +48,8 @@ export const allFeedsReducer = (state=initialState, action) => {
     }
     case Actions.VOTE_UP: {
 
-      const feed = state.feeds.filter( feed => feed.id === action.feedId )
-      const newVote = {}
+      console.log("liked")
 
-      if(feed.voteUp === false) {
-        newVote = { 0 : action.userid}
-      } else {
-        const key = Object.keys(feed.voteUp).length
-        newVote = { key : action.userid}
-      }
-      return {
-        ...state,
-        feeds: [
-          ...state.feeds.map(feed => {
-            if(feed.id === action.feedId) {
-              return {
-                ...feed,
-                voteUp: newVote
-              }
-            }
-            return feed
-          })
-        ]
-      }
     }
     default : 
       return state

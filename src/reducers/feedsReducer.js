@@ -23,36 +23,33 @@ export const feedsReducer = (state=initialState, action) => {
         loading: false
       } 
     case Actions.FETCH_FEEDS_REQUEST_SUCCESS:
-      const unOrderdFeeds = [
-        ...Object.keys(action.feeds).map(feed => ({
-          id: feed,
-          location: action.feeds[feed].location,
-          createdAt: action.feeds[feed].createdAt,
-          postText: action.feeds[feed].postText,
-          postMedia: {
-            type: action.feeds[feed].postMedia.type,
-            url: action.feeds[feed].postMedia.url
-          },
-          userObj: {
-            id: action.feeds[feed].userObj.userID,
-            name: action.feeds[feed].userObj.displayName,
-            image: action.feeds[feed].userObj.image
-          },
-          voteUp: action.feeds[feed].voteup  
-        }))
-      ]
-
-      const sortedIndex = [
-        ...Object.keys(unOrderdFeeds).sort((a, b) => {
-          return  unOrderdFeeds[b].createdAt - unOrderdFeeds[a].createdAt 
-        } )
-      ]
       return {
         ...state,
         loading: false,
-        feeds: [ ...state.feeds ,...sortedIndex.map(index => unOrderdFeeds[index])]
+        feeds: [...action.feeds, ...state.feeds]
       }
-    
+    case Actions.VOTE_UP:
+
+      const feeds = state.feeds
+
+      const newFeeds = feeds.map(feed => {
+        
+        if(feed.id === action.feedId) {
+          
+          const x  = {
+            ...feed,
+            voteUp: feed.voteUp+1,
+            currentUserLiked: true
+          }
+          return x
+        }else {
+          return feed
+        }
+      })
+      return {
+        ...state,
+        newFeeds
+      }
     default : 
       return state
   }

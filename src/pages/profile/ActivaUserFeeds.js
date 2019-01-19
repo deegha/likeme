@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Animated } from 'react-native'
 import { ActiveUserFeedsView } from './ActiveUserFeedsView'
 
-import { fetchUserFeeds } from '../../actions/feedsActions'
+import { fetchUserFeeds, fetchUserLikedFeeds } from '../../actions/feedsActions'
 
 class ActiveUserFeeds extends React.Component {
 
@@ -24,12 +24,13 @@ class ActiveUserFeeds extends React.Component {
 
   componentDidMount() {
 
-    const { user, authenticated, navigation, fetchUserFeeds } = this.props
+    const { user, authenticated, navigation, fetchUserFeeds, fetchLikedFeeds } = this.props
 
     if(!authenticated) {
       navigation.navigate('login')
     }else {
       fetchUserFeeds(user.id)
+      fetchLikedFeeds(user.id)
     }
   }
 
@@ -40,7 +41,7 @@ class ActiveUserFeeds extends React.Component {
   }
 
   render () {
-    const { user, userFeeds } = this.props
+    const { user, userFeeds, likedFeeds } = this.props
     const { scrollOffset } = this.state
 
     const headerPaddingTop = scrollOffset.interpolate({
@@ -74,6 +75,7 @@ class ActiveUserFeeds extends React.Component {
         titleFontSize={titleFontSize}
         imageWidth={imageWidth}
 
+        likedFeeds={likedFeeds}
         user={user} 
         userFeeds={userFeeds} />
     )
@@ -83,16 +85,19 @@ class ActiveUserFeeds extends React.Component {
 
 const mapStateToProps = ({
   auth: { user, loading, authenticated },
-  userFeeds: {userFeeds}
+  userFeeds: {userFeeds},
+  likedFeeds
 }) => ({
   user,
   loading,
   authenticated,
-  userFeeds
+  userFeeds,
+  likedFeeds
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchUserFeeds: (id) => dispatch(fetchUserFeeds(id))
+  fetchUserFeeds: (id) => dispatch(fetchUserFeeds(id)),
+  fetchLikedFeeds: (id) => dispatch(fetchUserLikedFeeds(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveUserFeeds)

@@ -10,6 +10,7 @@ import CreatepostContainer from '../pages/MainPage/components/createPost/Createp
 import { FeedsView } from './feedsView/FeedsView'
 import { ProfileFeed } from './profileFeed/ProfileFeed'
 import LikeBtn from './likeBtn/likeBtn'
+import { Loading } from './loading/loading' 
 
 export {
     ModalComponent,
@@ -23,5 +24,6 @@ export {
     CreatepostContainer,
     FeedsView,
     ProfileFeed,
-    LikeBtn
+    LikeBtn,
+    Loading
 }

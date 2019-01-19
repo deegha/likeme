@@ -6,8 +6,6 @@ export const FeedModel = {
     type: "",
     url: ""
   },
-  voteup: 0,
-  vateDown: 0,
   location: false,
   shares:0,
   reported: false,

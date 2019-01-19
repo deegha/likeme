@@ -1,50 +1,96 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withNavigation } from 'react-navigation'
 
-import { Text, TouchableOpacity, StyleSheet } from 'react-native'
-import { Foundation } from '@expo/vector-icons'
+import { Text, TouchableOpacity, StyleSheet, Animated, Easing } from 'react-native'
+import { Foundation, EvilIcons } from '@expo/vector-icons'
 import { voteUpAction } from '../../actions/feedsActions'
 
 class LikeBtn extends React.PureComponent {
 
   state = {
-    btnColor: '#000'
+    likeFontSize: new Animated.Value(11),
+    liked: false
+  }
+
+  componentDidUpdate(props) {
+    if(props.likeCount !== this.props.likeCount) 
+      this.animate()
+
+    if(props.liked !== this.props.liked) 
+      this.setState({liked: this.props.liked})
+  }
+
+  componentDidMount() {
+    if(this.props.liked) {
+      this.setState({liked: true})
+    }
   }
 
   clickLike = (id) => () => {
-    this.props.voteUp(id)
+    if(!this.props.authenticated) {
+      this.props.navigation.navigate('login')
+    }else {
+      this.setState({liked: true})
+      this.props.voteUp(id, this.props.userGeo)
+    }
+  }
+
+  animate = () => {
+    Animated.timing(                  
+      this.state.likeFontSize,            
+      {
+        toValue: 20,    
+        easing: Easing.back(),              
+        duration: 100,              
+      }
+    ).start(() => {
+      Animated.timing(                  
+        this.state.likeFontSize,            
+        {
+          toValue: 11,    
+          easing: Easing.back(),              
+          duration: 100,              
+        }
+      ).start()
+    })
   }
 
   render() {
-
-    const { feedId, likesArray } = this.props
-    console.log(feedId, likesArray)
-    const likeCount = likesArray === 0? 0: likesArray.length
+    
+    const { feedId, likeCount } = this.props
+    const { likeFontSize, liked } = this.state
 
     return (
       <TouchableOpacity style={styles.btnContainer} onPress={this.clickLike(feedId)}>
-        <Foundation name="heart" size={20} color={this.state.btnColor} />
-        <Text style={styles.statText}>{ likeCount }</Text>
+        {liked? 
+          <Foundation name="heart" size={20} color={'#ED4C67'} />:
+          <EvilIcons name="heart" size={20} color={'#B53471'} />
+        }
+        <Animated.Text style={[
+          styles.statText,
+          {fontSize: likeFontSize}
+        ]}>{ likeCount > 0 && likeCount }</Animated.Text>
       </TouchableOpacity>
     )
   }
 }
 
-
 const mapDispatchToProps = (dispatch) => ({
-  voteUp: (feedid) => dispatch(voteUpAction(feedid))
+  voteUp: (feedid, userGeo) => dispatch(voteUpAction(feedid, userGeo))
 })
 
+const mapStateToProps = ( { auth:{authenticated} } ) => ({
+  authenticated
+})
 
-export default connect(null, mapDispatchToProps)(LikeBtn)
+export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(LikeBtn)) 
 
 const styles = StyleSheet.create({
 	btnContainer: {
-		// backgroundColor: '#ecf0f1',
 		height: 20,
-		width: 40,
 		display:'flex',
-		justifyContent:'space-between',
+		justifyContent:'space-around',
 		alignItems: 'center',
 		flexDirection: 'row',
 		borderRadius: 100,
@@ -54,6 +100,7 @@ const styles = StyleSheet.create({
   statText: {
     fontSize: 11,
     textAlign: 'center',
-    color: "#95a5a6"
+    color: "#95a5a6",
+    marginLeft: 5
   }
 })

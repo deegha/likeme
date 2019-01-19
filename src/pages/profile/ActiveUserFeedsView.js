@@ -27,11 +27,11 @@ export const ActiveUserFeedsView = ({
   headerPaddingTop,
   headerPaddingBottom,
   titleFontSize,
-  imageWidth
+  imageWidth,
+  likedFeeds
 }) => {
 
-  console.log(userFeeds,"userFeeds")
-
+  console.log(likedFeeds)
   return (
 
       <View style={styles.container}>
@@ -48,7 +48,7 @@ export const ActiveUserFeedsView = ({
               <View style={{width: 10}} />
               <Text style={styles.detail}>20 Following</Text>
               <View style={{width: 10}} />
-              <Text style={styles.detail}>50 Promotions</Text>
+              <Text style={styles.detail}>{userFeeds.length} Promotions</Text>
             </View>
           </View>
           <Animated.Image style={[styles.displayImage,{
@@ -57,7 +57,7 @@ export const ActiveUserFeedsView = ({
           }]} source={{uri: user.image}} /> 
         </Animated.View>
         <View  style={styles.body}>
-        <ScrollView onScroll={handleScroll}>
+        <ScrollView style={styles.scrollView} onScroll={handleScroll}>
           {/* <Text style={styles.listtitle}>Your feeds</Text> */}
           { userFeeds.length > 0 &&
           <FlatList
@@ -71,14 +71,14 @@ export const ActiveUserFeedsView = ({
             
             />}
  
-          {/* <FlatList
+          <FlatList
             scrollEventThrottle={16}
-            data={Object.keys(feeds)}
-            keyExtractor={(item) => item.toString()}
-            renderItem={({item}) =>  <ProfileFeed feed={feeds[item]} />}
+            data={likedFeeds.likedFeeds}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({item}) =>  <ProfileFeed feed={item} />}
             initialNumToRender={4}
             ListHeaderComponent={() => <Listheader>Liked by you</Listheader>}
-            /> */}
+            />
           </ScrollView>
         </View>
       </View>

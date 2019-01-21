@@ -120,7 +120,7 @@ class LocationFeeds extends React.Component {
           feedsItem={feeds} 
           auth={auth}
           loading={loading}
-          userGeo={userGeo}
+          
           createPost={this.createPost}
           navigation={this.props.navigation}
           showModal={showModal}

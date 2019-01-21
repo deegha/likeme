@@ -150,28 +150,12 @@ const voteUpState = (feedId) => ({
 	feedId
 }) 
 
-export const voteUpAction = (feedId, userGeo) => (dispatch, getState) => {
+export const voteUpAction = (feedId) =>  (dispatch, getState) => {
 
 	const { auth: {user: {id, displayName}} } = getState()
 	voteUp(feedId,{id, displayName})
-	.then( () => {
+	.catch(err => console.log(err) )
 
-		dispatch(voteUpState(feedId))
-
-		getAllFeeds(id)
-			.then(res => {
-				const feeds = res.data
-				dispatch(fetchAllFeedsRequestSuccess(feeds))
-			})
-
-		if(userGeo) {
-			getFeeds(userGeo, id)
-			.then(feeds => {
-				dispatch(fetchFeedsRequestSuccess(feeds.data))
-			})
-		}
-	})
-	.catch(err => console.log(err))
 }
 
 const fetchUserFeedsRequest = () => ({

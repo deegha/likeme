@@ -19,6 +19,12 @@ const Listheader = ({children}) => {
   )
 }
 
+const NoContent= ({children}) => (
+  <View style={styles.noContentContaier}>
+    <Text style={styles.noContentText}>{children}</Text>
+  </View>
+)
+
 export const ActiveUserFeedsView = ({
   user,
   userFeeds,
@@ -43,9 +49,9 @@ export const ActiveUserFeedsView = ({
               fontSize: titleFontSize
             }]}>{user.displayName}</Animated.Text>
             <View  style={styles.profileDetails}>
-              <Text style={styles.detail}>10 Followers</Text>
+              {/* <Text style={styles.detail}>10 Followers</Text>
               <View style={{width: 10}} />
-              <Text style={styles.detail}>20 Following</Text>
+              <Text style={styles.detail}>20 Following</Text> */}
               <View style={{width: 10}} />
               <Text style={styles.detail}>{userFeeds.length} Promotions</Text>
             </View>
@@ -57,7 +63,10 @@ export const ActiveUserFeedsView = ({
         </Animated.View>
         <View  style={styles.body}>
         <ScrollView style={styles.scrollView} onScroll={handleScroll}>
-          {<Listheader>Liked by you  </Listheader>}
+          { likedFeeds.likedFeeds.length > 0? 
+          <Listheader>Liked by you  </Listheader>:
+          <NoContent>Go and like some promotions :) </NoContent>}
+          { likedFeeds.likedFeeds.length > 0 &&
            <FlatList
             horizontal={true}
             showsHorizontalScrollIndicator={false}
@@ -67,12 +76,11 @@ export const ActiveUserFeedsView = ({
             renderItem={({item}) =>  <ProfileFeed horizontal={true} feed={item} />}
             initialNumToRender={4}
             // ListHeaderComponent={() => <Listheader>Liked by you</Listheader>}
-            />
+            />}
 
           
-          { userFeeds.length > 0 &&
+          { userFeeds.length > 0 ?
           <FlatList
-            
             scrollEventThrottle={16}
             data={userFeeds}
             keyExtractor={(item) => item.id.toString()}
@@ -81,7 +89,10 @@ export const ActiveUserFeedsView = ({
             stickyHeaderIndices={[0]}
             initialNumToRender={4}
             
-            />}
+            />: <NoContent> 
+                  {user.type==='consumer'?"Upgrade to a store to add promotions": "Add promitions and they will appear here"}
+                   </NoContent>
+            }
  
          
           </ScrollView>

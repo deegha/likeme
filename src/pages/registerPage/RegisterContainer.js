@@ -168,9 +168,7 @@ class RegisterContainer extends React.Component {
   validateForm = () => {
    
     ( validateEmail(this.state.email) 
-      && this.state.password !== ''
-      && this.state.password === this.state.confirmpassword
-      && this.state.confirmpassword !== '')? this.setState({validForm: true}): this.setState({validForm: false})
+      && this.state.password !== '')? this.setState({validForm: true}): this.setState({validForm: false})
 	}
 
 

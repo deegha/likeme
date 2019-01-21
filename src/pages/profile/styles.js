@@ -52,5 +52,13 @@ export const styles = StyleSheet.create({
   },
   body: {
     paddingBottom: 100
+  },
+  noContentText: {
+    color: '#bdc3c7',
+    fontSize: 10,
+    fontWeight: 'bold'
+  },
+  noContentContaier: {
+    padding: 25,
   }
 })

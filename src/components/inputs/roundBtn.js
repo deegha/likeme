@@ -24,7 +24,7 @@ export class RoundBtn extends React.Component {
     else if(loading)
         return (
           <View style={[styles.roundBtn, exStyles]}>
-            <Text style={color !== undefined ?{fontWeight:'bold',color: fontColor?fontColor :'#ffffff'}:{}}>Loading...</Text>
+            <Text style={color !== undefined ?{fontWeight:'200',color: fontColor?fontColor :'#ffffff'}:{}}>Loading</Text>
           </View>
         )
     

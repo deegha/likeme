@@ -10,30 +10,35 @@ class LikeBtn extends React.PureComponent {
 
   state = {
     likeFontSize: new Animated.Value(11),
-    liked: false
+    liked: false,
+    likeCount: 0
   }
 
   componentDidUpdate(props) {
-    if(props.likeCount !== this.props.likeCount) 
+    if(props.likeCount !== this.props.likeCount) {
+      this.setState({likeCount: this.props.likeCount})
       this.animate()
+    }
+     
 
-    if(props.liked !== this.props.liked) 
+    if(props.liked !== this.props.liked ) 
       this.setState({liked: this.props.liked})
   }
 
   componentDidMount() {
-    if(this.props.liked) {
-      this.setState({liked: true})
-    }
+   
+    this.setState({liked: this.props.liked, likeCount: this.props.likeCount})
+   
   }
 
   clickLike = (id) => () => {
     if(!this.props.authenticated) {
       this.props.navigation.navigate('login')
     }else {
-      this.setState({liked: true})
-      this.props.voteUp(id, this.props.userGeo)
+      this.setState(preState => ({liked: true,likeCount: preState.likeCount+1 }),()=> this.animate())
+      this.props.voteUp(id)
     }
+
   }
 
   animate = () => {
@@ -57,15 +62,18 @@ class LikeBtn extends React.PureComponent {
   }
 
   render() {
-    
-    const { feedId, likeCount } = this.props
-    const { likeFontSize, liked } = this.state
 
+    
+    
+    const { feedId } = this.props
+    const { likeFontSize, liked, likeCount } = this.state
+
+   
     return (
       <TouchableOpacity style={styles.btnContainer} onPress={this.clickLike(feedId)}>
         {liked? 
           <Foundation name="heart" size={20} color={'#ED4C67'} />:
-          <EvilIcons name="heart" size={20} color={'#B53471'} />
+          <EvilIcons name="heart" size={20} color={'#ED4C67'} />
         }
         <Animated.Text style={[
           styles.statText,
@@ -80,8 +88,9 @@ const mapDispatchToProps = (dispatch) => ({
   voteUp: (feedid, userGeo) => dispatch(voteUpAction(feedid, userGeo))
 })
 
-const mapStateToProps = ( { auth:{authenticated} } ) => ({
-  authenticated
+const mapStateToProps = ( { auth:{authenticated}, allFeeds } ) => ({
+  authenticated,
+  allFeeds
 })
 
 export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(LikeBtn)) 

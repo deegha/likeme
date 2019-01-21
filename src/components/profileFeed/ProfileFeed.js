@@ -17,18 +17,16 @@ export class ProfileFeed extends React.PureComponent {
           <Image source={{uri: feed.postMedia.url}} style={hStyles.image} />
           <View style={styles.descriptionBox}>
             
-            <Text style={styles.description}>{feed.postText.substring(0, 100)}</Text>
+            <Text style={hStyles.description}>{feed.postText.substring(0, 100)}</Text>
             {feed.location.description !== undefined && feed.location.description !== '' && (
               <View style={styles.postLocation} >
               
-                <Text style={styles.postLocationText}>
+                <Text style={hStyles.postLocationText}>
                     {feed.location.description}
                 </Text>
               </View>
             )}
-            <TouchableOpacity style={styles.removeBtn}>
-              <Text style={styles.removeBtnText}>Remove</Text>
-            </TouchableOpacity>
+          
           </View>
         </View>
       )

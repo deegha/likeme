@@ -36,7 +36,6 @@ class AllFeeds extends React.Component {
   componentDidUpdate(preProps) {
     
     const action = this.props.navigation.getParam('action')
-    console.log('updated', action)
     if(action === 'create_post') {
       this.createPost()
     }
@@ -46,6 +45,10 @@ class AllFeeds extends React.Component {
     }
 
   }
+
+  // componentWillReceiveProps(newPros) {
+  //   console.log(newPros.feeds)
+  // }
 
   handleScroll = (e) =>  {
     const scrollSensitivity = 4 / 3

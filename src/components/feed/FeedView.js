@@ -6,15 +6,26 @@ import { Ionicons, Foundation, FontAwesome, Entypo } from '@expo/vector-icons'
 
 import propic from '../../../assets/propic.jpg'
 import { VOTE_UP, VOTE_DOWN, CLICK_ACTION, SHARE } from './actionsConstants' 
-import { FadeInView, LikeBtn } from '../'
+import { FadeInView, LikeBtn, Sharebtn } from '../'
 
 import { WithImage } from './withImage'
 import { styles } from './styles'
 
-export class FeedView extends React.PureComponent {
-  
+export class FeedView extends React.Component {
+
+  componentDidUpdate() {
+    console.log('updated feed')
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if(nextProps.feed !== this.props.feed)
+      return true
+    else 
+      return false
+  }
+
   render() {
-    const { feed, makeAction, userGeo } = this.props
+    const { feed, makeAction } = this.props
 
     // console.log(feed)
     return (
@@ -55,7 +66,7 @@ export class FeedView extends React.PureComponent {
         </View>
         {feed.location && feed.location.description !== undefined && feed.location.description !== '' && (
           <View style={styles.postLocation} >
-            <Entypo name="location-pin" size={11} color="black" />
+            <Entypo name="location-pin" size={11} color="#00bcd4" />
             <Text style={styles.postLocationText}>
                 {feed.location.description}
             </Text>
@@ -63,13 +74,10 @@ export class FeedView extends React.PureComponent {
         )}
         <View style={styles.actionArea}>
           <View style={styles.action}>
-            <LikeBtn userGeo={userGeo} feedId={feed.id} likeCount={feed.voteUp} liked={feed.currentUserLiked} />
+            <LikeBtn feedId={feed.id} likeCount={feed.voteUp} liked={feed.currentUserLiked} />
           </View>
           <View style={styles.action}>
-            <RoundButton callBack={makeAction(SHARE, feed.id)}>
-              <Ionicons name="md-share" size={20} color="black" />
-              <Text style={styles.statText}>120</Text>
-            </RoundButton>
+            <Sharebtn feed={feed} />
           </View>
         </View>
       </View>

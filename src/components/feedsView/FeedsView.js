@@ -11,6 +11,7 @@ import {  Entypo } from '@expo/vector-icons'
 import { Loading } from '../../components'
 
 export class FeedsView extends React.PureComponent {
+
    
   render() {
     
@@ -23,7 +24,6 @@ export class FeedsView extends React.PureComponent {
       navigateTol,
       logout,
       
-      userGeo,
       navigation,
       showModal,
       setModalVisibleAfterPost,
@@ -57,7 +57,6 @@ export class FeedsView extends React.PureComponent {
               //feedsItem[item].postMedia.url !=="" &&
               return  (
                 <FeedView 
-                  userGeo={userGeo}
                   makeAction={()=>()=>console.log("dsfsd")} 
                   key={feedsItem[item].id} 
                   feed={feedsItem[item]} />
@@ -73,6 +72,7 @@ export class FeedsView extends React.PureComponent {
         <FloatingBtn action={createPost}>
          <Entypo name={'plus'} size={30} color={"#ffffff"} />
         </FloatingBtn>
+        
         <ModalComponent 
           visible={showModal} 
           setModalVisible={setModalVisible} >
@@ -80,7 +80,6 @@ export class FeedsView extends React.PureComponent {
             navigation={navigation} 
             setModalVisible={setModalVisibleAfterPost}  />
         </ModalComponent>   
-      
       </View>
     )
   }

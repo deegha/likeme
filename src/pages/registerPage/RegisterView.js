@@ -57,14 +57,7 @@ export const RegisterView = ({
 				feild="password"  
 				placeholder="Password" />
 		</View>
-    <View style={styles.innerContainer}>
-			<TextFeild 
-				name="Confirm Password"
-				onChange={onChange}
-				type="password"
-				feild="confirmpassword"  
-				placeholder="Confirm Password"/>
-		</View>
+   
 		<View style={styles.btnContainer}>
 			<RoundBtn disabled={!validForm} loading={data.creating} onPress={ onSubmit} color={'#34495e'}>
 				Signup

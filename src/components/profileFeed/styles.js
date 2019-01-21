@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
   },
   description: {
     color: '#353b48',
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: 'bold',
     width: 200
   },
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   postLocationText: {
-    fontSize: 12,
+    fontSize: 9,
     width: 250
   },
   removeBtn: {
@@ -41,7 +41,8 @@ export const styles = StyleSheet.create({
   },
   removeBtnText: {
     color: shared.red
-  }
+  },
+  
 })
 
 export const hStyles = StyleSheet.create({
@@ -57,5 +58,17 @@ export const hStyles = StyleSheet.create({
     height: 200,
     borderRadius: 20,
     marginRight: 10
+  },
+  postLocationText: {
+    marginTop: 7,
+    fontSize: 9,
+    width: 250
+  },
+  description: {
+    marginTop: 7,
+    color: '#353b48',
+    fontSize: 12,
+    fontWeight: 'bold',
+    width: 200
   }
 })

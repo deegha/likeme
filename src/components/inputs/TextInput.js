@@ -3,18 +3,19 @@
  */
 
 import React from 'react'
-import { TextInput, View, Text } from 'react-native'
+import { TextInput, View, Text, TouchableOpacity } from 'react-native'
 import { styles } from './styles'
 
 import * as shared from '../sharedStyles'
 import { validateEmail } from '../../services/helpers'
 import { FadeInView } from '../'
-
+import { Entypo } from '@expo/vector-icons'
 export class TextFeild extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
+      type: 'text',
       value: '',
       error: ''
     }
@@ -26,6 +27,9 @@ export class TextFeild extends React.Component {
   //   }
   //   return {error: ""}
   // }
+  componentDidMount() {
+    this.props.type && this.setState({type: this.props.type})
+  }
 
   onChange = (text) => {
     this.validate(text)
@@ -50,9 +54,16 @@ export class TextFeild extends React.Component {
     }
   }
 
+  changeType = () => {
+    this.setState(preState => ({showpassword: !preState.showpassword}))
+  }
+
+
   render() {
 
-    const { lable, placeholder, color, type  } = this.props
+    const { lable, placeholder, color  } = this.props
+    const { type, showpassword, bw } = this.state
+
 
     let selectionColor = shared.PRIMERY_COLOR
     let placeholderTextColor = '#737373'
@@ -93,8 +104,14 @@ export class TextFeild extends React.Component {
       }
     }
 
+    if(showpassword) {
+      extraProps = {
+        secureTextEntry: false
+      }
+    }
+
     return (
-      <View style={styles.textInputContainer}>
+      <View>
         <View style={styles.textInputContainer}>
           <TextInput
             onBlur={()=>this.validate(this.state.value)}
@@ -104,10 +121,15 @@ export class TextFeild extends React.Component {
             placeholder={placeholder}
             onChangeText={this.onChange}
             style={[styles.inputText , extraStyles]} 
-            underlineColorAndroid={underlineColor}
+            underlineColorAndroid={'transparent'}
             value={this.state.value} 
             {...extraProps}
             />
+            {(type === 'password') && (
+              <TouchableOpacity onPress={this.changeType} >
+                <Entypo style={styles.searchIcon} name={showpassword?'eye-with-line':'eye'} size={20} color={'#00bcd4'} />
+              </TouchableOpacity>
+            ) }
         </View>    
         <View style={{height: 20 }}>
           {this.state.error ? (

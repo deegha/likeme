@@ -41,6 +41,13 @@ class LoginPageContainer extends React.Component {
 		redirectAction && this.setState({redirectAction, redirectPage})
 	}
 
+	componentDidUpdate(preProps) {
+		const { authenticated } = this.props.auth
+		if(authenticated && authenticated !== preProps.auth.authenticated) {
+			this.props.navigation.navigate('tabs')
+		}
+	}
+
 	componentWillMount () {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
@@ -133,10 +140,9 @@ class LoginPageContainer extends React.Component {
 				}
 			})
 			.then(user => {
-				console.log(user)
 				if(user !== undefined) {
 					this.setFormError("")
-					this.redirect()
+
 					this.setState({email: '', password: '', validForm: false})
 				} 
 

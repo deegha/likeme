@@ -11,16 +11,6 @@ class ActiveUserFeeds extends React.Component {
     scrollOffset: new Animated.Value(0),
   }
 
-  componentWillMount() {
-    this.props.navigation.addListener(
-      'didFocus',
-      payload => {
-        if(!this.props.authenticated) {
-          this.props.navigation.navigate('login')
-        }
-      }
-    )
-  }
 
   componentDidMount() {
 
@@ -32,11 +22,26 @@ class ActiveUserFeeds extends React.Component {
       fetchUserFeeds(user.id)
       fetchLikedFeeds(user.id)
     }
+
+    this.props.navigation.addListener(
+      'didFocus',
+      payload => {
+        if(!authenticated) {
+          navigation.navigate('login')
+        }else {
+          fetchUserFeeds(user.id)
+          fetchLikedFeeds(user.id)
+        }
+        if(!this.props.authenticated) {
+          this.props.navigation.navigate('login')
+        }
+      }
+    )
   }
 
   componentDidUpdate(preProps) {
-
-    if(preProps.authenticated !== this.props.authenticated) {
+    const { fetchUserFeeds, fetchLikedFeeds } = this.props
+    if(this.props.authenticated && preProps.authenticated !== this.props.authenticated) {
       fetchUserFeeds(this.props.user.id)
       fetchLikedFeeds(this.props.user.id)
     }

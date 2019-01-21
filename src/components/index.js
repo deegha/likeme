@@ -11,6 +11,7 @@ import { FeedsView } from './feedsView/FeedsView'
 import { ProfileFeed } from './profileFeed/ProfileFeed'
 import LikeBtn from './likeBtn/likeBtn'
 import { Loading } from './loading/loading' 
+import { Sharebtn } from './share/share'
 
 export {
     ModalComponent,
@@ -25,5 +26,6 @@ export {
     FeedsView,
     ProfileFeed,
     LikeBtn,
-    Loading
+    Loading,
+    Sharebtn
 }

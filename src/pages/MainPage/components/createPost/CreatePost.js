@@ -4,7 +4,7 @@ import Image from 'react-native-scalable-image'
 
 import { TextFeild, RoundButton, GooglePlacesInput } from '../../../../components/'
 import { styles } from './styles'
-
+import Tooltip from 'rn-tooltip'
 
 export const CreatePost = ({ onTextChange, location,  submitPost, postText, disabled, postMedia, pickImage, takePhoto, setLocationPostLocation }) => {
 	
@@ -13,8 +13,17 @@ export const CreatePost = ({ onTextChange, location,  submitPost, postText, disa
 		<View style={styles.container}>
 			<View style={styles.postOptions}>
 					<View style={styles.postOptionsSection}>
-						<TouchableOpacity style={styles.option} onPress={takePhoto}>
+						<TouchableOpacity style={styles.option} >
+						<Tooltip
+						onClose={takePhoto}
+						backgroundColor={'#7ed6df'}
+						width={200} 
+						height={100}
+						popover={<Text style={{color:'#ffffff'}}>Try to crop your image to make a squre, that will make your post more attractive</Text>}
+						tooltipText="Try to crop your image to make a squre, that will make your post more attractive">
 							<Text  style={styles.optionText}>camera</Text>
+						</Tooltip>
+							
 						</TouchableOpacity>
 						<TouchableOpacity  style={styles.option} >
 							<Text style={styles.optionText} onPress={pickImage}>library</Text>

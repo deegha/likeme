@@ -9,7 +9,6 @@ export class ProfileFeed extends React.PureComponent {
 
     const { feed, horizontal } = this.props
 
-
     if(horizontal) {
 
       return(

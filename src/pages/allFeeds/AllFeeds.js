@@ -79,10 +79,9 @@ class AllFeeds extends React.Component {
   render() {
     const { scrollOffset, showModal } = this.state
     const { feeds , auth , loading, creating } = this.props
-
     const titleMarginTop = scrollOffset.interpolate({
       inputRange: [0, 200],
-      outputRange: [45, 20],
+      outputRange: [70, 20],
       extrapolate: 'clamp',
     })
     const subTitleMarginTop = scrollOffset.interpolate({

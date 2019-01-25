@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    padding: 15,
+    padding: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -73,7 +73,7 @@ class LikeBtn extends React.PureComponent {
       <TouchableOpacity style={styles.btnContainer} onPress={this.clickLike(feedId)}>
         {liked? 
           <Foundation name="heart" size={20} color={'#ED4C67'} />:
-          <EvilIcons name="heart" size={20} color={'#ED4C67'} />
+          <EvilIcons name="heart" size={20} color={'#747d8c'} />
         }
         <Animated.Text style={[
           styles.statText,

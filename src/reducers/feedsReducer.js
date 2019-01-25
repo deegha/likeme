@@ -23,33 +23,47 @@ export const feedsReducer = (state=initialState, action) => {
         loading: false
       } 
     case Actions.FETCH_FEEDS_REQUEST_SUCCESS:
+
+      const newArray = [...state.feeds, ...action.feeds]
+
+      const getUnique = (arr, comp) => {
+
+        const unique = arr
+          .map(e => e[comp])
+          .map((e, i, final) => final.indexOf(e) === i && i)
+          .filter(e => arr[e]).map(e => arr[e]);
+      
+         return unique;
+      }
+
       return {
         ...state,
         loading: false,
-        feeds: [...action.feeds, ...state.feeds]
+        feeds: getUnique(newArray, 'id')
       }
-    case Actions.VOTE_UP:
-      console.log("vote up")
+    case Actions.VOTE_UP: 
       const feeds = state.feeds
 
-      const newFeeds = feeds.map(feed => {
-        console.log("vote up in map",feed.id, action.feedId )
+      const newFeeds = feeds.map(feed => { 
         if(feed.id === action.feedId) {
-          console.log("in if")
+          
           const x  = {
             ...feed,
             voteUp: feed.voteUp+1,
             currentUserLiked: true
           }
-          console.log(x)
+          console.log(x, "locatio feeds")
           return x
         }else {
           return feed
         }
       })
+
+      // console.log(newFeeds, "location new feeds")
+
       return {
         ...state,
-        newFeeds
+        feeds:newFeeds
       }
     default : 
       return state

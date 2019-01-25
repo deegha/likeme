@@ -4,7 +4,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { Animated,View } from 'react-native'
+import { Animated,View, Alert, Text } from 'react-native'
 import { Permissions, Location } from 'expo'
 import { fetchFeeds } from '../../actions/feedsActions'
 import { setWatingAction } from '../../actions/waitingActions'
@@ -24,43 +24,64 @@ class LocationFeeds extends React.Component {
 			scrollOffset: new Animated.Value(0),
 			userGeo: '',
       neighboursArr: [],
-      showModal:false
+      showModal:false,
 		}
 	}
 
   logout = () => Fire.auth().signOut()
 
   async componentDidMount() {
-    try{
-      const userGeo = await this.getLocationAsync()
-      // this.props.getFeeds('w2833r')
-      this.props.getFeeds(userGeo.userGeo, userGeo.neighboursArr)
-    }catch(err){
-      console.log(err)
-    }
+    this.fetchFeeds()
+    this.props.navigation.addListener(
+      'didFocus',
+      payload => {
+        this.fetchFeeds()
+      }
+    )
   }
 
   async componentDidUpdate(preProps) {
     
     if(preProps.auth.authenticated !== this.props.auth.authenticated) {
-      const userGeo = await this.getLocationAsync()
-      this.props.getFeeds(userGeo.userGeo, userGeo.neighboursArr)
+      this.fetchFeeds()
     }
   }
 
-  getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+  fetchFeeds = async () => {
+    try{
+      const userGeo = await this.getLocationAsync()
+      this.props.getFeeds(userGeo.userGeo, userGeo.neighboursArr)
+    }catch(err){
+      console.log(err, "fetch feeds error on location feeds")
+    }
+  }
+
+  getLocationPermission = async () =>  {
+    const { status } = await Permissions.askAsync(Permissions.LOCATION)
+
     if (status !== 'granted') {
-      this.setState({
-        errorMessage: 'Permission to access location was denied',
-      })
+
+      Alert.alert(
+        'Location permisions',
+        'This page requires location to work properly, would you like to grant',
+        [
+          {text: 'Cancel', onPress: () => this.props.navigation.navigate('Hot'), style: 'cancel'},
+          {text: 'OK', onPress: () => this.getLocationPermission},
+        ],
+        { cancelable: false }
+      )
     }
 
+    return  status
+  }
+
+
+  getLocationAsync = async () => {
+    
+    await this.getLocationPermission()
     let location = await Location.getCurrentPositionAsync({})
-    console.log(location)
 		const userGeo = Geohash.encode(location.coords.latitude, location.coords.longitude, 6)
     const neighboursObj = Geohash.neighbours(userGeo)
-    
     
 		const neighboursArr = Object.keys(neighboursObj).map(n =>  neighboursObj[n]) 
  
@@ -94,11 +115,13 @@ class LocationFeeds extends React.Component {
   setModalVisibleAfterPost = () => this.setState({showModal: false})
 
   render() {
-    const { scrollOffset, showModal, userGeo } = this.state
+    console.log('render')
+    const { scrollOffset, showModal } = this.state
     const { feeds , auth, loading } = this.props
+
     const titleMarginTop = scrollOffset.interpolate({
       inputRange: [0, 200],
-      outputRange: [45, 20],
+      outputRange: [70, 20],
       extrapolate: 'clamp',
     })
     const subTitleMarginTop = scrollOffset.interpolate({
@@ -111,7 +134,7 @@ class LocationFeeds extends React.Component {
       outputRange: [30, 18],
       extrapolate: 'clamp',
     })
-
+    
     return (
         <FeedsView 
           titleMarginTop={titleMarginTop}

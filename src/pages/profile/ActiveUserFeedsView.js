@@ -79,8 +79,8 @@ export const ActiveUserFeedsView = ({
             />}
 
           
-          { userFeeds.length > 0 ?
-          <FlatList
+          { userFeeds.length > 0 ?(
+            <FlatList
             scrollEventThrottle={16}
             data={userFeeds}
             keyExtractor={(item) => item.id.toString()}
@@ -88,10 +88,12 @@ export const ActiveUserFeedsView = ({
             ListHeaderComponent={() => <Listheader>Added by you  </Listheader>}
             stickyHeaderIndices={[0]}
             initialNumToRender={4}
-            
-            />: <NoContent> 
-                  {user.type==='consumer'?"Upgrade to a store to add promotions": "Add promitions and they will appear here"}
-                   </NoContent>
+            />
+          ):(
+              <NoContent> 
+                {user.type==='consumer'?"Upgrade to a store to add promotions": "Add    promitions and they will appear here"}
+              </NoContent>
+            ) 
             }
  
          

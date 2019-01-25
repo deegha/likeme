@@ -26,7 +26,7 @@ export const FETCH_USER_LIKED_FEEDS_REQUEST = 'FETCH_USER_LIKED_FEEDS_REQUEST'
 export const FETCH_USER_LIKED_FEEDS_SUCCESS = 'FETCH_USER_LIKED_FEEDS_SUCCESS'
 export const FETCH_USER_LIKED_FEEDS_FAIL = 'FETCH_USER_LIKED_FEEDS_FAIL'
 
-export const fetchFeedsRequest = () => ({
+export const fetchFeedsRequest = () =>  ({
 	type: FETCH_FEEDS_REQUEST
 })
 
@@ -82,12 +82,12 @@ export const fetchAllFeedsRequestSuccess = (feeds) => ({
 })
 
 export const fetchAllFeeds = () => async (dispatch, getState) => {
-	dispatch(fetchFeedsRequest())   
+	dispatch(fetchAllFeedsRequest())   
 	
 	try {
 
-		const { auth: {user: {id}} } = getState()
-
+		const { auth } =  getState()
+		const {user: {id}} = auth
 		const res = await getAllFeeds(id, null)	
 		const feeds = res.data
 		dispatch(fetchAllFeedsRequestSuccess(feeds))
@@ -108,8 +108,9 @@ export const CREATE_FEDD_FAIL			=	'CREATE_FEDD_FAIL'
 
 export const VOTE_UP	= 'VOTE_UP'
 
-export const createFeedRequest = () => ({
-	type: CREATE_FEED_REQUEST
+export const createFeedRequest = (feed) => ({
+	type: CREATE_FEED_REQUEST,
+	feed
 })
 
 export const createFeedSucess = () => ({
@@ -121,7 +122,7 @@ export const createFeedFail = () => ({
 })
 
 export const createFeedAction = (feed, postGeo, curLocation) => (dispatch, getState) => {
-	dispatch(createFeedRequest())
+	dispatch(createFeedRequest(feed))
 	const { auth: {user: {id}} } = getState()
 	createFeed(feed, postGeo)
 		.then(res => {
@@ -151,7 +152,7 @@ const voteUpState = (feedId) => ({
 }) 
 
 export const voteUpAction = (feedId) =>  (dispatch, getState) => {
-
+	dispatch(voteUpState(feedId))
 	const { auth: {user: {id, displayName}} } = getState()
 	voteUp(feedId,{id, displayName})
 	.catch(err => console.log(err) )

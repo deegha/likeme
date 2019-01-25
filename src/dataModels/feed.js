@@ -1,4 +1,5 @@
 export const FeedModel = {
+  id: 1,
   createdAt : 0,
   title: '',
   postText: '',

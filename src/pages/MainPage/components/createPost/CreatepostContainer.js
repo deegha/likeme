@@ -40,7 +40,7 @@ class CreatepostContainer extends React.Component {
 	}
 
 	async componentDidMount() {
-		if(!this.prop.authenticated) {
+		if(!this.props.authenticated) {
 			this.props.navigation.navigate('login')
 		}
     await Permissions.askAsync(Permissions.CAMERA_ROLL)
@@ -65,8 +65,17 @@ class CreatepostContainer extends React.Component {
 
 	submitPost = () => {
 		const { latitude, longitude, description } = this.state.location
-		const postGeo = Geohash.encode(latitude, longitude, 6)
-		const curGeoHash = Geohash.encode(this.state.currentUserLocation.latitude, this.state.currentUserLocation.longitude, 6)
+		let postGeo
+		let curGeoHash
+		try{
+			postGeo = Geohash.encode(latitude, longitude, 6)
+			curGeoHash = Geohash.encode(this.state.currentUserLocation.latitude, this.state.currentUserLocation.longitude, 6)
+		}catch(err) {
+			console.log(err)
+			curGeoHash = Geohash.encode(this.state.currentUserLocation.latitude, this.state.currentUserLocation.longitude, 6)
+			postGeo = curGeoHash
+		}
+		
 
 		console.log(postGeo, "postGeo")
 
@@ -111,7 +120,11 @@ class CreatepostContainer extends React.Component {
 	)
 	
 	validateForm = () => {
-		(this.state.info !=='' || this.state.postMedia !=='' )? this.setState({falidForm: true}): this.setState({falidForm: false}) 
+		if(this.state.info !=='' || this.state.postMedia.url !=='' ) {console.log("in")
+			this.setState({falidForm: true})
+		}else {
+			this.setState({falidForm: false}) 
+		}
 	}
 
 	getLocationAsync = async () => {
@@ -131,6 +144,7 @@ class CreatepostContainer extends React.Component {
   }
 
 	pickImage = async () => {
+		await Permissions.askAsync(Permissions.CAMERA)
     let result = await ImagePicker.launchImageLibraryAsync({
 			allowsEditing: true,
 			// aspect: [4, 3]
@@ -154,6 +168,7 @@ class CreatepostContainer extends React.Component {
 
 	render() {
 		const { postText, postMedia, currentUserLocation, falidForm } = this.state
+
 		return <CreatePost
 							location={this.state.location}
 							setLocationPostLocation={this.setLocationPostLocation}

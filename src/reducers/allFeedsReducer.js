@@ -46,27 +46,27 @@ export const allFeedsReducer = (state=initialState, action) => {
         creating: false
       }
     }
-    case Actions.VOTE_UP:
+    case Actions.VOTE_UP: 
       const feeds = state.feeds
 
-      const newFeeds = feeds.map(feed => {
+      const newFeeds = feeds.map(feed => { 
         if(feed.id === action.feedId) {
+          
           const x  = {
             ...feed,
             voteUp: feed.voteUp+1,
             currentUserLiked: true
           }
+          console.log(x, "locatio feeds")
           return x
         }else {
           return feed
         }
       })
 
-      console.log(newFeeds)
-
       return {
         ...state,
-        newFeeds
+        feeds:newFeeds
       }
     default : 
       return state

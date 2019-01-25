@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     paddingRight: 20
   },
   userName: {
-    marginBottom: 5,
+   
     fontWeight: 'bold',
     color: shared.primary_text
   },
@@ -59,8 +59,8 @@ export const styles = StyleSheet.create({
   action: {
     flexDirection: 'row',
     alignItems: 'center',
-    margin: 5,
-    width: 60
+    marginLeft: 5,
+    // width: 60
   },
   postLocation: {
     paddingHorizontal: 10,
@@ -86,6 +86,13 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#ffffff',
-    textAlign: 'center'
+    textAlign: 'center',
+    width: '100%'
+  },
+  createdAt: {
+    fontWeight: '100',
+    color: shared.secondary_text,
+    fontSize: 10,
+    marginBottom: 5,
   }
 })

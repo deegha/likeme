@@ -14,7 +14,6 @@ export class FeedsView extends React.PureComponent {
 
    
   render() {
-    
     const {
       handleScroll,
       feedsItem,
@@ -32,11 +31,6 @@ export class FeedsView extends React.PureComponent {
       loading
     } = this.props
   
-
-    if(loading) {
-      return <Loading />
-    }
-
     return (
       <View style={styles.container}>
         <Animated.View style={[styles.header, { marginTop: titleMarginTop }]}>
@@ -47,9 +41,11 @@ export class FeedsView extends React.PureComponent {
             <Text style={[styles.rightBtn]}>{auth.authenticated?"Logout":"Login"}</Text>
           </TouchableOpacity>
         </Animated.View>
-  
+        {(loading && Object.keys(feedsItem) < 1)?(
+          <Loading />
+        ):(
          <FlatList
-            scrollEventThrottle={16}
+             scrollEventThrottle={16}
             initialNumToRender={5}
             data={Object.keys(feedsItem)}
             keyExtractor={(item) => item.toString()}
@@ -68,7 +64,7 @@ export class FeedsView extends React.PureComponent {
             // onEndReached={loadMore}
             // ListFooterComponent={renderFooter} 
             />
-  
+          )}
         <FloatingBtn action={createPost}>
          <Entypo name={'plus'} size={30} color={"#ffffff"} />
         </FloatingBtn>

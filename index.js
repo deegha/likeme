@@ -3,10 +3,12 @@ import { RootStack } from './routerStack'
 import  { connect } from 'react-redux'
 import Fire from './src/services/firebase'
 import { authenticate, logout } from './src/actions/authActions'
-import { ToastAndroid } from 'react-native'
+import { ToastAndroid, Image, View } from 'react-native'
 import { getUserById, setPushToken } from './src/services/backendClient'
 import { Permissions, Notifications } from 'expo'
 import { Loading } from './src/components'
+
+import splash from './assets/splash.png'
 
 console.disableYellowBox = true
 class Index extends React.Component {
@@ -78,12 +80,14 @@ class Index extends React.Component {
   render() {
 
 		if(this.state.LoadingContent) {
-			return <Loading />
+			return (
+				<View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+					<Image source={splash} style={{width: 400, height:400}} />
+				</View>
+			)
 		}else{
 			return <RootStack />
 		}
-
-    
   }
 }
 

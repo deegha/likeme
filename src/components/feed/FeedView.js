@@ -11,6 +11,8 @@ import { FadeInView, LikeBtn, Sharebtn } from '../'
 import { WithImage } from './withImage'
 import { styles } from './styles'
 
+import moment from 'moment'
+
 export class FeedView extends React.Component {
 
   componentDidUpdate() {
@@ -25,9 +27,10 @@ export class FeedView extends React.Component {
   }
 
   render() {
-    const { feed, makeAction } = this.props
+    const { feed } = this.props
 
-    // console.log(feed)
+    const x = feed.createdAt
+
     return (
       <FadeInView>
       <View style={styles.container}>
@@ -38,7 +41,11 @@ export class FeedView extends React.Component {
           {/* </View> */}
           <View style={styles.postContent}>
             <Text style={styles.userName}>{feed.userObj.name}</Text>
-
+  
+            <Text style={styles.createdAt}>
+            {moment(feed.createdAt).fromNow()}
+            </Text>
+       
              {feed.postMedia.url !== "" && (
                 <Text style={styles.postText}>
                   {feed.postText}
@@ -54,7 +61,7 @@ export class FeedView extends React.Component {
           ):(
             
               <View style={styles.postBox}>
-              <LinearGradient style={{padding: 40}} colors={['#00bcd4', 'transparent']}>
+              <LinearGradient style={{padding: 40, width:'100%'}} colors={['#00bcd4', 'transparent']}>
                 <Text style={styles.postBoxText}>
                   {feed.postText}
                 </Text>
@@ -64,6 +71,7 @@ export class FeedView extends React.Component {
              )
           } 
         </View>
+       
         {feed.location && feed.location.description !== undefined && feed.location.description !== '' && (
           <View style={styles.postLocation} >
             <Entypo name="location-pin" size={11} color="#00bcd4" />
@@ -72,12 +80,14 @@ export class FeedView extends React.Component {
             </Text>
           </View>
         )}
+        
         <View style={styles.actionArea}>
-          <View style={styles.action}>
-            <LikeBtn feedId={feed.id} likeCount={feed.voteUp} liked={feed.currentUserLiked} />
-          </View>
+ 
           <View style={styles.action}>
             <Sharebtn feed={feed} />
+          </View>
+          <View style={styles.action}>
+            <LikeBtn feedId={feed.id} likeCount={feed.voteUp} liked={feed.currentUserLiked} />
           </View>
         </View>
       </View>

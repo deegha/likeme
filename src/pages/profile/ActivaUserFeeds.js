@@ -11,7 +11,6 @@ class ActiveUserFeeds extends React.Component {
     scrollOffset: new Animated.Value(0),
   }
 
-
   componentDidMount() {
 
     const { user, authenticated, navigation, fetchUserFeeds, fetchLikedFeeds } = this.props
@@ -31,9 +30,6 @@ class ActiveUserFeeds extends React.Component {
         }else {
           fetchUserFeeds(user.id)
           fetchLikedFeeds(user.id)
-        }
-        if(!this.props.authenticated) {
-          this.props.navigation.navigate('login')
         }
       }
     )

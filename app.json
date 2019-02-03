@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Promo App",
-    "description": "Share your promotions, Promo app is a centralize promotions hub for all kind of businesses. This app will show all the promotions near you",
+    "description": "Share your promotions, Promo app is a centralized promotions hub for all kind of businesses. This app will show all the promotions near the user",
     "slug": "promoapp",
     "privacy": "unlisted",
     "sdkVersion": "30.0.0",

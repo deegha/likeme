@@ -22,6 +22,12 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     width: 200
   },
+  descriptionHorizotal: {
+    color: '#353b48',
+    fontSize: 12,
+    fontWeight: 'bold',
+    width: 300
+  },
   timeLeft: {
     color: '#636e72',
     fontSize: 12,
@@ -52,23 +58,32 @@ export const hStyles = StyleSheet.create({
     justifyContent: 'flex-start' ,
     backgroundColor: '#ffff',
     margin: 1,
+    borderRadius: 5
+  },
+  containerHorizontal: {
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'flex-start' ,
+    backgroundColor: '#ffff',
+    margin: 1,
+    borderRadius: 5,
   },
   image: {
-    width: 200,
+    width: 300,
     height: 200,
     borderRadius: 20,
     marginRight: 10
   },
   postLocationText: {
     marginTop: 7,
-    fontSize: 9,
-    width: 250
+    fontSize: 8,
+    width: 300
   },
   description: {
     marginTop: 7,
     color: '#353b48',
     fontSize: 12,
-    fontWeight: 'bold',
-    width: 200
+    fontWeight: '600',
+    width: 300
   }
 })

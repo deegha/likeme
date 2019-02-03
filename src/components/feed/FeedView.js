@@ -1,11 +1,8 @@
 import React from 'react'
-import { View, Text, Dimensions, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { LinearGradient } from 'expo'
-import { RoundButton } from '../'
-import { Ionicons, Foundation, FontAwesome, Entypo } from '@expo/vector-icons'
+import {  Entypo } from '@expo/vector-icons'
 
-import propic from '../../../assets/propic.jpg'
-import { VOTE_UP, VOTE_DOWN, CLICK_ACTION, SHARE } from './actionsConstants' 
 import { FadeInView, LikeBtn, Sharebtn } from '../'
 
 import { WithImage } from './withImage'
@@ -59,16 +56,14 @@ export class FeedView extends React.Component {
           {feed.postMedia.url !== "" ?(
              <WithImage url={feed.postMedia.url} />
           ):(
-            
-              <View style={styles.postBox}>
-              <LinearGradient style={{padding: 40, width:'100%'}} colors={['#00bcd4', 'transparent']}>
-                <Text style={styles.postBoxText}>
-                  {feed.postText}
-                </Text>
-                </LinearGradient>
-               </View>
-              
-             )
+            <View style={styles.postBox}>
+            <LinearGradient style={{padding: 40, width:'100%'}} colors={['#00bcd4', 'transparent']}>
+              <Text style={styles.postBoxText}>
+                {feed.postText}
+              </Text>
+              </LinearGradient>
+              </View>  
+            )
           } 
         </View>
        

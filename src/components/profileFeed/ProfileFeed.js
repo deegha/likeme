@@ -12,20 +12,17 @@ export class ProfileFeed extends React.PureComponent {
     if(horizontal) {
 
       return(
-        <View style={hStyles.container}>
+        <View style={hStyles.containerHorizontal}>
           <Image source={{uri: feed.postMedia.url}} style={hStyles.image} />
           <View style={styles.descriptionBox}>
-            
             <Text style={hStyles.description}>{feed.postText.substring(0, 100)}</Text>
             {feed.location.description !== undefined && feed.location.description !== '' && (
               <View style={styles.postLocation} >
-              
                 <Text style={hStyles.postLocationText}>
                     {feed.location.description}
                 </Text>
               </View>
             )}
-          
           </View>
         </View>
       )

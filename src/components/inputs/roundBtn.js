@@ -31,7 +31,7 @@ export class RoundBtn extends React.Component {
     return (
       <FadeInView initial={0.2} >
         <TouchableOpacity onPress={onPress} style={[styles.roundBtn, exStyles]} >
-          <Text style={color !== undefined ?{fontWeight:'bold'  , color: fontColor?fontColor :'#ffffff'}:{}}>
+          <Text style={[color !== undefined ?{fontWeight:'bold'  , color: fontColor?fontColor :'#ffffff'}:{}, styles.roundBtnText]}>
             {children}
           </Text>
         </TouchableOpacity>

@@ -28,6 +28,7 @@ const NoContent= ({children}) => (
 export const ActiveUserFeedsView = ({
   user,
   userFeeds,
+  navigateToSettings,
 
   handleScroll,
   headerPaddingTop,
@@ -56,11 +57,15 @@ export const ActiveUserFeedsView = ({
               <Text style={styles.detail}>{userFeeds.length} Promotions</Text>
             </View>
           </View>
-          <Animated.Image style={[styles.displayImage,{
-              height: imageWidth,
-              width: imageWidth,
-          }]} source={{uri: user.image}} /> 
-        </Animated.View>
+          <TouchableOpacity onPress={navigateToSettings}>
+            <Animated.Image style={[styles.displayImage,{
+                height: imageWidth,
+                width: imageWidth,
+            }]} source={{uri: user.image}} /> 
+          </TouchableOpacity>
+
+          </Animated.View>
+       
         <View  style={styles.body}>
         <ScrollView style={styles.scrollView} onScroll={handleScroll}>
           { likedFeeds.likedFeeds.length > 0? 

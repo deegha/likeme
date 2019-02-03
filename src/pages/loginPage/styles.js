@@ -10,6 +10,13 @@ export const styles = StyleSheet.create({
         width: '100%',
         padding: 5
     },
+    containerScroll: {
+        display: 'flex',
+        backgroundColor: shared.secondaryColor,
+        height:'100%',
+        width: '100%',
+        padding: 5
+    },
     innerContainer: {
         display: 'flex',
         width: '80%',
@@ -43,7 +50,7 @@ export const styles = StyleSheet.create({
         height:50,
     },
     formError: {
-        color: "#e74c3c",
+        color: "#ED4C67",
         textAlign: 'center',
         fontWeight: '600',
         fontSize: 10

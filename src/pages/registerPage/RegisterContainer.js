@@ -11,15 +11,21 @@ import { UserModel } from '../../dataModels/user'
 import { createUser } from '../../services/backendClient'
 import { uploadImageAsync } from '../../services/utils'
 
+import { verticalScale, moderateScale } from '../../components/sharedStyles'
+
+const INITIAL_IMAGE_MARGIN = verticalScale(30)
+const INITIAL_IMAGE_WIDTH = verticalScale(90)
+const END_IMAGE_WIDTH = verticalScale(70)
+const INITIAL_IMAGE_TEXT = moderateScale(12)
 class RegisterContainer extends React.Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      imageMargin: new Animated.Value(30),
-      imageWidth: new Animated.Value(90),
-      imageText: new Animated.Value(12),
+      imageMargin: new Animated.Value(INITIAL_IMAGE_MARGIN),
+      imageWidth: new Animated.Value(INITIAL_IMAGE_WIDTH),
+      imageText: new Animated.Value(INITIAL_IMAGE_TEXT),
       propic: '',
       name: '',
       email:'',
@@ -65,7 +71,7 @@ class RegisterContainer extends React.Component {
     Animated.timing(                  
       this.state.imageWidth,            
       {
-        toValue: 70,    
+        toValue: END_IMAGE_WIDTH,    
         easing: Easing.back(),              
         duration: 400,              
       }
@@ -84,7 +90,7 @@ class RegisterContainer extends React.Component {
 		Animated.timing(                  
       this.state.imageMargin,            
       {
-        toValue: 30,    
+        toValue: INITIAL_IMAGE_MARGIN,    
         easing: Easing.back(),              
         duration: 400,              
       }
@@ -92,7 +98,7 @@ class RegisterContainer extends React.Component {
     Animated.timing(                  
       this.state.imageWidth,            
       {
-        toValue: 90,    
+        toValue: INITIAL_IMAGE_WIDTH,    
         easing: Easing.back(),              
         duration: 400,              
       }
@@ -100,7 +106,7 @@ class RegisterContainer extends React.Component {
     Animated.timing(                  
       this.state.imageText,            
       {
-        toValue: 15,    
+        toValue: INITIAL_IMAGE_TEXT,    
         easing: Easing.back(),              
         duration: 400,              
       }
@@ -127,19 +133,21 @@ class RegisterContainer extends React.Component {
 
   onSubmit = () => {
     this.setState({creating: true})
-    // if(this.state.password !== this.state.confirmPassword) {
-    //   this.setFormError("Password mismatch")
-    //   return  false
-    // }
+    if(this.state.propic === "") {
+      this.setFormError("Should upload a profile picture")
+      this.setState({creating: false})
+      return  false
+    }
 
     if(this.state.email === "" || this.state.password === "") {
       this.setFormError("Email and password are requied")
+      this.setState({creating: false})
       return  false
     }
 
     Fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(res => {
       const user = UserModel
-
+      console.log('uploading Image')
       uploadImageAsync(this.state.propic, 'userImages')
         .then(photoUrl => {
 
@@ -147,7 +155,8 @@ class RegisterContainer extends React.Component {
         user.displayName = this.state.name
         user.email = res.user.email
         user.image = photoUrl
-
+        
+        console.log('Creating user')
         createUser(
           res.user.uid,
           user

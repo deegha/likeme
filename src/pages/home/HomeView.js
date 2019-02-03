@@ -1,21 +1,24 @@
 import React from 'react'
 
-import { View, Text,Animated, TouchableOpacity,FlatList,Easing, Dimensions  } from 'react-native'
+import { View, ScrollView, Text,Animated, TouchableOpacity,FlatList,Easing, Dimensions  } from 'react-native'
 const { width, height } = Dimensions.get('window')
 import { styles } from './styles'
 import { 
   FloatingBtn, 
   ModalComponent, 
-  CreatepostContainer, 
-  FeedView  } from '../'
+  CreatepostContainer,
+  ProfileFeed } from '../../components'
 import {  Entypo, Ionicons } from '@expo/vector-icons'
 import { Loading } from '../../components'
 
-export class FeedsView extends React.PureComponent {
+import { XComponent, Sections, Listheader } from './components'
+
+export class HomeView extends React.PureComponent {
 
   constructor(props) {
     super(props)
     this.state={
+      scrollOffset:new Animated.Value(0),
       height: new Animated.Value(height),
       opacity: new Animated.Value(0),
       opacityName: new Animated.Value(0)
@@ -23,13 +26,17 @@ export class FeedsView extends React.PureComponent {
   }
 
   componentDidUpdate(prePros) {
-
-    console.log(Object.keys(this.props.feedsItem)< 1, "dagrsf")
-
+    console.log(this.props.loading,"loading")
     if(prePros.loading !== this.props.loading && this.props.loading === false) {
+      console.log("in")
       this.animate()
     }
+  }
 
+  handleScroll = (e) =>  {
+    const scrollSensitivity = 4 / 3
+    const offset = e.nativeEvent.contentOffset.y / scrollSensitivity
+    this.state.scrollOffset.setValue(offset)
   }
 
   animate =() => {
@@ -63,13 +70,7 @@ export class FeedsView extends React.PureComponent {
    
   render() {
     const {
-      handleScroll,
-      feedsItem,
-      titleMarginTop,
-      titleFontSize ,
       auth:{authenticated,user:{type, displayName}},
-      navigateTol,
-      logout,
       
       navigation,
       showModal,
@@ -77,14 +78,26 @@ export class FeedsView extends React.PureComponent {
       setModalVisible,
       createPost,
       loading,
-      navigateToProfile
+      navigateToProfile,
+      feedsItems
     } = this.props
 
-    const { opacity,height, opacityName } = this.state
+    const { opacity,height, opacityName, scrollOffset } = this.state
+
+    const elav = scrollOffset.interpolate({
+      inputRange: [0, 50],
+      outputRange: [0, 10],
+      extrapolate: 'clamp',
+    })
+
+    const exStyles= {
+      elevation: elav,
+      height:height
+    }
   
     return (
       <View style={styles.container}>
-        <Animated.View style={[styles.headerContainer, {height:height}]}>
+        <Animated.View style={[styles.headerContainer, exStyles]}>
         {(loading)&&(
           <Loading />
         )}
@@ -105,32 +118,23 @@ export class FeedsView extends React.PureComponent {
         </View>
          
         </Animated.View>
-        {(loading && Object.keys(feedsItem) < 1)?(
-          <Loading />
-        )
-        :(
-         <FlatList
-             scrollEventThrottle={16}
-            initialNumToRender={5}
-            data={Object.keys(feedsItem)}
-            keyExtractor={(item) => item.toString()}
-            renderItem={({item}) => {
-              //feedsItem[item].postMedia.url !=="" &&
-              return  (
-                <FeedView 
-                  makeAction={()=>()=>console.log("dsfsd")} 
-                  key={feedsItem[item].id} 
-                  feed={feedsItem[item]} />
-              )
-            }}
-            
-            onScroll={handleScroll}
-            // onEndReachedThreshold={0.1}
-            // onEndReached={loadMore}
-            // ListFooterComponent={renderFooter} 
-            />
-          )}
-              
+        <ScrollView onScroll={this.handleScroll} >      
+          <XComponent />
+          <Sections>
+          <Listheader>Hot deals</Listheader>
+            <FlatList
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              scrollEventThrottle={16}
+              data={feedsItems}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({item}) =>  <ProfileFeed horizontal={true} feed={item} />}
+              initialNumToRender={4}
+              // ListHeaderComponent={() => <Listheader>Hot deals</Listheader>}
+              />
+          </Sections>
+        </ScrollView>
+
         {(type !== "consumer" &&  authenticated ) &&   (
           <FloatingBtn action={createPost}>
             <Entypo name={'plus'} size={30} color={"#ffffff"} />

@@ -18,41 +18,64 @@ export const styles = StyleSheet.create({
     },
  
     inputFeild: {
-        fontSize: 20,
-        padding: 5,
-        marginBottom: 10
+			fontSize: 20,
+			padding: 5,
+			marginBottom: 10
     },
     postOptions:{
-        display:'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderBottomWidth:0.5,
-        borderBottomColor: '#d6d7da',    
-        marginBottom: 30
+			display:'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			alignItems: 'center',
+			borderBottomWidth:0.5,
+			borderBottomColor: '#d6d7da',    
+        marginBottom: 20
     },
     postImage: {
-        width: '100%'
+			width: '100%'
     },
     option: {
-        margin: 10
+			margin: 10
     },
     optionText: {
-        fontSize: 15,
-        fontWeight: '600'
+			fontSize: 15,
+			fontWeight: '600'
     },
     optionTextDisabled: {
-        fontSize: 15,
-        fontWeight: '600',
-        color: shared.disabledText
+		fontSize: 15,
+		fontWeight: '600',
+		color: shared.disabledText
     },
     form: {
-        padding: 5,
-        flex:2
+			padding: 5,
+			flex:2
     },
     postOptionsSection: {
-        flexDirection: 'row',
-        justifyContent: 'center'
+			flexDirection: 'row',
+			justifyContent: 'center'
     },
-  
+    tagContainer: {
+			flexDirection: 'row',
+			justifyContent: 'flex-start',
+			alignItems: 'center',
+			marginBottom: 10
+    },
+    tag: {
+			fontSize: 10,
+			color: '#ffffff',
+			backgroundColor: '#fc5c65',
+			borderRadius: 40,
+			padding: 10,
+			fontWeight: 'bold',
+			marginRight: 5
+		},
+		selected: {
+			fontSize: 11,
+			color: '#ffffff',
+			backgroundColor: '#eb3b5a',
+			borderRadius: 40,
+			padding: 10,
+			fontWeight: 'bold',
+			marginRight: 5	
+		}
 })

@@ -32,6 +32,7 @@ class CreatepostContainer extends React.Component {
 			info: "",
 			postType: null,
 			userID: "",
+			category: "",
 			postMedia: {
 				url:"",
 				type:""
@@ -147,7 +148,7 @@ class CreatepostContainer extends React.Component {
 		await Permissions.askAsync(Permissions.CAMERA)
     let result = await ImagePicker.launchImageLibraryAsync({
 			allowsEditing: true,
-			// aspect: [4, 3]
+			aspect: [4, 3]
     })
 
     if (!result.cancelled) {
@@ -157,7 +158,8 @@ class CreatepostContainer extends React.Component {
 	
 	takePhoto = async () => {
     let result = await ImagePicker.launchCameraAsync({
-      allowsEditing: true
+			allowsEditing: true,
+			aspect: [4, 3]
 		});
 	
 
@@ -166,19 +168,25 @@ class CreatepostContainer extends React.Component {
     }
   }
 
-	render() {
-		const { postText, postMedia, currentUserLocation, falidForm } = this.state
+	setCategory = (cat) => () => this.setState({category:cat})
 
-		return <CreatePost
-							location={this.state.location}
-							setLocationPostLocation={this.setLocationPostLocation}
-							postMedia={postMedia}
-							disabled={!falidForm}
-							postText={postText} 
-							pickImage={this.pickImage}
-							takePhoto={this.takePhoto}
-							onTextChange={this.onTextChange} 
-							submitPost={this.submitPost} />
+	render() {
+		const { postText, postMedia, currentUserLocation, falidForm, category } = this.state
+
+		return (
+			<CreatePost
+				setCategory={this.setCategory}
+				category={category}
+				location={this.state.location}
+				setLocationPostLocation={this.setLocationPostLocation}
+				postMedia={postMedia}
+				disabled={!falidForm}
+				postText={postText} 
+				pickImage={this.pickImage}
+				takePhoto={this.takePhoto}
+				onTextChange={this.onTextChange} 
+				submitPost={this.submitPost} />
+		)
 	}
 }
 

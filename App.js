@@ -6,7 +6,6 @@ import { Provider } from "react-redux"
 import { createStore, applyMiddleware } from "redux"
 import { rootReducer } from './src/reducers/rootReducer'
 
-import HandleAuthRedirect from './src/components/handleAuthRedirect/HandleAuthRedirect'
 import Index from './index'
 
 const store = createStore(rootReducer,  applyMiddleware(thunkMiddleware))

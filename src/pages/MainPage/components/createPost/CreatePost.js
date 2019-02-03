@@ -6,23 +6,31 @@ import { TextFeild, RoundButton, GooglePlacesInput } from '../../../../component
 import { styles } from './styles'
 import Tooltip from 'rn-tooltip'
 
-export const CreatePost = ({ onTextChange, location,  submitPost, postText, disabled, postMedia, pickImage, takePhoto, setLocationPostLocation }) => {
+const Tag = ({cat, onPress, selelcted}) => {
+	return (
+		<TouchableOpacity onPress={onPress(cat)}>
+				<Text style={(cat ===selelcted)?styles.selected:styles.tag}>{cat}</Text>
+		</TouchableOpacity>
+	)
+}
+
+export const CreatePost = ({ onTextChange, location,  submitPost, postText, disabled, postMedia, pickImage, takePhoto, setLocationPostLocation, category, setCategory }) => {
 	
 	return (
-		<ScrollView style={styles.container} >
+		<ScrollView style={styles.container} keyboardShouldPersistTaps={'handled'} >
 		<View style={styles.container}>
 			<View style={styles.postOptions}>
 					<View style={styles.postOptionsSection}>
 						<TouchableOpacity style={styles.option} >
-						<Tooltip
-						onClose={takePhoto}
-						backgroundColor={'#7ed6df'}
-						width={200} 
-						height={100}
-						popover={<Text style={{color:'#ffffff'}}>Try to crop your image to make a squre, that will make your post more attractive</Text>}
-						tooltipText="Try to crop your image to make a squre, that will make your post more attractive">
-							<Text  style={styles.optionText}>camera</Text>
-						</Tooltip>
+							<Tooltip
+								onClose={takePhoto}
+								backgroundColor={'#7ed6df'}
+								width={200} 
+								height={100}
+								popover={<Text style={{color:'#ffffff'}}>Try to crop your image to make a squre, that will make your post more attractive</Text>}
+								tooltipText="Try to crop your image to make a 4:3 ratio, that will make your post more attractive">
+								<Text  style={styles.optionText}>camera</Text>
+							</Tooltip>
 							
 						</TouchableOpacity>
 						<TouchableOpacity  style={styles.option} >
@@ -42,6 +50,14 @@ export const CreatePost = ({ onTextChange, location,  submitPost, postText, disa
 					</View>
 				
 			</View>
+			<View style={styles.tagContainer}>
+				<Tag onPress={setCategory} cat={"Food"} selelcted={category} />
+				<Tag onPress={setCategory} cat={"Clothing"} selelcted={category} />
+				<Tag onPress={setCategory} cat={"Health"} selelcted={category} />
+				<Tag onPress={setCategory} cat={"Fashion"} selelcted={category} />
+				<Tag onPress={setCategory} cat={"Rides"} selelcted={category} />
+				<Tag onPress={setCategory} cat={"Beauty"} selelcted={category} />
+			</View>
 			<View style={styles.form}>
 				
 				<TextInput 
@@ -59,8 +75,9 @@ export const CreatePost = ({ onTextChange, location,  submitPost, postText, disa
 			</View>
 			
 			<View style={styles.postData}>
-				
-				{postMedia.url !== "" && <Image source={{ uri: postMedia.url }} width={Dimensions.get('window').width} /> }
+				{postMedia.url !== "" && (
+					<Image source={{ uri: postMedia.url }} width={Dimensions.get('window').width} />
+				) }
 			</View>
 		
 		</View>

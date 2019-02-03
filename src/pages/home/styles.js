@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
   headerContainer: {
     backgroundColor: '#00bcd4',
     alignItems:'center',
+    elevation: 3,
     justifyContent:'center'
   },
   header: {
@@ -20,14 +21,13 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: shared.backGround,
     backgroundColor: '#00bcd4',
     zIndex: 1,
   },
   title: {
     fontWeight: 'bold',
     fontSize: 20,
-    color: '#fff'
+    color: '#ffffff'
   },
   creatingContainer: {
     marginTop: 22,
@@ -61,5 +61,50 @@ export const styles = StyleSheet.create({
     marginRight: 5,
     fontWeight: 'bold',
     color:'#ffffff'
+  },
+  xComponentContainer: {
+    width:'100%',
+    alignItems: 'center',
+    marginBottom: -40
+  },
+  xComponentTop: {
+    width: '100%',
+    backgroundColor: '#00bcd4',
+    height: 50,
+    
+  },
+  xComponenBottom: {
+    backgroundColor: '#ffffff',
+    borderRadius: 5,
+    width: '90%', 
+    height: 100,
+    position: 'relative',
+    top: -40,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    
+  },
+  iconlable: {
+    fontSize: 10,
+    textAlign: 'center'
+  },
+  iconContainer: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  sectionlable: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000'
+  },
+  listheaderContainer: {
+    padding: 25,
+  },
+  listheadertext: {
+    fontWeight: 'bold',
+    color: '#353b48'
   }
 })

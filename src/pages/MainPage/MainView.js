@@ -16,7 +16,7 @@ export default createBottomTabNavigator({
     screen: AllFeeds,
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ tintColor }) => {
-        return <MaterialCommunityIcons name={'fire'} size={25} color={tintColor} />
+        return <MaterialCommunityIcons name={'fire'} size={18} color={tintColor} />
       },
     })
   },
@@ -24,7 +24,7 @@ export default createBottomTabNavigator({
     screen: LocationFeeds,
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ tintColor }) => {
-        return <Entypo name={'location'} size={25} color={tintColor} />
+        return <Entypo name={'location'} size={18} color={tintColor} />
       },
     })
   },
@@ -32,7 +32,7 @@ export default createBottomTabNavigator({
     screen: ActiveUserFeeds,
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ tintColor }) => {
-        return <Ionicons name={'ios-person-add'} size={25} color={tintColor} />
+        return <Ionicons name={'ios-person-add'} size={18} color={tintColor} />
       },
     })
   },

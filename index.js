@@ -6,7 +6,6 @@ import { authenticate, logout } from './src/actions/authActions'
 import { ToastAndroid, Image, View } from 'react-native'
 import { getUserById, setPushToken } from './src/services/backendClient'
 import { Permissions, Notifications } from 'expo'
-import { Loading } from './src/components'
 
 import splash from './assets/splash.png'
 
@@ -27,13 +26,22 @@ class Index extends React.Component {
 			if(userData !== null) { 
 				getUserById(userData.uid)
 					.then(data => {
-						this.props.authenticate(data.val()[userData.uid])
-						this.registerForPushNotificationsAsync(userData.uid)
-						ToastAndroid.showWithGravity(
-							'logged in succes',
-							ToastAndroid.SHORT,
-							ToastAndroid.BOTTOM
-						)
+
+						console.log(data, "data at index")
+
+						try{
+							this.props.authenticate(data.val()[userData.uid])
+							this.registerForPushNotificationsAsync(userData.uid)
+							ToastAndroid.showWithGravity(
+								'logged in succes',
+								ToastAndroid.SHORT,
+								ToastAndroid.BOTTOM
+							)
+						}catch(err) {
+							console.log(err)
+							this.props.logoutUser()
+						}
+						
 
 						this.setState({LoadingContent: false})
 					})

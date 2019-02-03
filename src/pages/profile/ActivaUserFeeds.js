@@ -25,6 +25,8 @@ class ActiveUserFeeds extends React.Component {
     this.props.navigation.addListener(
       'didFocus',
       payload => {
+        console.log(payload)
+
         if(!authenticated) {
           navigation.navigate('login')
         }else {
@@ -48,6 +50,8 @@ class ActiveUserFeeds extends React.Component {
     const offset = e.nativeEvent.contentOffset.y / scrollSensitivity;
     this.state.scrollOffset.setValue(offset);
   }
+
+  navigateToSettings = () => this.props.navigation.navigate('settings')
 
   render () {
     const { user, userFeeds, likedFeeds } = this.props
@@ -79,6 +83,8 @@ class ActiveUserFeeds extends React.Component {
     return (
       <ActiveUserFeedsView 
         handleScroll={this.handleScroll}
+        navigateToSettings={this.navigateToSettings}
+
         headerPaddingTop={headerPaddingTop}
         headerPaddingBottom={headerPaddingBottom}
         titleFontSize={titleFontSize}

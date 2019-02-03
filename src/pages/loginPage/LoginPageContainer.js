@@ -11,15 +11,22 @@ import { authenticate } from '../../actions/authActions'
 import { getUserById, createUser } from '../../services/backendClient'
 import { UserModel } from '../../dataModels/user'
 import { validateEmail } from '../../services/helpers'
+
+import  { moderateScale, scale, verticalScale } from '../../components/sharedStyles'
+
+const INITIAL_TITLTE_MARGIN = verticalScale(50)
+const INITIAL_TITLE_FONT = scale(34)
+const INITIAL_DEVIDER_HEIGHT = verticalScale(80)
+
 class LoginPageContainer extends React.Component {
 
 	constructor(props) {
 		super(props)
 
 		this.state = {
-			titleMargin: new Animated.Value(50),
-			titleFont: new Animated.Value(34),
-			deviderHeight: new Animated.Value(90),
+			titleMargin: new Animated.Value(INITIAL_TITLTE_MARGIN),
+			titleFont: new Animated.Value(INITIAL_TITLE_FONT),
+			deviderHeight: new Animated.Value(INITIAL_DEVIDER_HEIGHT),
 
 			email: "",
 			password: "",
@@ -44,7 +51,14 @@ class LoginPageContainer extends React.Component {
 	componentDidUpdate(preProps) {
 		const { authenticated } = this.props.auth
 		if(authenticated && authenticated !== preProps.auth.authenticated) {
-			this.props.navigation.navigate('tabs')
+			this.props.navigation.navigate('home')
+		}
+	}
+
+	componentDidMount() {
+		const { authenticated } = this.props.auth
+		if(authenticated) {
+			this.props.navigation.navigate('home')
 		}
 	}
 
@@ -118,7 +132,7 @@ class LoginPageContainer extends React.Component {
 			console.log(redirectAction, "redirect	")
 			this.props.navigation.navigate(redirectPage, {action:redirectAction})
 		}else {
-			this.props.navigation.navigate('tabs')
+			this.props.navigation.navigate('home')
 		}
 	}
 
@@ -142,7 +156,7 @@ class LoginPageContainer extends React.Component {
 			.then(user => {
 				if(user !== undefined) {
 					this.setFormError("")
-
+					console.log('user singed in')
 					this.setState({email: '', password: '', validForm: false})
 				} 
 
@@ -160,7 +174,7 @@ class LoginPageContainer extends React.Component {
 		Animated.timing(                  
       this.state.titleMargin,            
       {
-        toValue: 10,    
+        toValue: 30,    
         easing: Easing.back(),              
         duration: 400,              
       }
@@ -169,7 +183,7 @@ class LoginPageContainer extends React.Component {
 		Animated.timing(                  
       this.state.titleFont,            
       {
-        toValue: 20,    
+        toValue: 25,    
         easing: Easing.back(),              
         duration: 400,              
       }
@@ -189,7 +203,7 @@ class LoginPageContainer extends React.Component {
 		Animated.timing(                  
       this.state.titleMargin,            
       {
-        toValue: 50,    
+        toValue: INITIAL_TITLTE_MARGIN,    
         easing: Easing.back(),              
         duration: 400,              
       }
@@ -198,7 +212,7 @@ class LoginPageContainer extends React.Component {
 		Animated.timing(                  
       this.state.titleFont,            
       {
-        toValue: 34,    
+        toValue: INITIAL_TITLE_FONT,    
         easing: Easing.back(),              
         duration: 400,              
       }
@@ -207,7 +221,7 @@ class LoginPageContainer extends React.Component {
 		Animated.timing(                  
       this.state.deviderHeight,            
       {
-        toValue: 90,    
+        toValue: INITIAL_DEVIDER_HEIGHT,    
         easing: Easing.back(),              
         duration: 400,              
       }

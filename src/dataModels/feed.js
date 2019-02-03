@@ -13,6 +13,7 @@ export const FeedModel = {
   status: 'active',
   actions: false,
   privacy: 'public',
+  category: 'open',
   userObj: {
     userID: 0,
     image: '',

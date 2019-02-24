@@ -10,24 +10,31 @@ export const styles = StyleSheet.create({
   headerContainer: {
     backgroundColor: '#00bcd4',
     alignItems:'center',
-    justifyContent:'center'
+    justifyContent:'center',
+    height: 80
   },
   header: {
     width: '100%',
     paddingHorizontal: 20,
-    paddingTop: 30,
-    paddingBottom: 10,
+    paddingTop: 35,
+    paddingBottom: 14,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: shared.backGround,
     backgroundColor: '#00bcd4',
     zIndex: 1,
+    elevation: 2
+  },
+  headerleft: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   title: {
-    fontWeight: 'bold',
+    fontWeight: '600',
     fontSize: 20,
-    color: '#fff'
+    color: '#fff',
+    marginLeft: 10
   },
   creatingContainer: {
     marginTop: 22,

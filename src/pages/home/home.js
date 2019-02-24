@@ -43,7 +43,7 @@ class HomeContainer extends React.Component {
 
   }
 
-  navigateTol = () => {
+  navigateTol = () => () => {
     console.log('cliked')
     this.props.navigation.navigate("login")
   }
@@ -67,7 +67,10 @@ class HomeContainer extends React.Component {
     }else {
       this.setState({showModal: true})
     }
-    
+  }
+
+  navigateTo = (to,props) => () => {
+    this.props.navigation.navigate(to,  {filter: props} )
   }
   
   setModalVisibleAfterPost = () => this.setState({showModal: false})
@@ -75,19 +78,22 @@ class HomeContainer extends React.Component {
   render() {
     const { scrollOffset, showModal } = this.state
     const { feeds , auth , loading, creating } = this.props
-
+    const lastestDeals= feeds.slice(0, 8)
+    const fashion = feeds.filter(feed => feed.category === 'fashion')
     return (
         <HomeView 
-          feedsItems={feeds} 
+          feedsItems={lastestDeals} 
           auth={auth}
           navigateToProfile={this.navigateToProfile}  
-          loading={loading }
+          loading={loading && lastestDeals.length < 1 }
           createPost={this.createPost}
           navigation={this.props.navigation}
           showModal={showModal}
           setModalVisibleAfterPost={this.setModalVisibleAfterPost}
           setModalVisible={this.setModalVisible}
           navigateTol={this.navigateTol}
+          navigateTo={this.navigateTo}
+          fashion={fashion}
         />
     ) 
   }

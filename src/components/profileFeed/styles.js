@@ -71,19 +71,21 @@ export const hStyles = StyleSheet.create({
   image: {
     width: 300,
     height: 200,
-    borderRadius: 20,
+    borderRadius: 10,
     marginRight: 10
   },
   postLocationText: {
     marginTop: 7,
     fontSize: 8,
-    width: 300
+    width: 300,
+    textAlign:'center'
   },
   description: {
     marginTop: 7,
     color: '#353b48',
     fontSize: 12,
     fontWeight: '600',
-    width: 300
+    width: 300,
+    textAlign:'center'
   }
 })

@@ -19,9 +19,6 @@ class AllFeeds extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			scrollOffset: new Animated.Value(0),
-			userGeo: '',
-      neighboursArr: [],
       showModal:false
 		}
 	}
@@ -29,7 +26,9 @@ class AllFeeds extends React.Component {
   logout = () => Fire.auth().signOut()
 
   componentDidMount() {
-    this.props.getAllFeeds()  
+    if(this.props.feeds.length < 1) {
+      this.props.getAllFeeds()
+    }
   }
 
   componentDidUpdate(preProps) {
@@ -42,12 +41,7 @@ class AllFeeds extends React.Component {
     if(preProps.auth.authenticated !== this.props.auth.authenticated) {
       this.props.getAllFeeds()  
     }
-
   }
-
-  // componentWillReceiveProps(newPros) {
-  //   console.log(newPros.feeds)
-  // }
 
   handleScroll = (e) =>  {
     const scrollSensitivity = 4 / 3
@@ -84,43 +78,45 @@ class AllFeeds extends React.Component {
   
   setModalVisibleAfterPost = () => this.setState({showModal: false})
 
-  render() {
-    const { scrollOffset, showModal } = this.state
-    const { feeds , auth , loading, creating } = this.props
-    const titleMarginTop = scrollOffset.interpolate({
-      inputRange: [0, 200],
-      outputRange: [70, 20],
-      extrapolate: 'clamp',
-    })
-    const subTitleMarginTop = scrollOffset.interpolate({
-      inputRange: [0, 200],
-      outputRange: [37, 0],
-      extrapolate: 'clamp',
-    })
-    const titleFontSize = scrollOffset.interpolate({
-      inputRange: [0, 200],
-      outputRange: [30, 18],
-      extrapolate: 'clamp',
-    })
+  goback = () => {
+    this.props.navigation.goBack()
+  }
+  
+  capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
+  render() {
+  
+    const {  showModal } = this.state
+    const { feeds , auth , loading, creating, navigation } = this.props
+    const filter = navigation.getParam('filter', 'all')
+    let filteredFeeds = feeds
+    let title = 'Hot'
+    if(filter !== 'all') {
+      title = this.capitalize(filter)
+      filteredFeeds = feeds.filter(feed => {
+        return feed.category === filter
+      })
+    }
+     
     return (
-        <FeedsView 
-          titleMarginTop={titleMarginTop}
-          subTitleMarginTop={subTitleMarginTop}
-          titleFontSize={titleFontSize}
-          feedsItem={feeds} 
-          auth={auth}
-          navigateToProfile={this.navigateToProfile}  
-          loading={loading && Object.keys(feeds) < 1}
-          createPost={this.createPost}
-          navigation={this.props.navigation}
-          showModal={showModal}
-          setModalVisibleAfterPost={this.setModalVisibleAfterPost}
-          setModalVisible={this.setModalVisible}
-          logout={this.logout}
-          navigateTol={this.navigateTol}
-          handleScroll={this.handleScroll}
-        />
+      <FeedsView 
+        goback={this.goback}
+        title={title}
+        feedsItem={filteredFeeds} 
+        auth={auth}
+        navigateToProfile={this.navigateToProfile}  
+        loading={loading && Object.keys(filteredFeeds) < 1}
+        createPost={this.createPost}
+        navigation={this.props.navigation}
+        showModal={showModal}
+        setModalVisibleAfterPost={this.setModalVisibleAfterPost}
+        setModalVisible={this.setModalVisible}
+        logout={this.logout}
+        navigateTol={this.navigateTol}
+        handleScroll={this.handleScroll}
+      />
     ) 
   }
 }

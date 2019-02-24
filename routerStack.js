@@ -1,6 +1,6 @@
 import { createStackNavigator } from 'react-navigation'
 
-import Tabs from "./src/pages/MainPage/MainView"
+// import Tabs from "./src/pages/MainPage/MainView"
 import LoginPageContainer from './src/pages/loginPage/LoginPageContainer'
 import RegisterContainer from './src/pages/registerPage/RegisterContainer'
 import SettingsContainer from './src/pages/Settings/SettingsContainer'
@@ -20,6 +20,12 @@ export const RootStack = createStackNavigator(
 		// },	
 		profile: {
 			screen: Profile,
+			navigationOptions:{
+				header: null 
+			}
+		},
+		allFeeds: {
+			screen: AllFeeds,
 			navigationOptions:{
 				header: null 
 			}
@@ -53,7 +59,6 @@ export const RootStack = createStackNavigator(
 		}
 	},
 	{
-		header: null,
 		initialRouteName: 'home',
 		navigationOptions: {
 		headerStyle: {

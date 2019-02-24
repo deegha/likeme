@@ -7,13 +7,15 @@ export const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: shared.secondaryColor,
     padding: 20,
-    marginBottom:3
+    marginBottom:3,
+    
   },
   imageArea: {
     display:'flex',
     borderRadius: 20,
     overflow: 'hidden',
     marginBottom: 25,
+    elevation: 5
   },
   contentArea: {
     display:'flex',
@@ -31,7 +33,7 @@ export const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius:30,
-    marginRight:6
+    marginRight:6,
   },
   postContent: {
     flex: 6,
@@ -50,6 +52,11 @@ export const styles = StyleSheet.create({
   actionArea: {
     flexDirection: 'row',
     justifyContent: 'flex-start'
+  },
+  actionAreaContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   statText: {
     fontSize: 11,

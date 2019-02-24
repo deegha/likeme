@@ -14,14 +14,13 @@ import Geohash from 'latlon-geohash'
 
 class LocationFeeds extends React.Component {
 
-  static navigationOptions = {
-		header: null 
-	}
+  // static navigationOptions = {
+	// 	header: null 
+	// }
 
 	constructor(props) {
 		super(props)
 		this.state = {
-			scrollOffset: new Animated.Value(0),
 			userGeo: '',
       neighboursArr: [],
       showModal:false,
@@ -109,50 +108,39 @@ class LocationFeeds extends React.Component {
     }else {
       this.setState({showModal: true})
     }
-    
   }
   
   setModalVisibleAfterPost = () => this.setState({showModal: false})
 
-  render() {
-    console.log('render')
-    const { scrollOffset, showModal } = this.state
-    const { feeds , auth, loading } = this.props
+  goback = () => {
+    this.props.navigation.goBack()
+  }
 
-    const titleMarginTop = scrollOffset.interpolate({
-      inputRange: [0, 200],
-      outputRange: [70, 20],
-      extrapolate: 'clamp',
-    })
-    const subTitleMarginTop = scrollOffset.interpolate({
-      inputRange: [0, 200],
-      outputRange: [37, 0],
-      extrapolate: 'clamp',
-    })
-    const titleFontSize = scrollOffset.interpolate({
-      inputRange: [0, 200],
-      outputRange: [30, 18],
-      extrapolate: 'clamp',
-    })
+  navigateToProfile=()=> {
+    this.props.navigation.navigate('profile')
+  }
+
+  render() {
+    const {  showModal } = this.state
+    const { feeds , auth, loading } = this.props
     
     return (
-        <FeedsView 
-          titleMarginTop={titleMarginTop}
-          subTitleMarginTop={subTitleMarginTop}
-          titleFontSize={titleFontSize}
-          feedsItem={feeds} 
-          auth={auth}
-          loading={loading}
-          
-          createPost={this.createPost}
-          navigation={this.props.navigation}
-          showModal={showModal}
-          setModalVisibleAfterPost={this.setModalVisibleAfterPost}
-          setModalVisible={this.setModalVisible}
-          logout={this.logout}
-          navigateTol={this.navigateTol}
-          handleScroll={this.handleScroll}
-        />
+      <FeedsView 
+        navigateToProfile={this.navigateToProfile}
+        feedsItem={feeds} 
+        auth={auth}
+        goback={this.goback}
+        loading={loading}
+        title={'On your location'}
+        createPost={this.createPost}
+        navigation={this.props.navigation}
+        showModal={showModal}
+        setModalVisibleAfterPost={this.setModalVisibleAfterPost}
+        setModalVisible={this.setModalVisible}
+        logout={this.logout}
+        navigateTol={this.navigateTol}
+        handleScroll={this.handleScroll}
+      />
     ) 
   }
 }

@@ -65,7 +65,7 @@ export const LoginPageView = ({
 		</Animated.View>
 		<View style={styles.btnContainer}>
 			<RoundBtn onPress={navigateRegister} color={'#00bcd4'}>
-				Sign up
+				Create an account
 			</RoundBtn>
 		</View>
 		<View style={styles.btnContainer} >

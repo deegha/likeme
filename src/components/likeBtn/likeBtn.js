@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withNavigation } from 'react-navigation'
 
-import { Text, TouchableOpacity, StyleSheet, Animated, Easing } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Animated, Easing } from 'react-native'
 import { Foundation, EvilIcons } from '@expo/vector-icons'
 import { voteUpAction } from '../../actions/feedsActions'
 
@@ -72,8 +72,12 @@ class LikeBtn extends React.PureComponent {
     return (
       <TouchableOpacity style={styles.btnContainer} onPress={this.clickLike(feedId)}>
         {liked? 
-          <Foundation name="heart" size={20} color={'#ED4C67'} />:
-          <EvilIcons name="heart" size={20} color={'#747d8c'} />
+          <View style={styles.icon}>
+            <Foundation name="heart" size={20} color={'#ED4C67'} />
+          </View>:
+          <View style={styles.icon}>
+            <EvilIcons name="heart" size={20} color={'#747d8c'} />
+          </View>
         }
         <Animated.Text style={[
           styles.statText,
@@ -103,9 +107,12 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		flexDirection: 'row',
 		borderRadius: 100,
-		margin: 8
+    margin: 8,
+    
 	},
-
+  icon: {
+    elevation: 5
+  },
   statText: {
     fontSize: 11,
     textAlign: 'center',

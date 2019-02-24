@@ -89,6 +89,7 @@ class CreatepostContainer extends React.Component {
 			feed.title = this.state.title
 			feed.postText  = this.state.info
 			feed.postMedia.type = 'text'
+			feed.category	= this.state.category
 			feed.userObj.image = this.props.currentUser.image
 			feed.userObj.userID	= this.props.currentUser.id
 			feed.userObj.displayName = this.props.currentUser.displayName
@@ -106,6 +107,7 @@ class CreatepostContainer extends React.Component {
 				feed.postText  = this.state.info
 				feed.postMedia.type = this.state.postMedia.type
 				feed.postMedia.url	= medaUrl
+				feed.category	= this.state.category
 				feed.userObj.userID	= this.props.currentUser.id
 				feed.userObj.image = this.props.currentUser.image
 				feed.userObj.displayName = this.props.currentUser.displayName
@@ -121,7 +123,7 @@ class CreatepostContainer extends React.Component {
 	)
 	
 	validateForm = () => {
-		if(this.state.info !=='' || this.state.postMedia.url !=='' ) {console.log("in")
+		if(this.state.info !=='' || this.state.postMedia.url !=='' ) {
 			this.setState({falidForm: true})
 		}else {
 			this.setState({falidForm: false}) 

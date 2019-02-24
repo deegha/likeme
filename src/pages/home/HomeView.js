@@ -1,34 +1,36 @@
 import React from 'react'
 
 import { View, ScrollView, Text,Animated, TouchableOpacity,FlatList,Easing, Dimensions  } from 'react-native'
-const { width, height } = Dimensions.get('window')
+
+
 import { styles } from './styles'
+
 import { 
   FloatingBtn, 
   ModalComponent, 
   CreatepostContainer,
   ProfileFeed } from '../../components'
 import {  Entypo, Ionicons } from '@expo/vector-icons'
-import { Loading } from '../../components'
+import { Loading, APP_NAME } from '../../components'
 
-import { XComponent, Sections, Listheader } from './components'
+import { XComponent, Section } from './components'
+
+const { width, height } = Dimensions.get('window')
 
 export class HomeView extends React.PureComponent {
 
   constructor(props) {
     super(props)
-    this.state={
-      scrollOffset:new Animated.Value(0),
-      height: new Animated.Value(height),
-      opacity: new Animated.Value(0),
-      opacityName: new Animated.Value(0)
-    }
+
+    this.scrollOffset=new Animated.Value(0)
+    this.height= new Animated.Value(height)
+    this.opacity= new Animated.Value(0)
+    this.opacityName= new Animated.Value(0)
   }
 
   componentDidUpdate(prePros) {
-    console.log(this.props.loading,"loading")
+
     if(prePros.loading !== this.props.loading && this.props.loading === false) {
-      console.log("in")
       this.animate()
     }
   }
@@ -36,13 +38,13 @@ export class HomeView extends React.PureComponent {
   handleScroll = (e) =>  {
     const scrollSensitivity = 4 / 3
     const offset = e.nativeEvent.contentOffset.y / scrollSensitivity
-    this.state.scrollOffset.setValue(offset)
+    this.scrollOffset.setValue(offset)
   }
 
   animate =() => {
     Animated.parallel([
       Animated.timing(                  
-        this.state.height,            
+        this.height,            
         {
           toValue: 80,    
           easing: Easing.back(),              
@@ -50,41 +52,38 @@ export class HomeView extends React.PureComponent {
         }
       ).start(),
       Animated.timing(                  
-        this.state.opacity,            
+        this.opacity,            
         {
           toValue: 1,    
           easing: Easing.back(),              
-          duration: 1000,              
+          duration: 800,              
         }
       ).start(() => Animated.timing(                  
-        this.state.opacityName,            
+        this.opacityName,            
         {
           toValue: 1,    
           easing: Easing.back(),              
-          duration: 400,              
+          duration: 800,              
         }
       ).start())
     ])
-   
   }
-   
+
+  
   render() {
     const {
       auth:{authenticated,user:{type, displayName}},
-      
-      navigation,
-      showModal,
-      setModalVisibleAfterPost,
-      setModalVisible,
-      createPost,
+      navigateTo,
       loading,
       navigateToProfile,
-      feedsItems
+      feedsItems,
+      fashion
     } = this.props
 
-    const { opacity,height, opacityName, scrollOffset } = this.state
+    const { opacity,height, opacityName,  } = this
 
-    const elav = scrollOffset.interpolate({
+
+    const elav = this.scrollOffset.interpolate({
       inputRange: [0, 50],
       outputRange: [0, 10],
       extrapolate: 'clamp',
@@ -94,7 +93,7 @@ export class HomeView extends React.PureComponent {
       elevation: elav,
       height:height
     }
-  
+
     return (
       <View style={styles.container}>
         <Animated.View style={[styles.headerContainer, exStyles]}>
@@ -103,13 +102,13 @@ export class HomeView extends React.PureComponent {
         )}
         <View style={styles.header}>
           <Animated.Text style={[styles.title, {opacity:opacity}]} >
-            Promo app
+            { APP_NAME }
           </Animated.Text>
           <TouchableOpacity onPress={navigateToProfile} >
             <Animated.View style={[{opacity:opacity},styles.profileArea]}>
               {authenticated && (
                 <Animated.Text style={[styles.profileName,{opacity:opacityName}]}>{displayName}
-                </Animated.Text>
+              </Animated.Text>
               )}
               
               <Ionicons name={'ios-person'} size={30} color={"#ffffff"} />
@@ -119,35 +118,14 @@ export class HomeView extends React.PureComponent {
          
         </Animated.View>
         <ScrollView onScroll={this.handleScroll} >      
-          <XComponent />
-          <Sections>
-          <Listheader>Hot deals</Listheader>
-            <FlatList
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              scrollEventThrottle={16}
-              data={feedsItems}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({item}) =>  <ProfileFeed horizontal={true} feed={item} />}
-              initialNumToRender={4}
-              // ListHeaderComponent={() => <Listheader>Hot deals</Listheader>}
-              />
-          </Sections>
+          <XComponent navigateTo={navigateTo} />
+          <Section feedsItems={feedsItems}  lable={"Latest deals"}/>
+          
+          {fashion.length > 1 && (
+            <Section feedsItems={fashion}  lable={"Fashion"}/>
+          )}
+          
         </ScrollView>
-
-        {(type !== "consumer" &&  authenticated ) &&   (
-          <FloatingBtn action={createPost}>
-            <Entypo name={'plus'} size={30} color={"#ffffff"} />
-          </FloatingBtn>  
-        )}  
-       
-        <ModalComponent 
-          visible={showModal} 
-          setModalVisible={setModalVisible} >
-          <CreatepostContainer 
-            navigation={navigation} 
-            setModalVisible={setModalVisibleAfterPost}  />
-        </ModalComponent>   
       </View>
     )
   }

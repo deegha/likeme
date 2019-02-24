@@ -12,6 +12,9 @@ import { ProfileFeed } from './profileFeed/ProfileFeed'
 import LikeBtn from './likeBtn/likeBtn'
 import { Loading } from './loading/loading' 
 import { Sharebtn } from './share/share'
+import { SliderItem } from './sliderItem/sliderItem'
+import { APP_NAME } from './sharedConstants/Const'
+import { TagDisplay } from './tag/tagDisplay'
 
 export {
     ModalComponent,
@@ -27,5 +30,8 @@ export {
     ProfileFeed,
     LikeBtn,
     Loading,
-    Sharebtn
+    Sharebtn,
+    SliderItem,
+    APP_NAME,
+    TagDisplay
 }

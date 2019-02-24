@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { LinearGradient } from 'expo'
 import {  Entypo } from '@expo/vector-icons'
 
-import { FadeInView, LikeBtn, Sharebtn } from '../'
+import { FadeInView, LikeBtn, Sharebtn, TagDisplay } from '../'
 
 import { WithImage } from './withImage'
 import { styles } from './styles'
@@ -75,14 +75,17 @@ export class FeedView extends React.Component {
             </Text>
           </View>
         )}
-        
-        <View style={styles.actionArea}>
- 
-          <View style={styles.action}>
-            <Sharebtn feed={feed} />
+        <View style={styles.actionAreaContainer}>
+          <View style={styles.actionArea}>
+            <View style={styles.action}>
+              <Sharebtn feed={feed} />
+            </View>
+            <View style={styles.action}>
+              <LikeBtn feedId={feed.id} likeCount={feed.voteUp} liked={feed.currentUserLiked} />
+            </View>
           </View>
           <View style={styles.action}>
-            <LikeBtn feedId={feed.id} likeCount={feed.voteUp} liked={feed.currentUserLiked} />
+            <TagDisplay title={feed.category} />
           </View>
         </View>
       </View>

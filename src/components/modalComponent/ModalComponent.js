@@ -24,7 +24,7 @@ export class ModalComponent extends React.Component {
 						swipeDirection={"down"} 
 						onSwipeThreshold={0}
 						hideModalContentWhileAnimating={true}
-						onSwipe={() => this.setState({ visible: false })}
+						onSwipe={() => this.props.setModalVisible(false)}
 						>
 						<View style={styles.container}>
 							<View style={styles.modalHeader}>

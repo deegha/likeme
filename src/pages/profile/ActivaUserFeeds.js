@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Animated } from 'react-native'
-import { ActiveUserFeedsView } from './ActiveUserFeedsView'
+import { ProfileView } from './ProfileView'
 
 import { fetchUserFeeds, fetchUserLikedFeeds } from '../../actions/feedsActions'
 
@@ -9,6 +9,7 @@ class ActiveUserFeeds extends React.Component {
 
   state = {
     scrollOffset: new Animated.Value(0),
+    showModal: false
   }
 
   componentDidMount() {
@@ -45,53 +46,17 @@ class ActiveUserFeeds extends React.Component {
     }
   }
 
-  handleScroll = (e) =>  {
-    const scrollSensitivity = 4 / 3;
-    const offset = e.nativeEvent.contentOffset.y / scrollSensitivity;
-    this.state.scrollOffset.setValue(offset);
-  }
-
-  navigateToSettings = () => this.props.navigation.navigate('settings')
-
+  
   render () {
-    const { user, userFeeds, likedFeeds } = this.props
-    const { scrollOffset } = this.state
-
-    const headerPaddingTop = scrollOffset.interpolate({
-      inputRange: [0, 200],
-      outputRange: [82, 35],
-      extrapolate: 'clamp',
-    })
-
-    const headerPaddingBottom = scrollOffset.interpolate({
-      inputRange: [0, 200],
-      outputRange: [62, 15],
-      extrapolate: 'clamp',
-    })
-
-    const titleFontSize = scrollOffset.interpolate({
-      inputRange: [0, 200],
-      outputRange: [40, 20],
-      extrapolate: 'clamp',
-    })
-
-    const imageWidth = scrollOffset.interpolate({
-      inputRange: [0, 200],
-      outputRange: [70, 40],
-      extrapolate: 'clamp',
-    })
+    const { user, userFeeds, likedFeeds, authenticated } = this.props
+    
     return (
-      <ActiveUserFeedsView 
-        handleScroll={this.handleScroll}
+      <ProfileView 
         navigateToSettings={this.navigateToSettings}
-
-        headerPaddingTop={headerPaddingTop}
-        headerPaddingBottom={headerPaddingBottom}
-        titleFontSize={titleFontSize}
-        imageWidth={imageWidth}
-
+        authenticated={authenticated}
         likedFeeds={likedFeeds}
         user={user} 
+        navigation={this.props.navigation}
         userFeeds={userFeeds} />
     )
   }

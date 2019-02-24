@@ -51,12 +51,12 @@ export const CreatePost = ({ onTextChange, location,  submitPost, postText, disa
 				
 			</View>
 			<View style={styles.tagContainer}>
-				<Tag onPress={setCategory} cat={"Food"} selelcted={category} />
-				<Tag onPress={setCategory} cat={"Clothing"} selelcted={category} />
-				<Tag onPress={setCategory} cat={"Health"} selelcted={category} />
-				<Tag onPress={setCategory} cat={"Fashion"} selelcted={category} />
-				<Tag onPress={setCategory} cat={"Rides"} selelcted={category} />
-				<Tag onPress={setCategory} cat={"Beauty"} selelcted={category} />
+				<Tag onPress={setCategory} cat={"food"} selelcted={category} />
+				<Tag onPress={setCategory} cat={"clothing"} selelcted={category} />
+				<Tag onPress={setCategory} cat={"health"} selelcted={category} />
+				<Tag onPress={setCategory} cat={"fashion"} selelcted={category} />
+				<Tag onPress={setCategory} cat={"rides"} selelcted={category} />
+				<Tag onPress={setCategory} cat={"beauty"} selelcted={category} />
 			</View>
 			<View style={styles.form}>
 				

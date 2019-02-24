@@ -77,15 +77,21 @@ export const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 5,
     width: '90%', 
-    height: 100,
+    height: 150,
     position: 'relative',
     top: -40,
     left: 0,
     right: 0,
-    flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     
+  },
+  xComponenBottomRow: {
+    marginVertical: 20 ,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   iconlable: {
     fontSize: 10,
@@ -93,7 +99,8 @@ export const styles = StyleSheet.create({
   },
   iconContainer: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    width: 40
   },
   sectionlable: {
     fontSize: 18,
@@ -101,7 +108,8 @@ export const styles = StyleSheet.create({
     color: '#000'
   },
   listheaderContainer: {
-    padding: 25,
+    paddingHorizontal: 25,
+    paddingVertical: 25
   },
   listheadertext: {
     fontWeight: 'bold',

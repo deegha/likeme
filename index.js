@@ -3,7 +3,8 @@ import { RootStack } from './routerStack'
 import  { connect } from 'react-redux'
 import Fire from './src/services/firebase'
 import { authenticate, logout } from './src/actions/authActions'
-import { ToastAndroid, Image, View } from 'react-native'
+import { fetchAllFeedsRequestSuccess } from './src/actions/feedsActions'
+import { ToastAndroid, Image, View, AsyncStorage } from 'react-native'
 import { getUserById, setPushToken } from './src/services/backendClient'
 import { Permissions, Notifications } from 'expo'
 
@@ -16,11 +17,14 @@ class Index extends React.Component {
 		LoadingContent: false
 	}
 
-  componentDidMount() {
+  async componentDidMount() {
 
-		Fire.database().ref("feeds").on("value", (snapshot, b) => {
-			console.log("database changed")
-		})
+
+		// const feeds = await AsyncStorage.getItem('feeds')
+		// if(feeds) {
+		// 	this.props.setInitialFeeds(JSON.parse(feeds))
+		// }
+
 		this.setState({LoadingContent: true})
 		Fire.auth().onAuthStateChanged(userData => {
 			if(userData !== null) { 
@@ -87,15 +91,15 @@ class Index extends React.Component {
 
   render() {
 
-		if(this.state.LoadingContent) {
-			return (
-				<View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-					<Image source={splash} style={{width: 400, height:400}} />
-				</View>
-			)
-		}else{
+		// if(this.state.LoadingContent) {
+		// 	return (
+		// 		<View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+		// 			<Image source={splash} style={{width: 400, height:400}} />
+		// 		</View>
+		// 	)
+		// }else{
 			return <RootStack />
-		}
+		// }
   }
 }
 
@@ -106,7 +110,8 @@ const mapStateToProps = ({auth, waitingAction}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	authenticate: (user) => dispatch(authenticate(user)),
-	logoutUser: () => dispatch(logout())
+	logoutUser: () => dispatch(logout()),
+	setInitialFeeds: (feeds) => dispatch(fetchAllFeedsRequestSuccess(feeds))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index)

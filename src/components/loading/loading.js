@@ -6,7 +6,7 @@ export class Loading extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.loadingText} >Loading</Text>
+        <Text style={styles.loadingText} >Hi there, hold on a bit :)</Text>
       </View>
     )
   }

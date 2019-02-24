@@ -13,13 +13,14 @@ export class ProfileFeed extends React.PureComponent {
 
       return(
         <View style={hStyles.containerHorizontal}>
-          <Image source={{uri: feed.postMedia.url}} style={hStyles.image} />
+          <Image resizeMode={"contain"} source={{uri: feed.postMedia.url}} style={hStyles.image} />
           <View style={styles.descriptionBox}>
             <Text style={hStyles.description}>{feed.postText.substring(0, 100)}</Text>
             {feed.location.description !== undefined && feed.location.description !== '' && (
               <View style={styles.postLocation} >
+                <Entypo name="location-pin" size={11} color="#00bcd4" />
                 <Text style={hStyles.postLocationText}>
-                    {feed.location.description}
+                  {feed.location.description}
                 </Text>
               </View>
             )}

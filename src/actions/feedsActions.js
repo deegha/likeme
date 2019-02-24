@@ -3,7 +3,7 @@
  */
 
 import { getFeeds, createFeed, voteUp, getAllFeeds, getFeedsByUser, getFeedsLikedByUser } from '../services/backendClient'
-
+import { AsyncStorage } from 'react-native'
 /**
  * 
  * Feeds action
@@ -90,6 +90,8 @@ export const fetchAllFeeds = () => async (dispatch, getState) => {
 		const {user: {id}} = auth
 		const res = await getAllFeeds(id, null)	
 		const feeds = res.data
+		const storageData = feeds.slice(0, 10)
+		await AsyncStorage.setItem('feeds', JSON.stringify(storageData))
 		dispatch(fetchAllFeedsRequestSuccess(feeds))
 	}catch(err) {
 		console.log(err)

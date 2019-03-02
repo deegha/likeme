@@ -13,8 +13,8 @@ import LikeBtn from './likeBtn/likeBtn'
 import { Loading } from './loading/loading' 
 import { Sharebtn } from './share/share'
 import { SliderItem } from './sliderItem/sliderItem'
-import { APP_NAME } from './sharedConstants/Const'
 import { TagDisplay } from './tag/tagDisplay'
+import * as Categories from './sharedConstants/categories'
 
 export {
     ModalComponent,
@@ -32,6 +32,6 @@ export {
     Loading,
     Sharebtn,
     SliderItem,
-    APP_NAME,
-    TagDisplay
+    TagDisplay,
+    Categories
 }

@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         backgroundColor: shared.secondaryColor,
-        padding: 10
+       
     },
     postData: {
         display: 'flex',
@@ -14,7 +14,8 @@ export const styles = StyleSheet.create({
         padding:0,
         width: '100%',
         alignItems:'center',
-        flex: 1
+				flex: 1,
+				padding: 10
     },
  
     inputFeild: {
@@ -29,7 +30,8 @@ export const styles = StyleSheet.create({
 			alignItems: 'center',
 			borderBottomWidth:0.5,
 			borderBottomColor: '#d6d7da',    
-        marginBottom: 20
+				marginBottom: 20,
+				padding: 10
     },
     postImage: {
 			width: '100%'
@@ -48,7 +50,8 @@ export const styles = StyleSheet.create({
     },
     form: {
 			padding: 5,
-			flex:2
+			flex:2,
+			padding: 10
     },
     postOptionsSection: {
 			flexDirection: 'row',
@@ -58,7 +61,9 @@ export const styles = StyleSheet.create({
 			flexDirection: 'row',
 			justifyContent: 'flex-start',
 			alignItems: 'center',
-			marginBottom: 10
+			marginBottom: 10,
+			flexGrow: 1,
+			marginLeft: 10
     },
     tag: {
 			fontSize: 10,

@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text , Dimensions, TouchableOpacity, TextInput, ScrollView } from 'react-native'
 import Image from 'react-native-scalable-image'
 
-import { TextFeild, RoundButton, GooglePlacesInput } from '../../../../components/'
+import { TextFeild, RoundButton, GooglePlacesInput, Categories } from '../../../../components/'
 import { styles } from './styles'
 import Tooltip from 'rn-tooltip'
 
@@ -50,16 +50,15 @@ export const CreatePost = ({ onTextChange, location,  submitPost, postText, disa
 					</View>
 				
 			</View>
-			<View style={styles.tagContainer}>
-				<Tag onPress={setCategory} cat={"food"} selelcted={category} />
-				<Tag onPress={setCategory} cat={"clothing"} selelcted={category} />
-				<Tag onPress={setCategory} cat={"health"} selelcted={category} />
-				<Tag onPress={setCategory} cat={"fashion"} selelcted={category} />
-				<Tag onPress={setCategory} cat={"rides"} selelcted={category} />
-				<Tag onPress={setCategory} cat={"beauty"} selelcted={category} />
-			</View>
+			<ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tagContainer} >
+				<Tag onPress={setCategory} cat={Categories.FOOD_CAT} selelcted={category} />
+				<Tag onPress={setCategory} cat={Categories.CLOTHING_CAT} selelcted={category} />
+				<Tag onPress={setCategory} cat={Categories.HEALTH_CAT} selelcted={category} />
+				<Tag onPress={setCategory} cat={Categories.FASHION_CAT} selelcted={category} />
+				<Tag onPress={setCategory} cat={Categories.RIDES_CAT} selelcted={category} />
+				<Tag onPress={setCategory} cat={Categories.BEAUTY_CAT} selelcted={category} />
+			</ScrollView>
 			<View style={styles.form}>
-				
 				<TextInput 
 					autoFocus
 					selectionColor={"#000000"}
@@ -70,16 +69,12 @@ export const CreatePost = ({ onTextChange, location,  submitPost, postText, disa
 					placeholder="Tell them about your deal"
 					/>
 					<GooglePlacesInput location={location} callback={setLocationPostLocation} />
-
-			
 			</View>
-			
 			<View style={styles.postData}>
 				{postMedia.url !== "" && (
 					<Image source={{ uri: postMedia.url }} width={Dimensions.get('window').width} />
-				) }
+				)}
 			</View>
-		
 		</View>
 		</ScrollView>
 	)

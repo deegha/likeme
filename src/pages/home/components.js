@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, Dimensions } from 'react-native'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { styles } from './styles'
 
-import { SliderItem } from '../../components'
+import { SliderItem, Categories, FeedView } from '../../components'
 import {  Entypo, Ionicons, MaterialCommunityIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons'
 
 
@@ -46,24 +46,30 @@ export class XComponent extends React.PureComponent {
             <IconContainer lable={'On your location'} callBack={navigateTo} callBackProp={'LocationFeeds'}>
               <Entypo name={'location'} size={22} color={"#00bcd4"} />
             </IconContainer>
-            <IconContainer lable={'Cards'} callBack={navigateTo}  extraProps={ "cards"}>
+            <IconContainer lable={'Cards'} callBack={navigateTo}  
+              extraProps={Categories.CARDS_CAT}>
               <FontAwesome name={'credit-card'} size={22} color={"#30336b"} />
             </IconContainer>
-            <IconContainer lable={'Online'} callBack={navigateTo}  extraProps={ "online"}>
+            <IconContainer lable={'Online'} callBack={navigateTo}  
+              extraProps={Categories.ONLINE_CAT}>
               <MaterialIcons name={'computer'} size={22} color={"#a55eea"} />
             </IconContainer>
           </View>
           <View style={styles.xComponenBottomRow}>
-            <IconContainer lable={'Fashion'} callBack={navigateTo}  extraProps={"fashion"}>
+            <IconContainer lable={'Fashion'} callBack={navigateTo}  
+              extraProps={Categories.FASHION_CAT}>
               <MaterialCommunityIcons name={'hanger'} size={22} color={"#ff4757"} />
             </IconContainer>
-            <IconContainer lable={'Travel'} callBack={navigateTo} extraProps={"travel"}>
+            <IconContainer lable={'Travel'} callBack={navigateTo} 
+              extraProps={Categories.TRAVEL_CAT}>
               <MaterialCommunityIcons name={'airplane'} size={22} color={"#4b7bec"} />
             </IconContainer>
-            <IconContainer lable={'Rides'} callBack={navigateTo}  extraProps={"rides"}>
+            <IconContainer lable={'Rides'} callBack={navigateTo}  
+              extraProps={Categories.RIDES_CAT}>
               <FontAwesome name={'taxi'} size={22} color={"#fed330"} />
             </IconContainer>
-            <IconContainer lable={'Happy Hours'} callBack={navigateTo} extraProps={"drinks"}>
+            <IconContainer lable={'Happy Hours'} callBack={navigateTo} 
+              extraProps={Categories.DRINKS_CAT}>
               <Ionicons name={'md-wine'} size={22} color={"#B53471"} />
             </IconContainer>
           </View>

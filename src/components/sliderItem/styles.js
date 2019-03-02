@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     borderRadius: 5
   },
   containerHorizontal: {
-    paddingVertical: 20,
+    paddingVertical: 15,
     alignItems: 'flex-start',
     justifyContent: 'flex-start' ,
     backgroundColor: '#ffff',
@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
   },
   actionArea: {
     flexDirection: 'row',
-    justifyContent: 'flex-start'
+    justifyContent: 'space-between'
   },
   action: {
     flexDirection: 'row',
@@ -74,5 +74,13 @@ export const styles = StyleSheet.create({
     marginRight: 5,
     marginTop: 10
     // width: 60
+  },
+  actionAreaLeft: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
+  actionAreaRight: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
   }
 })

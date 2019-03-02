@@ -2,7 +2,7 @@ import React from 'react'
 import { RootStack } from './routerStack'
 import  { connect } from 'react-redux'
 import Fire from './src/services/firebase'
-import { authenticate, logout } from './src/actions/authActions'
+import { authenticate, logout, authenticateRequest } from './src/actions/authActions'
 import { fetchAllFeedsRequestSuccess } from './src/actions/feedsActions'
 import { ToastAndroid, Image, View, AsyncStorage } from 'react-native'
 import { getUserById, setPushToken } from './src/services/backendClient'
@@ -26,28 +26,36 @@ class Index extends React.Component {
 		// }
 
 		this.setState({LoadingContent: true})
+
+		this.props.setLoading()
 		Fire.auth().onAuthStateChanged(userData => {
 			if(userData !== null) { 
 				getUserById(userData.uid)
 					.then(data => {
 
-						console.log(data, "data at index")
+						// console.log(data, "data at index")
 
 						try{
 							this.props.authenticate(data.val()[userData.uid])
+							console.log("2")
 							this.registerForPushNotificationsAsync(userData.uid)
+							console.log("3")
 							ToastAndroid.showWithGravity(
 								'logged in succes',
 								ToastAndroid.SHORT,
 								ToastAndroid.BOTTOM
 							)
+							console.log("4")
+							this.setState({LoadingContent: false})
 						}catch(err) {
+							console.log("5")
 							console.log(err)
 							this.props.logoutUser()
+							this.setState({LoadingContent: false})
 						}
 						
-
-						this.setState({LoadingContent: false})
+						console.log("LoadingContent", LoadingContent)
+						
 					})
       }else {
 				this.props.logoutUser()
@@ -90,7 +98,7 @@ class Index extends React.Component {
 	}
 
   render() {
-
+		// console.log(this.state.LoadingContent)
 		// if(this.state.LoadingContent) {
 		// 	return (
 		// 		<View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
@@ -111,7 +119,8 @@ const mapStateToProps = ({auth, waitingAction}) => ({
 const mapDispatchToProps = (dispatch) => ({
 	authenticate: (user) => dispatch(authenticate(user)),
 	logoutUser: () => dispatch(logout()),
-	setInitialFeeds: (feeds) => dispatch(fetchAllFeedsRequestSuccess(feeds))
+	setInitialFeeds: (feeds) => dispatch(fetchAllFeedsRequestSuccess(feeds)),
+	setLoading: () => dispatch(authenticateRequest())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index)

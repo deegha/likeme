@@ -30,10 +30,17 @@ export const styles = StyleSheet.create({
     justifyContent:'flex-start'
   },
   userImage: {
-    width: 60,
-    height: 60,
-    borderRadius:30,
+    width: '100%',
+    height: '100%',
+  },
+  userImageArea: {
+    width: 40,
+    height: 40,
+    borderRadius:20,
     marginRight:6,
+    elevation: 5,
+    overflow:'hidden',
+    zIndex:3
   },
   postContent: {
     flex: 6,
@@ -46,7 +53,9 @@ export const styles = StyleSheet.create({
     color: shared.primary_text
   },
   postText: {
-    fontWeight: '100',
+    fontWeight: '600',
+    paddingLeft: 10,
+    marginBottom: 8,
     color: shared.secondary_text,
   },
   actionArea: {
@@ -101,5 +110,10 @@ export const styles = StyleSheet.create({
     color: shared.secondary_text,
     fontSize: 10,
     marginBottom: 5,
-  }
+  },
+  lightText: {
+    marginRight: 5,
+    color: '#535c68',
+    fontWeight: '100',
+  },
 })

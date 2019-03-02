@@ -13,9 +13,3 @@ export const ONLINE_CAT = 'online'
 export const TRAVEL_CAT = 'travel'
 export const DRINKS_CAT = 'drinks'
 
-
-
-
-/****System wide ****/
-
-export const APP_NAME = 'Promo'

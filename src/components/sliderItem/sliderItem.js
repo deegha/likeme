@@ -2,7 +2,7 @@ import React from 'react'
 import { View, TouchableOpacity, Animated, Text, Image } from 'react-native'
 import {  Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { styles } from './styles'
-import { Sharebtn, LikeBtn } from '../'
+import { Sharebtn, LikeBtn, TagDisplay } from '../'
 
 export class SliderItem extends React.Component {
 
@@ -22,13 +22,7 @@ export class SliderItem extends React.Component {
             source={{uri: feed.postMedia.url}} style={styles.image} />
 
           <View style={styles.descriptionBox}>
-            <View style={styles.profileimageContainer}>
-              <Image  
-                source={{uri: feed.userObj.image}} style={styles.profileimage} />
-
-              <Text style={styles.profileName}>{feed.userObj.name}</Text>
-            </View>
-            
+         
 
             <Text style={styles.description}>{feed.postText.substring(0, 100)}</Text>
             {feed.location.description !== undefined && feed.location.description !== '' && (
@@ -41,11 +35,23 @@ export class SliderItem extends React.Component {
             )}
           
             <View style={styles.actionArea}>
-              <View style={styles.action}>
-                <Sharebtn feed={feed} />
+              <View style={styles.actionAreaLeft}>
+                <View style={styles.action}>
+                  <Image  
+                    source={{uri: feed.userObj.image}} style={styles.profileimage} />
+                  <Text style={styles.profileName}>{feed.userObj.name}</Text>
+                </View>
+                <View style={styles.action}>
+                    <TagDisplay title={feed.category} />
+                  </View>
               </View>
-              <View style={styles.action}>
-                <LikeBtn feedId={feed.id} likeCount={feed.voteUp} liked={feed.currentUserLiked} />
+              <View style={styles.actionAreaRight}>
+                <View style={styles.action}>
+                  <Sharebtn feed={feed} />
+                </View>
+                <View style={styles.action}>
+                  <LikeBtn feedId={feed.id} likeCount={feed.voteUp} liked={feed.currentUserLiked} />
+                </View>
               </View>
             </View>
           </View>

@@ -29,7 +29,6 @@ export class HomeView extends React.PureComponent {
   }
 
   componentDidUpdate(prePros) {
-
     if(prePros.loading !== this.props.loading && this.props.loading === false) {
       this.animate()
     }

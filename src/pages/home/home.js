@@ -80,12 +80,17 @@ class HomeContainer extends React.Component {
     const { feeds , auth , loading, creating } = this.props
     const lastestDeals= feeds.slice(0, 8)
     const fashion = feeds.filter(feed => feed.category === 'fashion')
+
+    
+
+    const lodingProp = loading && lastestDeals.length < 1 && auth.loading
+    console.log( lodingProp )
     return (
         <HomeView 
           feedsItems={lastestDeals} 
           auth={auth}
           navigateToProfile={this.navigateToProfile}  
-          loading={loading && lastestDeals.length < 1 }
+          loading={lodingProp}
           createPost={this.createPost}
           navigation={this.props.navigation}
           showModal={showModal}

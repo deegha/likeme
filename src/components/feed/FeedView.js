@@ -32,10 +32,10 @@ export class FeedView extends React.Component {
       <FadeInView>
       <View style={styles.container}>
   
-        <View style={styles.contentArea}>
-          {/* <View style={styles.userImageContainer}> */}
+        {/* <View style={styles.contentArea}>
+        
             <Image style={styles.userImage} source={{uri: feed.userObj.image}} />
-          {/* </View> */}
+       
           <View style={styles.postContent}>
             <Text style={styles.userName}>{feed.userObj.name}</Text>
   
@@ -50,7 +50,7 @@ export class FeedView extends React.Component {
              )}
            
           </View>   
-        </View>
+        </View> */}
   
         <View style={styles.imageArea}> 
           {feed.postMedia.url !== "" ?(
@@ -66,7 +66,11 @@ export class FeedView extends React.Component {
             )
           } 
         </View>
-       
+        {feed.postMedia.url !== "" && (
+                <Text style={styles.postText}>
+                  {feed.postText}
+                </Text>
+             )}
         {feed.location && feed.location.description !== undefined && feed.location.description !== '' && (
           <View style={styles.postLocation} >
             <Entypo name="location-pin" size={11} color="#00bcd4" />
@@ -78,14 +82,24 @@ export class FeedView extends React.Component {
         <View style={styles.actionAreaContainer}>
           <View style={styles.actionArea}>
             <View style={styles.action}>
+              <View style={styles.userImageArea}>
+              <Image style={styles.userImage} source={{uri: feed.userObj.image}} />
+              </View>
+              
+              {/* <Text style={styles.lightText}>by</Text> */}
+              <Text style={styles.userName}>{feed.userObj.name}</Text>
+            </View>
+            <View style={styles.action}>
+              <TagDisplay title={feed.category} />
+            </View>
+          </View>
+          <View style={styles.action}>
+            <View style={styles.action}>
               <Sharebtn feed={feed} />
             </View>
             <View style={styles.action}>
               <LikeBtn feedId={feed.id} likeCount={feed.voteUp} liked={feed.currentUserLiked} />
             </View>
-          </View>
-          <View style={styles.action}>
-            <TagDisplay title={feed.category} />
           </View>
         </View>
       </View>

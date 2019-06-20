@@ -56,7 +56,7 @@ export class GooglePlacesInput extends React.Component {
               query={{
                 key: 'AIzaSyBzy1UKhqfWpTSwIg6JVf-K3V4ov0tG5EU',
                 language: 'en', 
-                components: 'country:my'
+                components: 'country:lk'
               }}
               
               styles={{

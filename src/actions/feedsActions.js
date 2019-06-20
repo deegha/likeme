@@ -2,7 +2,7 @@
  * Created by deegha
  */
 
-import { getFeeds, createFeed, voteUp, getAllFeeds, getFeedsByUser, getFeedsLikedByUser } from '../services/backendClient'
+import { getFeeds, createFeed, voteUp, getAllFeeds, getFeedsByUser, getFeedsLikedByUser, voteDown } from '../services/backendClient'
 import { AsyncStorage } from 'react-native'
 /**
  * 
@@ -109,10 +109,10 @@ export const CREATE_FEED_SUCESS 	= 'CREATE_FEED_SUCESS'
 export const CREATE_FEDD_FAIL			=	'CREATE_FEDD_FAIL'
 
 export const VOTE_UP	= 'VOTE_UP'
+export const VOTE_DOWN = 'VOTE_DOWN'
 
-export const createFeedRequest = (feed) => ({
-	type: CREATE_FEED_REQUEST,
-	feed
+export const createFeedRequest = () => ({
+	type: CREATE_FEED_REQUEST
 })
 
 export const createFeedSucess = () => ({
@@ -124,11 +124,11 @@ export const createFeedFail = () => ({
 })
 
 export const createFeedAction = (feed, postGeo, curLocation) => (dispatch, getState) => {
-	dispatch(createFeedRequest(feed))
+	dispatch(createFeedRequest())
 	const { auth: {user: {id}} } = getState()
 	createFeed(feed, postGeo)
 		.then(res => {
-			
+			fetchUserFeeds(id)
 			getAllFeeds()
 			.then(res => {
 				const feeds = res.data
@@ -153,12 +153,23 @@ const voteUpState = (feedId) => ({
 	feedId
 }) 
 
+const voteDownState =  (feedId) => ({
+	type: VOTE_DOWN,
+	feedId
+}) 
+
 export const voteUpAction = (feedId) =>  (dispatch, getState) => {
 	dispatch(voteUpState(feedId))
 	const { auth: {user: {id, displayName}} } = getState()
 	voteUp(feedId,{id, displayName})
 	.catch(err => console.log(err) )
+}
 
+export const voteDownAction = (feedId) =>  (dispatch, getState) => {
+	dispatch(voteDownState(feedId))
+	const { auth: {user: {id, displayName}} } = getState()
+	voteDown(feedId,{id, displayName})
+	.catch(err => console.log(err) )
 }
 
 const fetchUserFeedsRequest = () => ({
@@ -176,9 +187,10 @@ const fetchUserFeedsFail = () => ({
 
 export const fetchUserFeeds = (userId) => async (dispatch) => {
 	dispatch(fetchUserFeedsRequest())
-
+	console.log('fetching data')
 	try {
 		const feeds = await getFeedsByUser(userId)
+		console.log('fetching data new')
 		dispatch(fetchUserFeedsSuccess(feeds.data))
 	}catch(err) {
 		dispatch(fetchUserFeedsFail())

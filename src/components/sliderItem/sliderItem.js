@@ -7,7 +7,7 @@ import { Sharebtn, LikeBtn, TagDisplay } from '../'
 export class SliderItem extends React.Component {
 
   shouldComponentUpdate(preProps) {
-    preProps.feed !== this.props.feed
+    return preProps.feed !== this.props.feed
   }
 
   render () {

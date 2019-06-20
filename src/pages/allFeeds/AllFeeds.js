@@ -99,7 +99,7 @@ class AllFeeds extends React.Component {
         return feed.category === filter
       })
     }
-     
+     //&& Object.keys(filteredFeeds) < 1
     return (
       <FeedsView 
         goback={this.goback}
@@ -107,7 +107,7 @@ class AllFeeds extends React.Component {
         feedsItem={filteredFeeds} 
         auth={auth}
         navigateToProfile={this.navigateToProfile}  
-        loading={loading && Object.keys(filteredFeeds) < 1}
+        loading={loading }
         createPost={this.createPost}
         navigation={this.props.navigation}
         showModal={showModal}

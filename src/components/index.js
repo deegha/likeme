@@ -15,6 +15,7 @@ import { Sharebtn } from './share/share'
 import { SliderItem } from './sliderItem/sliderItem'
 import { TagDisplay } from './tag/tagDisplay'
 import * as Categories from './sharedConstants/categories'
+import { APP_NAME } from './sharedConstants/settingsConstants'
 
 export {
     ModalComponent,
@@ -33,5 +34,6 @@ export {
     Sharebtn,
     SliderItem,
     TagDisplay,
-    Categories
+    Categories,
+    APP_NAME
 }

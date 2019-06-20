@@ -5,6 +5,7 @@ import { TextFeild, RoundBtn } from '../../components'
 import { styles } from './styles' 
 import {primaryColor, thirdColor} from '../../components/sharedStyles'
 
+
 export const LoginPageView = ({
 	loading, 
 	onSubmit, 

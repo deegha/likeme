@@ -23,7 +23,9 @@ export const styles = StyleSheet.create({
     },
     loginTitile: {
         color: shared.secondary_text,
-        fontWeight: '100'
+        fontWeight: '100',
+        fontFamily: 'saira bold',
+        letterSpacing: 1.2
     },
     devider: {
         borderTopWidth: 1,
@@ -41,7 +43,8 @@ export const styles = StyleSheet.create({
     text : {
         color: shared.thirdColor,
         marginLeft: 9,
-        marginRight: 9
+        marginRight: 9,
+        fontFamily: 'saira thin'
     },
     btnContainer : {
         display: 'flex',

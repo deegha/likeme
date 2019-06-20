@@ -7,17 +7,55 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0814bb7b-8a44-4077-bbcd-f01116714def" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/f4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/f5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/fashion.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/fashion1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/fashion3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/iconold.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/splashold.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routerStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/routerStack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/authActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/authActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/feedsActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/feedsActions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/feed/FeedView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/feed/FeedView.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/feed/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/feed/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/feedsView/FeedsView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/feedsView/FeedsView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/feedsView/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/feedsView/styles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/sharedConstants/Const.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/inputs/loactionSearch.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/inputs/loactionSearch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/inputs/roundBtn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/inputs/roundBtn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/inputs/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/inputs/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/likeBtn/likeBtn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/likeBtn/likeBtn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/loading/loading.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/loading/loading.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profileFeed/ProfileFeed.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profileFeed/ProfileFeed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profileFeed/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profileFeed/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/share/share.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/share/share.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/sliderItem/sliderItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sliderItem/sliderItem.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/sliderItem/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sliderItem/styles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/MainPage/components/createPost/CreatePost.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage/components/createPost/CreatePost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/MainPage/components/createPost/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage/components/createPost/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/MainPage/components/createPost/CreatepostContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MainPage/components/createPost/CreatepostContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Settings/SettingsContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Settings/SettingsContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Settings/SettingsView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Settings/SettingsView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/allFeeds/AllFeeds.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/allFeeds/AllFeeds.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/home/HomeView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/home/HomeView.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/home/components.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/home/components.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/home/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/home/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/home/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/home/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/locationFeeds/LocationFeeds.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/locationFeeds/LocationFeeds.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/loginPage/LoginPageView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/loginPage/LoginPageView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/loginPage/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/loginPage/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/profile/ProfileView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/profile/ProfileView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/profile/profileRouter.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/profile/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/profile/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/registerPage/RegisterContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/registerPage/RegisterContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reducers/allFeedsReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/allFeedsReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reducers/authReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/authReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/backendClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/backendClient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/utils.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,9 +79,9 @@
     </navigator>
     <panes>
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">

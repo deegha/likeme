@@ -49,11 +49,12 @@ export const styles = StyleSheet.create({
   },
   userName: {
    
-    fontWeight: 'bold',
+    fontFamily: 'inter bold',
     color: shared.primary_text
   },
   postText: {
-    fontWeight: '600',
+    fontFamily: 'saira bold',
+    fontSize: 25,
     paddingLeft: 10,
     marginBottom: 8,
     color: shared.secondary_text,
@@ -65,7 +66,8 @@ export const styles = StyleSheet.create({
   actionAreaContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 5
   },
   statText: {
     fontSize: 11,
@@ -81,15 +83,19 @@ export const styles = StyleSheet.create({
   postLocation: {
     paddingHorizontal: 10,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 10
   },
   postLocationText: {
-    fontWeight: '100',
+    fontFamily: 'inter thin',
+    lineHeight: 20,
     color: shared.secondary_text,
     fontSize: 11,
     marginLeft: 5,
     
+  },
+  locationIcon: {
+    paddingVertical: 5
   },
   postBox: {
     justifyContent: 'center',
@@ -100,7 +106,7 @@ export const styles = StyleSheet.create({
   },
   postBoxText: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'saira light',
     color: '#ffffff',
     textAlign: 'center',
     width: '100%'

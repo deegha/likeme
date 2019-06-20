@@ -4,7 +4,7 @@ import { withNavigation } from 'react-navigation'
 
 import { View, Text, TouchableOpacity, StyleSheet, Animated, Easing } from 'react-native'
 import { Foundation, EvilIcons } from '@expo/vector-icons'
-import { voteUpAction } from '../../actions/feedsActions'
+import { voteUpAction,voteDownAction } from '../../actions/feedsActions'
 
 class LikeBtn extends React.PureComponent {
 
@@ -32,11 +32,19 @@ class LikeBtn extends React.PureComponent {
   }
 
   clickLike = (id) => () => {
+
+   
     if(!this.props.authenticated) {
       this.props.navigation.navigate('login')
     }else {
-      this.setState(preState => ({liked: true,likeCount: preState.likeCount+1 }),()=> this.animate())
-      this.props.voteUp(id)
+
+      if(this.state.liked) {
+        this.props.voteDown(id)
+
+      }else {
+        this.setState(preState => ({liked: true,likeCount: preState.likeCount+1 }),()=> this.animate())
+        this.props.voteUp(id)
+      }
     }
 
   }
@@ -89,7 +97,8 @@ class LikeBtn extends React.PureComponent {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  voteUp: (feedid, userGeo) => dispatch(voteUpAction(feedid, userGeo))
+  voteUp: (feedid, userGeo) => dispatch(voteUpAction(feedid, userGeo)),
+  voteDown: (feedid, userGeo) => dispatch(voteDownAction(feedid, userGeo)),
 })
 
 const mapStateToProps = ( { auth:{authenticated}, allFeeds } ) => ({

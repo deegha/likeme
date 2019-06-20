@@ -7,25 +7,34 @@ import { fetchAllFeedsRequestSuccess } from './src/actions/feedsActions'
 import { ToastAndroid, Image, View, AsyncStorage } from 'react-native'
 import { getUserById, setPushToken } from './src/services/backendClient'
 import { Permissions, Notifications } from 'expo'
-
+import { Font } from 'expo'
 import splash from './assets/splash.png'
 
 console.disableYellowBox = true
 class Index extends React.Component {
 
 	state = {
-		LoadingContent: false
+		LoadingContent: false,
+		fontsLoaded: false
 	}
 
   async componentDidMount() {
 
 
-		// const feeds = await AsyncStorage.getItem('feeds')
-		// if(feeds) {
-		// 	this.props.setInitialFeeds(JSON.parse(feeds))
-		// }
-
 		this.setState({LoadingContent: true})
+
+		await Font.loadAsync({
+      'inter black': require('./assets/fonts/Inter-Black.ttf'),
+      'inter bold': require('./assets/fonts/Inter-Bold.ttf'),
+      'inter regular': require('./assets/fonts/Inter-Regular.ttf'),
+			'inter thin': require('./assets/fonts/Inter-ExtraLight-BETA.ttf'),
+			'saira black': require('./assets/fonts/SairaExtraCondensed-Black.ttf'),
+			'saira bold': require('./assets/fonts/SairaExtraCondensed-Bold.ttf'),
+			'saira light': require('./assets/fonts/SairaExtraCondensed-Light.ttf'),
+			'saira thin': require('./assets/fonts/SairaExtraCondensed-Thin.ttf'),
+    })
+		this.setState({fontsLoaded: true})
+		
 
 		this.props.setLoading()
 		Fire.auth().onAuthStateChanged(userData => {
@@ -33,28 +42,25 @@ class Index extends React.Component {
 				getUserById(userData.uid)
 					.then(data => {
 
-						// console.log(data, "data at index")
-
 						try{
 							this.props.authenticate(data.val()[userData.uid])
-							console.log("2")
+						
 							this.registerForPushNotificationsAsync(userData.uid)
-							console.log("3")
+						
 							ToastAndroid.showWithGravity(
 								'logged in succes',
 								ToastAndroid.SHORT,
 								ToastAndroid.BOTTOM
 							)
-							console.log("4")
+						
 							this.setState({LoadingContent: false})
 						}catch(err) {
-							console.log("5")
+				
 							console.log(err)
 							this.props.logoutUser()
 							this.setState({LoadingContent: false})
 						}
 						
-						console.log("LoadingContent", LoadingContent)
 						
 					})
       }else {
@@ -99,15 +105,11 @@ class Index extends React.Component {
 
   render() {
 		// console.log(this.state.LoadingContent)
-		// if(this.state.LoadingContent) {
-		// 	return (
-		// 		<View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-		// 			<Image source={splash} style={{width: 400, height:400}} />
-		// 		</View>
-		// 	)
-		// }else{
+		if(this.state.fontsLoaded) {
 			return <RootStack />
-		// }
+		}else{
+			return null
+		}
   }
 }
 

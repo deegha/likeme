@@ -16,9 +16,14 @@ class SettingsContainer extends React.Component {
     this.props.navigation.navigate('home')
   }
 
+  navigateTo = (to) => () => {
+    console.log(to, 'to')
+    this.props.navigation.navigate(to)
+  }
+
   render () {
     return (
-      <SettingsView logout={this.logout} />
+      <SettingsView navigateTo={this.navigateTo} logout={this.logout} />
     )
   }
 }

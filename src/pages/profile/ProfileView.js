@@ -63,7 +63,13 @@ export class ProfileView extends React.PureComponent {
 
     const imageWidth = scrollOffset.interpolate({
       inputRange: [0, 200],
-      outputRange: [70, 40],
+      outputRange: [72, 40],
+      extrapolate: 'clamp',
+    })
+
+    const elevation = scrollOffset.interpolate({
+      inputRange: [0, 80],
+      outputRange: [0, 5],
       extrapolate: 'clamp',
     })
 
@@ -75,72 +81,55 @@ export class ProfileView extends React.PureComponent {
       navigation
     } = this.props
 
+    const feeds = user.type==='consumer'?likedFeeds.likedFeeds: userFeeds
+
     return (
 
       <View style={styles.container}>
         <Animated.View style={[styles.header, {
           paddingTop: headerPaddingTop,
-          paddingBottom: headerPaddingBottom
+          paddingBottom: headerPaddingBottom,
+          elevation:elevation
         }]}>
           <View style={styles.informationArea}>
             <Animated.Text style={[styles.displayName, {
               fontSize: titleFontSize
-            }]}>{user.displayName}</Animated.Text>
+              }]}>{user.displayName}</Animated.Text>
             <View  style={styles.profileDetails}>
               {/* <Text style={styles.detail}>10 Followers</Text>
               <View style={{width: 10}} />
               <Text style={styles.detail}>20 Following</Text> */}
-              <View style={{width: 10}} />
+            
               <Text style={styles.detail}>{userFeeds.length} Promotions</Text>
             </View>
           </View>
           <TouchableOpacity onPress={this.navigateToSettings}>
-            <Animated.Image style={[styles.displayImage,{
+            <Animated.View style={[styles.displayImageContainer,{
                 height: imageWidth,
                 width: imageWidth,
-            }]} source={{uri: user.image}} /> 
+            }]}>
+              <Image style={styles.displayImage}  source={{uri: user.image}} /> 
+            </Animated.View>
           </TouchableOpacity>
-
           </Animated.View>
        
-        <View  style={styles.body}>
-        <ScrollView style={styles.scrollView} onScroll={this.handleScroll}>
-          { likedFeeds.likedFeeds.length > 0? 
-          <Listheader>Liked by you  </Listheader>:
-          <NoContent>Go and like some promotions :) </NoContent>}
-          { likedFeeds.likedFeeds.length > 0 &&
-           <FlatList
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            scrollEventThrottle={16}
-            data={likedFeeds.likedFeeds}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({item}) =>  <ProfileFeed horizontal={true} feed={item} />}
-            initialNumToRender={4}
-            // ListHeaderComponent={() => <Listheader>Liked by you</Listheader>}
-            />}
+        <FlatList
+          scrollEventThrottle={16}
+          onScroll={this.handleScroll}
+          data={feeds}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({item}) =>  <ProfileFeed useType={user.type} feed={item} />}
+          ListHeaderComponent={() => {
 
-          
-          { userFeeds.length > 0 ?(
-            <FlatList
-            scrollEventThrottle={16}
-            data={userFeeds}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({item}) =>  <ProfileFeed  feed={item} />}
-            ListHeaderComponent={() => <Listheader>Added by you  </Listheader>}
-            stickyHeaderIndices={[0]}
-            initialNumToRender={4}
-            />
-          ):(
-              <NoContent> 
-                {user.type==='consumer'?"Upgrade to a store to add promotions": "Add    promitions and they will appear here"}
-              </NoContent>
-            ) 
-            }
- 
-         
-          </ScrollView>
-        </View>
+            return(
+              <Listheader>{user.type==='consumer'?'You liked':'Added by you'}  </Listheader>
+            )
+          }}
+          // stickyHeaderIndices={[0]}
+          initialNumToRender={4}
+          />
+    
+
         {(user.type !== "consumer" &&  authenticated ) &&   (
           <FloatingBtn action={this.openModal}>
             <Entypo name={'plus'} size={30} color={"#ffffff"} />

@@ -57,11 +57,16 @@ export const CreatePost = ({ onTextChange, location,  submitPost, postText, disa
 				<Tag onPress={setCategory} cat={Categories.FASHION_CAT} selelcted={category} />
 				<Tag onPress={setCategory} cat={Categories.RIDES_CAT} selelcted={category} />
 				<Tag onPress={setCategory} cat={Categories.BEAUTY_CAT} selelcted={category} />
+				<Tag onPress={setCategory} cat={Categories.CARDS_CAT} selelcted={category} />
+				<Tag onPress={setCategory} cat={Categories.ONLINE_CAT} selelcted={category} />
+				<Tag onPress={setCategory} cat={Categories.DRINKS_CAT} selelcted={category} />
+				<Tag onPress={setCategory} cat={Categories.TRAVEL_CAT} selelcted={category} />
 			</ScrollView>
 			<View style={styles.form}>
 				<TextInput 
 					autoFocus
 					selectionColor={"#000000"}
+					value={postText}
 				  onChangeText={onTextChange}
 					style={styles.inputFeild}
 					underlineColorAndroid="#ffffff"

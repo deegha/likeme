@@ -7,7 +7,6 @@ import { styles } from './styles'
 import { SliderItem, Categories, FeedView } from '../../components'
 import {  Entypo, Ionicons, MaterialCommunityIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons'
 
-
 const { width } = Dimensions.get('window')
 
 const IconContainer = ({children, lable, callBack, callBackProp, extraProps}) => {
@@ -46,13 +45,13 @@ export class XComponent extends React.PureComponent {
             <IconContainer lable={'On your location'} callBack={navigateTo} callBackProp={'LocationFeeds'}>
               <Entypo name={'location'} size={22} color={"#00bcd4"} />
             </IconContainer>
+            <IconContainer lable={'Food'} callBack={navigateTo}  
+              extraProps={Categories.FOOD_CAT}>
+              <MaterialCommunityIcons name={'food'} size={22} color={"#a55eea"} />
+            </IconContainer>
             <IconContainer lable={'Cards'} callBack={navigateTo}  
               extraProps={Categories.CARDS_CAT}>
               <FontAwesome name={'credit-card'} size={22} color={"#30336b"} />
-            </IconContainer>
-            <IconContainer lable={'Online'} callBack={navigateTo}  
-              extraProps={Categories.ONLINE_CAT}>
-              <MaterialIcons name={'computer'} size={22} color={"#a55eea"} />
             </IconContainer>
           </View>
           <View style={styles.xComponenBottomRow}>
@@ -126,6 +125,7 @@ export class Section extends React.PureComponent  {
     return (
       <View style={styles.sectionContainer}>
         <Listheader>{lable}</Listheader>
+    
         <Carousel
           ref={(c) => { this._carousel = c; }}
           data={feedsItems}
@@ -134,7 +134,7 @@ export class Section extends React.PureComponent  {
           itemWidth={width}
           onSnapToItem={(index) => this.setState({ activeSlide: index }) }
 
-          />
+          /> 
           { this.pagination }
       </View>
     )

@@ -118,9 +118,13 @@ class CreatepostContainer extends React.Component {
 			.catch(err => console.log(err))
 	}
 
-	onTextChange = (value) => this.setState(
-    {info : value}, ()=> this.validateForm()
-	)
+	onTextChange = (value) => {
+		value.length < 150 && (
+			this.setState(
+				{info : value}, ()=> this.validateForm()
+			)
+		)
+	}
 	
 	validateForm = () => {
 		if(this.state.info !=='' || this.state.postMedia.url !=='' ) {
@@ -173,7 +177,7 @@ class CreatepostContainer extends React.Component {
 	setCategory = (cat) => () => this.setState({category:cat})
 
 	render() {
-		const { postText, postMedia, currentUserLocation, falidForm, category } = this.state
+		const { info, postMedia, currentUserLocation, falidForm, category } = this.state
 
 		return (
 			<CreatePost
@@ -183,7 +187,7 @@ class CreatepostContainer extends React.Component {
 				setLocationPostLocation={this.setLocationPostLocation}
 				postMedia={postMedia}
 				disabled={!falidForm}
-				postText={postText} 
+				postText={info} 
 				pickImage={this.pickImage}
 				takePhoto={this.takePhoto}
 				onTextChange={this.onTextChange} 

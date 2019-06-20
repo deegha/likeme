@@ -1,12 +1,12 @@
 import React from  'react'
-
+import { connect } from 'react-redux'
 import { RegisterView } from './RegisterView'
 import { ImagePicker, Permissions } from 'expo'
 import { Animated, Easing, Keyboard } from 'react-native'
 
 import Fire  from '../../services/firebase'
 import { validateEmail } from '../../services/helpers'
-
+import { authenticate } from '../../actions/authActions'
 import { UserModel } from '../../dataModels/user'
 import { createUser } from '../../services/backendClient'
 import { uploadImageAsync } from '../../services/utils'
@@ -37,9 +37,9 @@ class RegisterContainer extends React.Component {
     }
   }
 
-	static navigationOptions = {
-    title: 'Signup'
-  }
+	// static navigationOptions = {
+  //   title: 'Signup'
+  // }
 
   componentWillMount () {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
@@ -50,6 +50,13 @@ class RegisterContainer extends React.Component {
     this.keyboardDidShowListener.remove()
     this.keyboardDidHideListener.remove()
   }
+
+  componentDidUpdate(preProps) {
+		const { authenticated } = this.props.auth
+		if(authenticated && authenticated !== preProps.auth.authenticated) {
+			this.props.navigation.navigate('home')
+		}
+	}
 
   keyboardDidShow = () => {
 		this.feildOnfocus()
@@ -150,6 +157,8 @@ class RegisterContainer extends React.Component {
       console.log('uploading Image')
       uploadImageAsync(this.state.propic, 'userImages')
         .then(photoUrl => {
+        
+        Fire.auth().currentUser.sendEmailVerification()  
 
         user.id = res.user.uid
         user.displayName = this.state.name
@@ -161,6 +170,9 @@ class RegisterContainer extends React.Component {
           res.user.uid,
           user
         )
+
+        this.props.authenticate(user)
+
         this.setState({creating: false})
       })
 
@@ -202,5 +214,12 @@ class RegisterContainer extends React.Component {
   }
 }
 
+const mapStateToProps = ({auth}) => ({
+	auth
+})
 
-export default RegisterContainer
+const mapDispatchToProps = (dispatch) => ({
+	authenticate: (user) => dispatch(authenticate(user))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterContainer) 

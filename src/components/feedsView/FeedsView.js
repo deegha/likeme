@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { View, Text,Animated, TouchableOpacity,FlatList,Easing, Dimensions  } from 'react-native'
+import { View, Text,Animated, TouchableOpacity,FlatList,Easing, Dimensions, Image  } from 'react-native'
 const { width, height } = Dimensions.get('window')
 import { styles } from './styles'
 import { 
@@ -10,8 +10,10 @@ import {
   FeedView  } from '../'
 import {  Entypo, Ionicons } from '@expo/vector-icons'
 import { Loading, APP_NAME } from '../../components'
-
+import loadingImg from '../../../assets/downloading.png'
+import { Font } from 'expo'
 export class FeedsView extends React.PureComponent {
+
 
   render() {
     const {
@@ -26,9 +28,10 @@ export class FeedsView extends React.PureComponent {
       loading,
       navigateToProfile
     } = this.props
-  
+    console.log(loading, "loading on feeds vieww")
     return (
       <View style={styles.container}>
+      <Image source={{loadingImg}} width={200} height={200} />
         <View style={[styles.headerContainer]}>
         <View style={styles.header}>
           <View style={styles.headerleft}>
@@ -51,10 +54,23 @@ export class FeedsView extends React.PureComponent {
             </View>
           </TouchableOpacity>
         </View>
-         
         </View>
-     
-         <FlatList
+
+
+        {feedsItem.length < 1 && !loading ? (
+        <View style={[styles.container, {
+          justifyContent: 'center',
+          alignItems: 'center'
+        }]}>
+          {(this.props.title === 'On your location') ? (
+            <Text style={styles.infoMessage}>Sorry! no promotions or deals found on your location </Text>
+          ):(
+            <Text style={styles.infoMessage}>Sorry! no promotions or deals found under this category </Text>
+          )}        
+          
+        </View>
+        ): (
+          <FlatList
           scrollEventThrottle={16}
           initialNumToRender={5}
           data={Object.keys(feedsItem)}
@@ -67,21 +83,8 @@ export class FeedsView extends React.PureComponent {
             )
           }}
           />
+        )}
         
-              
-        {/* {(type !== "consumer" &&  authenticated ) &&   (
-          <FloatingBtn action={createPost}>
-            <Entypo name={'plus'} size={30} color={"#ffffff"} />
-          </FloatingBtn>  
-        )}  
-       
-        <ModalComponent 
-          visible={showModal} 
-          setModalVisible={setModalVisible} >
-          <CreatepostContainer 
-            navigation={navigation} 
-            setModalVisible={setModalVisibleAfterPost}  />
-        </ModalComponent>    */}
       </View>
     )
   }

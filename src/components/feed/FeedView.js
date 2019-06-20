@@ -73,7 +73,9 @@ export class FeedView extends React.Component {
              )}
         {feed.location && feed.location.description !== undefined && feed.location.description !== '' && (
           <View style={styles.postLocation} >
-            <Entypo name="location-pin" size={11} color="#00bcd4" />
+            <View style={styles.locationIcon}>
+             <Entypo name="location-pin" size={11} color="#00bcd4" />
+            </View>
             <Text style={styles.postLocationText}>
                 {feed.location.description}
             </Text>

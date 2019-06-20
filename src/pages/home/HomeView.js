@@ -1,10 +1,6 @@
 import React from 'react'
-
-import { View, ScrollView, Text,Animated, TouchableOpacity,FlatList,Easing, Dimensions  } from 'react-native'
-
-
+import { View, ScrollView, Text,Animated, Image,  TouchableOpacity,FlatList,Easing, Dimensions  } from 'react-native'
 import { styles } from './styles'
-
 import { 
   FloatingBtn, 
   ModalComponent, 
@@ -12,8 +8,9 @@ import {
   ProfileFeed } from '../../components'
 import {  Entypo, Ionicons } from '@expo/vector-icons'
 import { Loading, APP_NAME } from '../../components'
-
+import starter from '../../../assets/bg2.png'
 import { XComponent, Section } from './components'
+import { Font } from 'expo'
 
 const { width, height } = Dimensions.get('window')
 
@@ -26,6 +23,9 @@ export class HomeView extends React.PureComponent {
     this.height= new Animated.Value(height)
     this.opacity= new Animated.Value(0)
     this.opacityName= new Animated.Value(0)
+    this.imageHeight = new Animated.Value(height)
+
+   
   }
 
   componentDidUpdate(prePros) {
@@ -45,8 +45,8 @@ export class HomeView extends React.PureComponent {
       Animated.timing(                  
         this.height,            
         {
-          toValue: 80,    
-          easing: Easing.back(),              
+          toValue: 0,    
+          easing: Easing.in(),              
           duration: 700,              
         }
       ).start(),
@@ -78,7 +78,6 @@ export class HomeView extends React.PureComponent {
       feedsItems,
       fashion
     } = this.props
-
     const { opacity,height, opacityName,  } = this
 
 
@@ -90,19 +89,25 @@ export class HomeView extends React.PureComponent {
 
     const exStyles= {
       elevation: elav,
-      height:height
+      // opacity: opacity
+      // height:height
     }
+
+    
 
     return (
       <View style={styles.container}>
+        <Animated.View style={[styles.initialTextContainer ,{width: width, height:height}]}>
+          <Text style={styles.initialText}>PROMO APP</Text>
+        </Animated.View>
         <Animated.View style={[styles.headerContainer, exStyles]}>
-        {(loading)&&(
-          <Loading />
-        )}
         <View style={styles.header}>
-          <Animated.Text style={[styles.title, {opacity:opacity}]} >
-            { APP_NAME }
-          </Animated.Text>
+         
+            <Animated.Text style={[styles.title, {opacity:opacity}]} >
+              { APP_NAME }
+            </Animated.Text>
+         
+          
           <TouchableOpacity onPress={navigateToProfile} >
             <Animated.View style={[{opacity:opacity},styles.profileArea]}>
               {authenticated && (

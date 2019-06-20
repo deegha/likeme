@@ -3,25 +3,26 @@ import React from 'react'
 import { Text, TouchableOpacity, StyleSheet, Animated, Easing } from 'react-native'
 import { Foundation, Ionicons } from '@expo/vector-icons'
 import { Share } from 'react-native'
-
+import { WEB_URL } from '../sharedConstants/settingsConstants'
 export class Sharebtn extends React.PureComponent {
 
 
   onShare = ({
     postText,
     url,
+    id,
     displayName
     }) => async () => {
 
-    const body = `${postText}${url}`  
+    const body = `${WEB_URL}/feed?slug=${id}`  
 
     try {
       const result = await Share.share({
         message: body,
-        url: url,
-        title: `New promotions from ${displayName}`
+        url: `${WEB_URL}?feed?slug=${id}`,
+        title: `${postText}`
         }, {
-        dialogTitle: `New promotions from ${displayName}`,
+        dialogTitle: `${postText}`,
       })
 
       if (result.action === Share.sharedAction) {
@@ -39,13 +40,13 @@ export class Sharebtn extends React.PureComponent {
   }
 
   render () {
-
-    const { postText, postMedia: {url}, userObj:{displayName}} = this.props.feed
+    const { id, postText, postMedia: {url}, userObj:{displayName}} = this.props.feed
 
     return (
       <TouchableOpacity style={styles.btnContainer} onPress={this.onShare({
         postText,
         url,
+        id,
         displayName
       })}>
           <Ionicons name="md-share" size={20} color="#00bcd4" />

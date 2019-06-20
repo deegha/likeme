@@ -7,27 +7,7 @@ export class ProfileFeed extends React.PureComponent {
 
   render () {
 
-    const { feed, horizontal } = this.props
-
-    if(horizontal) {
-
-      return(
-        <View style={hStyles.containerHorizontal}>
-          <Image resizeMode={"contain"} source={{uri: feed.postMedia.url}} style={hStyles.image} />
-          <View style={styles.descriptionBox}>
-            <Text style={hStyles.description}>{feed.postText.substring(0, 100)}</Text>
-            {feed.location.description !== undefined && feed.location.description !== '' && (
-              <View style={styles.postLocation} >
-                <Entypo name="location-pin" size={11} color="#00bcd4" />
-                <Text style={hStyles.postLocationText}>
-                  {feed.location.description}
-                </Text>
-              </View>
-            )}
-          </View>
-        </View>
-      )
-    }
+    const { feed, useType } = this.props
 
     return (
       <View style={styles.container}>
@@ -43,9 +23,12 @@ export class ProfileFeed extends React.PureComponent {
               </Text>
             </View>
           )}
-          <TouchableOpacity style={styles.removeBtn}>
-            <Text style={styles.removeBtnText}>Remove</Text>
-          </TouchableOpacity>
+          {useType !== 'consumer' && (
+            <TouchableOpacity style={styles.removeBtn}>
+              <Text style={styles.removeBtnText}>Remove</Text>
+            </TouchableOpacity>
+          )}
+         
         </View>
 
       </View>

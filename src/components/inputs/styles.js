@@ -5,9 +5,9 @@ export const styles = StyleSheet.create({
     textInputError: {
       color: 'red',
       fontSize: 12,
-      padding: 10,
       paddingLeft: 0,
-      paddingTop: 0
+      paddingTop: 0,
+      fontFamily: 'inter thin'
     },
     inputText: {
       paddingBottom: 10,
@@ -18,16 +18,19 @@ export const styles = StyleSheet.create({
       paddingBottom: 5,
       paddingLeft: 0,
       fontSize: shared.moderateScale(14),
+      fontFamily: 'inter regular'
     },
     roundBtn: {
       borderColor: shared.btnBorder,
       borderRadius: 30,
-      padding: shared.moderateScale(10),
+      padding: shared.moderateScale(5),
       alignItems: 'center',
       justifyContent: 'center',
     },
     roundBtnText: {
-      fontSize: shared.moderateScale(14),
+      fontSize: shared.moderateScale(18),
+      fontFamily: 'saira light',
+      letterSpacing: 1.1
     },
     SeachIconContainer: {
       width: '100%',

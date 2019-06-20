@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     alignItems: 'flex-start'
   },
   displayName: {
-    fontWeight: 'bold',
+    fontFamily: 'saira bold',
     fontSize: 40,
     color: '#353b48'
   },
@@ -30,24 +30,30 @@ export const styles = StyleSheet.create({
     marginTop: 5,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center',
-   
+    alignItems: 'flex-start',
   },
   detail: {
     fontSize: 13,
-    fontWeight: 'bold',
-    color: '#636e72'
+    fontFamily: 'inter bold', 
+    color: '#636e72',
   },
-  displayImage: {
+  displayImageContainer: {
     height: 70,
     width: 70,
-    borderRadius: 35
+    borderRadius: 35,
+    elevation: 5,
+    overflow: 'hidden'
+  },
+  displayImage: {
+    height: '100%',
+    width: '100%'
   },
   listheaderContainer: {
     padding: 25,
+    
   },
   listheadertext: {
-    fontWeight: 'bold',
+    fontFamily: 'inter regular',
     color: '#353b48'
   },
   body: {

@@ -18,9 +18,10 @@ export const styles = StyleSheet.create({
   },
   description: {
     color: '#353b48',
-    fontSize: 12,
-    fontWeight: 'bold',
-    width: 200
+    fontSize: 18,
+    fontFamily: 'saira bold',
+    width: 200,
+    marginBottom: 5
   },
   descriptionHorizotal: {
     color: '#353b48',
@@ -40,6 +41,8 @@ export const styles = StyleSheet.create({
   },
   postLocationText: {
     fontSize: 9,
+    fontFamily: 'inter regular',
+    lineHeight: 15,
     width: 250
   },
   removeBtn: {

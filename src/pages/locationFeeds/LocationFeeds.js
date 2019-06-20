@@ -155,7 +155,6 @@ const mapStateToProps = ({feeds, auth, waitingAction, allFeeds:{creating}}) => (
 
 const mapDispatchToProps = (dispatch) => ({
 	getFeeds : (userGeo, neighboursArr) => dispatch(fetchFeeds(userGeo, neighboursArr)),
-	getAllFeeds: () => dispatch(fetchAllFeeds()),
 	setWatingAction: (action, params) => dispatch(setWatingAction(action, params)),
 	voteUp: (feedId) => dispatch(voteUpAction(feedId))
 })

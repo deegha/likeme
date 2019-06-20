@@ -30,18 +30,19 @@ export const styles = StyleSheet.create({
     width: width-90,
     height: width-200,
     borderRadius: 10,
-    elevation: 5
   },
   postLocationText: {
     fontSize: 10,
     width: width-110,
-    marginLeft: 10
+    marginLeft: 10,
+    fontFamily: 'inter regular',
+    lineHeight: 20,
   },
   description: {
     marginTop: 7,
     color: '#353b48',
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 25,
+    fontFamily: 'saira bold',
     width: width-100,
   },
   descriptionBox: {
@@ -63,6 +64,7 @@ export const styles = StyleSheet.create({
   profileName: {
     color: '#2d3436',
     fontWeight: '600',
+    fontFamily: 'inter bold',
   },
   actionArea: {
     flexDirection: 'row',

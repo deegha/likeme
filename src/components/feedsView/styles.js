@@ -29,12 +29,15 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    
   },
   title: {
-    fontWeight: '600',
-    fontSize: 20,
+    fontWeight: '100',
+    fontFamily: 'saira light',
+    fontSize: 25,
+    letterSpacing: 1.2,
     color: '#fff',
-    marginLeft: 10
+    marginLeft: 40,
   },
   creatingContainer: {
     marginTop: 22,
@@ -66,7 +69,12 @@ export const styles = StyleSheet.create({
   },
   profileName: {
     marginRight: 5,
-    fontWeight: 'bold',
-    color:'#ffffff'
+    fontFamily: 'saira bold',
+    color:'#ffffff',
+    fontSize: 18,
+    letterSpacing: 1.2
+  },
+  infoMessage: {
+    color:'#95afc0'
   }
 })

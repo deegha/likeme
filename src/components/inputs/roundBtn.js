@@ -1,7 +1,7 @@
 import React from 'react'
 import { TouchableOpacity, Text, View, Animated, Easing } from 'react-native'
 import { FadeInView } from '../'
-
+import { Bubbles, DoubleBounce, Bars, Pulse } from 'react-native-loader'
 import { styles } from './styles'
 
 export class RoundBtn extends React.Component {
@@ -17,21 +17,21 @@ export class RoundBtn extends React.Component {
     if(disabled)
       return (
         <View style={[styles.roundBtn,{backgroundColor: "#ecf0f1"}]}>
-          <Text style={{fontWeight:'bold'}}>{loading?"Loading":children}</Text>
+          <Text style={[styles.roundBtnText]}>{loading?"Loading":children}</Text>
         </View>
       )
 
     else if(loading)
         return (
           <View style={[styles.roundBtn, exStyles]}>
-            <Text style={color !== undefined ?{fontWeight:'200',color: fontColor?fontColor :'#ffffff'}:{}}>Loading</Text>
+            <Bars size={10} color="#FFF" />
           </View>
         )
     
     return (
       <FadeInView initial={0.2} >
         <TouchableOpacity onPress={onPress} style={[styles.roundBtn, exStyles]} >
-          <Text style={[color !== undefined ?{fontWeight:'bold'  , color: fontColor?fontColor :'#ffffff'}:{}, styles.roundBtnText]}>
+          <Text style={[color !== undefined ?{ color: fontColor?fontColor :'#ffffff'}:{}, styles.roundBtnText]}>
             {children}
           </Text>
         </TouchableOpacity>

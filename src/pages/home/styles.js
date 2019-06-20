@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#00bcd4',
     alignItems:'center',
     elevation: 3,
-    justifyContent:'center'
+    justifyContent:'center',
   },
   header: {
     width: '100%',
@@ -25,9 +25,10 @@ export const styles = StyleSheet.create({
     zIndex: 1,
   },
   title: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    color: '#ffffff'
+    fontSize: 25,
+    letterSpacing: 1.5,
+    color: '#ffffff',
+    fontFamily: 'saira bold'
   },
   creatingContainer: {
     marginTop: 22,
@@ -59,8 +60,10 @@ export const styles = StyleSheet.create({
   },
   profileName: {
     marginRight: 5,
-    fontWeight: 'bold',
-    color:'#ffffff'
+    fontFamily: 'saira bold',
+    color:'#ffffff',
+    fontSize: 18,
+    letterSpacing: 1.2
   },
   xComponentContainer: {
     width:'100%',
@@ -95,7 +98,9 @@ export const styles = StyleSheet.create({
   },
   iconlable: {
     fontSize: 10,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: 'inter regular',
+    lineHeight: 15
   },
   iconContainer: {
     alignItems: 'center',
@@ -114,5 +119,14 @@ export const styles = StyleSheet.create({
   listheadertext: {
     fontWeight: 'bold',
     color: '#353b48'
+  },
+  initialText: {
+    color: shared.floatingBtnColor,
+    fontFamily: 'saira bold',
+    fontSize: 70
+  },
+  initialTextContainer: {
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })

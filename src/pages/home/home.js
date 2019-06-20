@@ -84,7 +84,7 @@ class HomeContainer extends React.Component {
     
 
     const lodingProp = loading && lastestDeals.length < 1 && auth.loading
-    console.log( lodingProp )
+
     return (
         <HomeView 
           feedsItems={lastestDeals} 

@@ -38,6 +38,8 @@ export const getAllFeeds = (userId, nextRef) => POST('getAllFeeds', {userId, nex
 
 export const voteUp = (feedId, user) =>  POST('likeFeed',  { user, feedId })
 
+export const voteDown = (feedId, user) =>  POST('removeLike',  { user, feedId })
+
 export const createFeed = (feed, postGeo) => Fire.database().ref(`feeds/${postGeo}`).push(feed)
 
 export const getUserById = (id) => Fire.database().ref("users").orderByChild('id').equalTo(id).once("value") 
@@ -49,6 +51,11 @@ export const setPushToken = (token, userID) => Fire.database().ref(`users/${user
 export const getFeedsByUser = (userId) => POST('getFeedsByuser', {userId})
 
 export const getFeedsLikedByUser = (userId) => POST('likedFeeds', {userId})
+
+export const updateProfilePic = (imageUrl, userId) => {
+  console.log(imageUrl, userId)
+  Fire.database().ref(`users/${userId}`).update({ image: imageUrl })
+}
 
 
 

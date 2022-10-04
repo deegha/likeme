@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@rolandhordos/react-native-carousel": "^0.11.4",
-    "expo": "^30.0.1",
+    "expo": "^46.0.14",
     "firebase": "^5.5.2",
     "firebase-functions": "^2.1.0",
     "geofirex": "0.0.6",
